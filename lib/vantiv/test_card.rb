@@ -56,7 +56,40 @@ module Vantiv
           mocked_sandbox_payment_account_id: "1111111111140003",
           network: "MC"
         }
-      }
+      },
+      {
+        access_method_name: "account_updater",
+        attrs: {
+          card_number: "4457000300000007",
+          expiry_month: "01",
+          expiry_year: "15",
+          cvv: "123",
+          mocked_sandbox_payment_account_id: "1111111111120007",
+          network: "VI"
+        }
+      },
+      {
+        access_method_name: "account_updater_account_closed",
+        attrs: {
+          card_number: "5112000101110009",
+          expiry_month: "11",
+          expiry_year: "99",
+          cvv: "123",
+          mocked_sandbox_payment_account_id: "1111111111160009",
+          network: "MC"
+        }
+      },
+      {
+        access_method_name: "account_updater_contact_cardholder",
+        attrs: {
+          card_number: "4457000301100004",
+          expiry_month: "11",
+          expiry_year: "99",
+          cvv: "123",
+          mocked_sandbox_payment_account_id: "1111111111130004",
+          network: "VI"
+        }
+      },
     ]
 
     def self.all
