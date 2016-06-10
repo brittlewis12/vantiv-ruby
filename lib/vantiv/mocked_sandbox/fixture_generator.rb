@@ -49,6 +49,8 @@ module Vantiv
         cert_response = Vantiv.auth_capture(
           amount: 10901,
           payment_account_id: card.payment_account_id,
+          expiry_month: card.expiry_month,
+          expiry_year: card.expiry_year,
           customer_id: "not-dynamic-cust-id",
           order_id: "not-dynamic-order-id"
         )
@@ -63,6 +65,8 @@ module Vantiv
         cert_response = Vantiv.auth(
           amount: 10901,
           payment_account_id: card.payment_account_id,
+          expiry_month: card.expiry_month,
+          expiry_year: card.expiry_year,
           customer_id: "not-dynamic-cust-id",
           order_id: "not-dynamic-order-id"
         )
@@ -77,6 +81,8 @@ module Vantiv
         cert_response = Vantiv.refund(
           amount: 10901,
           payment_account_id: card.payment_account_id,
+          expiry_month: card.expiry_month,
+          expiry_year: card.expiry_year,
           customer_id: "not-dynamic-cust-id",
           order_id: "not-dynamic-order-id"
         )
