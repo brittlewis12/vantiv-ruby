@@ -1,0 +1,47 @@
+{
+  "httpok": true,
+  "http_response_code": "200",
+  "response_body": {
+    "litleOnlineResponse": {
+      "@version": "10.2",
+      "@response": "0",
+      "@message": "Valid Format",
+      "authorizationResponse": {
+        "@id": "90f46988ecb53684f70ad8ba",
+        "@reportGroup": "<%= Vantiv.default_report_group %>",
+        "@customerId": "not-dynamic-cust-id",
+        "orderId": "not-dynamic-order-id",
+        "response": "000",
+        "responseTime": "<%= Time.now.strftime('%FT%T') %>",
+        "postDate": "<%= Time.now.strftime('%F') %>",
+        "message": "Approved",
+        "authCode": "123457",
+        "accountUpdater": {
+          "originalCardTokenInfo": {
+            "bin": "511200",
+            "PaymentAccountID": "1112000239160009",
+            "Type": "MC",
+            "ExpirationMonth": "11",
+            "ExpirationYear": "99"
+          },
+          "newCardTokenInfo": {
+            "bin": "445700",
+            "PaymentAccountID": "1111000288150001",
+            "Type": "VI",
+            "ExpirationMonth": "11",
+            "ExpirationYear": "99"
+          },
+          "extendedCardResponse": {
+            "code": "501",
+            "message": "The account was closed"
+          }
+        },
+        "fraudResult": {
+          "avsResult": "00"
+        },
+        "TransactionID": "<%= rand(10**17) %>"
+      }
+    },
+    "RequestID": "b0d811ec-f575-4c0b-c316-ef873e92682f"
+  }
+}

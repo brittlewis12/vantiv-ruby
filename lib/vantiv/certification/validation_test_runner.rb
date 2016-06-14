@@ -95,6 +95,11 @@ module Vantiv
           response_object: Vantiv::Api::Response.new
         ).run
 
+        if response.api_level_failure?
+          error_message = "CERT FAILED: #{cert_name} \n WITH: #{response.body}"
+          raise StandardError.new(error_message)
+        end
+
         response_cache.push(cert_name, response)
         results_file << "#{cert_name},#{response.request_id}\n"
       end

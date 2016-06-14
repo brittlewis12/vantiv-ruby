@@ -42,8 +42,13 @@ module Vantiv
         response_code == RESPONSE_CODES[:expired_card]
       end
 
-      private
+      def account_updater
+        @account_updater ||= AccountUpdaterResponse.new(
+          litle_transaction_response.fetch("accountUpdater", {})
+        )
+      end
 
+      private
       def transaction_approved?
         response_code == RESPONSE_CODES[:approved]
       end

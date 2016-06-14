@@ -54,7 +54,7 @@ describe "mocked API requests to auth_capture" do
         (
           Vantiv::Api::LiveTransactionResponse.instance_methods(false) +
           Vantiv::Api::Response.instance_methods(false) -
-          [:payment_account_id, :body, :load, :request_id, :transaction_id]
+          [:payment_account_id, :body, :load, :request_id, :transaction_id, :account_updater]
         ).each do |method_name|
           live_response_value = live_response.send(method_name)
           mocked_response_value = mocked_response.send(method_name)
@@ -73,6 +73,31 @@ describe "mocked API requests to auth_capture" do
         response_1 = run_mocked_response
         response_2 = run_mocked_response
         expect(response_1.transaction_id).not_to eq response_2.transaction_id
+      end
+
+      context "when the response has account updater information" do
+        let(:live_account_updater_response) { live_response.account_updater }
+        let(:mocked_account_updater_response) { mocked_response.account_updater }
+
+        it "has an equivalent payment_account_id" do
+          expect(mocked_account_updater_response.payment_account_id).to eq live_account_updater_response.payment_account_id
+        end
+
+        it "has an equivalent card_type" do
+          expect(mocked_account_updater_response.card_type).to eq live_account_updater_response.card_type
+        end
+
+        it "has an equivalent expiry_month" do
+          expect(mocked_account_updater_response.expiry_month).to eq live_account_updater_response.expiry_month
+        end
+
+        it "has an equivalent expiry_year" do
+          expect(mocked_account_updater_response.expiry_year).to eq live_account_updater_response.expiry_year
+        end
+
+        it "has an equivalent extended_card_response_code" do
+          expect(mocked_account_updater_response.extended_card_response_code).to eq live_account_updater_response.extended_card_response_code
+        end
       end
     end
   end

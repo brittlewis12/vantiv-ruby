@@ -42,7 +42,7 @@ To certify your application, run the following script:
 $ bundle exec vantiv-certify-app -l sub-your-license-id-in-here -a sub-your-acceptor-id-in-here -p your-paypage-id 
 ```
 
-A certs.txt file will be generated in the directory that the script is run, and then opened. It contains a list of DevHub Certification test names and associated Request IDs, like follows:
+A certs.txt file will be generated in the directory that the script is run, and then opened. It contains a list of DevHub Certification Test IDs and associated Request IDs, like follows:
 
 ```
 L_AC_1, request-id-for-L_AC_1-here
@@ -50,6 +50,15 @@ L_AC_2, request-id-for-L_AC_2-here
 ```
 
 Navigate to your application's page in DevHub's developer portal (apideveloper.vantiv.com). Paste the contents of this file into the validation form input field, and then click "Validate".
+
+### Running a subset of the certifications
+
+If you want to just run a subset of the certifications you can pass in the Test ID that you want to which match against using the `--filter_by` option. For example, if you only want to run the Account Updater certification, which have Test IDs that are prefixed with `L_AU`, you would filter by `AU` like follows:
+
+```
+$ bundle exec vantiv-certify-app -l foo -a bar -p bla --filter_by=AU
+```
+
 
 ## Usage
 

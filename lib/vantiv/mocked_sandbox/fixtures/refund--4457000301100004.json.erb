@@ -1,0 +1,22 @@
+{
+  "httpok": true,
+  "http_response_code": "200",
+  "response_body": {
+    "litleOnlineResponse": {
+      "@version": "10.2",
+      "@response": "0",
+      "@message": "Valid Format",
+      "creditResponse": {
+        "@id": "3f1f4d9dc10a832642d740ef",
+        "@reportGroup": "<%= Vantiv.default_report_group %>",
+        "@customerId": "not-dynamic-cust-id",
+        "response": "001",
+        "responseTime": "<%= Time.now.strftime('%FT%T') %>",
+        "postDate": "<%= Time.now.strftime('%F') %>",
+        "message": "Transaction Received",
+        "TransactionID": "<%= rand(10**17) %>"
+      }
+    },
+    "RequestID": "6b7f3723-22d8-4306-dc17-7e5ef082040a"
+  }
+}
