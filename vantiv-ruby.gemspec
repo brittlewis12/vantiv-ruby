@@ -6,8 +6,8 @@ require 'vantiv/version'
 Gem::Specification.new do |spec|
   spec.name          = "vantiv"
   spec.version       = Vantiv::VERSION
-  spec.authors       = ["Joshua Balloch", "Chris Voxland"]
-  spec.email         = ["joshuaballoch@gmail.com", "chrisvoxland@gmail.com"]
+  spec.authors       = ["Joshua Balloch", "Chris Voxland", "Scott Bartell"]
+  spec.email         = ["joshuaballoch@gmail.com", "chrisvoxland@gmail.com", "me@scottbartell.com"]
 
   spec.summary       = %q{A simple ruby client to use Vantiv's DevHub API}
   spec.homepage      = "https://github.com/plated/vantiv-ruby"

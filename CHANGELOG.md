@@ -1,4 +1,15 @@
 Vantiv Ruby Changes
+0.3.0
+-----------
+- Bug/fix: adds expiry arguments to the relevant methods when running the fixture generator
+- Improve certification validation test runner
+  - Raise an exception if there is an api error while running certification
+  - Update the interface to be more user friendly and return more useful errors
+- Implement account updater response handling
+  - Live transaction response objects now contain account updater response objects
+  - Add certifications for account updater
+  - Add account updater related test cards and test accounts
+    - Add related fixtures for the mocked sandbox
 
 0.2.0
 -----------
