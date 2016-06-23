@@ -12,11 +12,13 @@ module Vantiv
         self.endpoint = endpoint
         self.request_body = JSON.parse(request_body)
       end
-
+#WIP: still need to figure out how to map tokens
       def run
         if endpoint == Api::Endpoints::TOKENIZATION
           if direct_post?
             load_fixture("tokenize_by_direct_post", card_number)
+          else
+            load_fixture("tokenize", temporary_token)
           end
         elsif endpoint == Api::Endpoints::SALE
           load_fixture("auth_capture", card_number_from_payment_account_id)
@@ -48,6 +50,10 @@ module Vantiv
 
       def direct_post?
         request_body["Card"] && request_body["Card"]["AccountNumber"] != nil
+      end
+
+      def temporary_token
+        request_body["Card"]["PaypageRegistrationID"]
       end
 
       def card_number

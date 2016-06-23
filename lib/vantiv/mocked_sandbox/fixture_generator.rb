@@ -1,4 +1,6 @@
 require 'vantiv/mocked_sandbox/dynamic_response_body'
+require 'vantiv/certification/paypage_driver'
+require 'vantiv/test_paypage_registration_id'
 
 module Vantiv
   module MockedSandbox
@@ -11,6 +13,10 @@ module Vantiv
       attr_accessor :card
 
       def run
+        @paypage_driver = Vantiv::Certification::PaypageDriver.new
+        @paypage_driver.start
+        record_tokenize
+
         TestCard.all.each do |card|
           self.card = CardforFixtureGeneration.new(card)
 
@@ -22,6 +28,8 @@ module Vantiv
           end
         end
 
+        @paypage_driver.stop
+
         record_capture
         record_auth_reversal
         record_credit
@@ -29,6 +37,30 @@ module Vantiv
       end
 
       private
+
+      def record_tokenize
+        test_paypage_id = TestPaypageRegistrationId.valid_registration_id
+        cert_response = Vantiv.tokenize(
+          temporary_token: generate_real_registration_id(test_paypage_id.test_card)
+        )
+        dynamic_body = DynamicResponseBody.generate(
+          body: cert_response.body,
+          litle_txn_name: "registerTokenResponse",
+          mocked_payment_account_id: test_paypage_id.test_card.mocked_sandbox_payment_account_id
+        )
+        write_fixture_to_file(
+          "tokenize--#{test_paypage_id.mocked_sandbox_paypage_registration_id}",
+          cert_response,
+          dynamic_body
+        )
+      end
+
+      def generate_real_registration_id(card)
+        @paypage_driver.get_paypage_registration_id(
+          card.card_number,
+          card.cvv
+        )
+      end
 
       def record_tokenize_by_direct_post
         cert_response = Vantiv.tokenize_by_direct_post(
