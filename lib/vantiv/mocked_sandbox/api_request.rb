@@ -12,7 +12,7 @@ module Vantiv
         self.endpoint = endpoint
         self.request_body = JSON.parse(request_body)
       end
-#WIP: still need to figure out how to map tokens
+
       def run
         if endpoint == Api::Endpoints::TOKENIZATION
           if direct_post?
