@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'vantiv/certification/paypage_driver'
+require 'vantiv/test_paypage_registration_id'
 include TestHelpers
 
 describe "mocked API requests to .tokenize" do
@@ -15,12 +16,6 @@ describe "mocked API requests to .tokenize" do
   let(:live_response) do
     Vantiv.tokenize(temporary_token: live_temporary_token)
   end
-  let(:live_temporary_token) do
-    @test_paypage_driver.get_paypage_registration_id(
-      test_card.card_number,
-      test_card.cvv
-    )
-  end
 
   before :all do
     @test_paypage_driver = Vantiv::Certification::PaypageDriver.new
@@ -34,7 +29,19 @@ describe "mocked API requests to .tokenize" do
   after { Vantiv::MockedSandbox.disable_self_mocked_requests! }
 
 
-  context ".valid_registration_id" do
+  context "with a valid registration id" do
+    let(:test_registration_id) { TestPaypageRegistrationId.valid_registration_id }
+    let(:card) { test_registration_id.test_card }
+    let(:live_temporary_token) do
+      @test_paypage_driver.get_paypage_registration_id(
+        card.card_number,
+        card.cvv
+      )
+    end
+    let(:mocked_temporary_token) do
+      test_registration_id.mocked_sandbox_paypage_registration_id
+    end
+
     it "the mocked response's public methods return the same as the live one" do
       (
         Vantiv::Api::TokenizationResponse.instance_methods(false) +
@@ -57,6 +64,47 @@ describe "mocked API requests to .tokenize" do
     it "returns the whitelisted payment account id" do
       expect(mocked_response.success?).to eq true
       expect(mocked_response.payment_account_id).to eq card.mocked_sandbox_payment_account_id
+    end
+
+    it "returns a dynamic transaction id" do
+      response_1 = run_mocked_response
+      response_2 = run_mocked_response
+      expect(response_1.transaction_id).not_to eq response_2.transaction_id
+    end
+  end
+
+  context "with an expired registration id" do
+    let(:test_registration_id) { TestPaypageRegistrationId.expired_registration_id }
+    let(:live_temporary_token) do
+      # test token that always returns an expired response
+      "RGFQNCt6U1d1M21SeVByVTM4dHlHb1FsVkUrSmpnWXhNY0o5UkMzRlZFanZiUHVnYjN1enJXbG1WSDF4aXlNcA=="
+    end
+    let(:mocked_temporary_token) do
+      test_registration_id.mocked_sandbox_paypage_registration_id
+    end
+
+    it "the mocked response's public methods return the same as the live one" do
+      (
+        Vantiv::Api::TokenizationResponse.instance_methods(false) +
+        Vantiv::Api::Response.instance_methods(false) -
+        [:payment_account_id, :body, :load, :request_id, :transaction_id]
+      ).each do |method_name|
+          live_response_value = live_response.send(method_name)
+          mocked_response_value = mocked_response.send(method_name)
+
+          expect(mocked_response_value).to eq(live_response_value),
+            error_message_for_mocked_api_failure(
+              method_name: method_name,
+              expected_value: live_response_value,
+              got_value: mocked_response_value,
+              live_response: live_response
+            )
+        end
+    end
+
+    it "returns the same error message" do
+      expect(mocked_response.success?).to eq false
+      expect(mocked_response.error_message).to eq live_response.error_message
     end
 
     it "returns a dynamic transaction id" do

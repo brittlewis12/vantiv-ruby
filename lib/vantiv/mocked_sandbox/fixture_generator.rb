@@ -39,6 +39,27 @@ module Vantiv
       private
 
       def record_tokenize
+        record_valid_tokenize
+        record_expired_tokenize
+      end
+
+      def record_expired_tokenize
+        test_paypage_id = TestPaypageRegistrationId.expired_registration_id
+        cert_response = Vantiv.tokenize(
+          temporary_token: test_paypage_id.mocked_sandbox_paypage_registration_id
+        )
+        dynamic_body = DynamicResponseBody.generate(
+          body: cert_response.body,
+          litle_txn_name: "registerTokenResponse",
+        )
+        write_fixture_to_file(
+          "tokenize--#{test_paypage_id.mocked_sandbox_paypage_registration_id}",
+          cert_response,
+          dynamic_body
+        )
+      end
+
+      def record_valid_tokenize
         test_paypage_id = TestPaypageRegistrationId.valid_registration_id
         cert_response = Vantiv.tokenize(
           temporary_token: generate_real_registration_id(test_paypage_id.test_card)
