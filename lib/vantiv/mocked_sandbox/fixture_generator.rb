@@ -13,8 +13,7 @@ module Vantiv
       attr_accessor :card
 
       def run
-        @paypage_driver = Vantiv::Certification::PaypageDriver.new
-        @paypage_driver.start
+        #possibly extract this to its own class
         record_tokenize
 
         TestCard.all.each do |card|
@@ -28,8 +27,6 @@ module Vantiv
           end
         end
 
-        @paypage_driver.stop
-
         record_capture
         record_auth_reversal
         record_credit
@@ -39,8 +36,30 @@ module Vantiv
       private
 
       def record_tokenize
+        @paypage_driver = Vantiv::Certification::PaypageDriver.new
+        @paypage_driver.start
+
         record_valid_tokenize
         record_expired_tokenize
+        record_invalid_tokenize
+
+        @paypage_driver.stop
+      end
+
+      def record_invalid_tokenize
+        test_paypage_id = TestPaypageRegistrationId.invalid_registration_id
+        cert_response = Vantiv.tokenize(
+          temporary_token: test_paypage_id.mocked_sandbox_paypage_registration_id
+        )
+        dynamic_body = DynamicResponseBody.generate(
+          body: cert_response.body,
+          litle_txn_name: "registerTokenResponse",
+        )
+        write_fixture_to_file(
+          "tokenize--#{test_paypage_id.mocked_sandbox_paypage_registration_id}",
+          cert_response,
+          dynamic_body
+        )
       end
 
       def record_expired_tokenize

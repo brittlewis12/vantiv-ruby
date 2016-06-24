@@ -113,4 +113,45 @@ describe "mocked API requests to .tokenize" do
       expect(response_1.transaction_id).not_to eq response_2.transaction_id
     end
   end
+
+  context "with an invalid registration id" do
+    let(:test_registration_id) { TestPaypageRegistrationId.invalid_registration_id }
+    let(:live_temporary_token) do
+      # test token that always returns an invalid response
+      "pDZJcmd1VjNlYXNaSlRMTGpocVZQY1NWVXE4Z W5UTko4NU9KK3p1L1p1Vzg4YzVPQVlSUHNITG1 JN2I0NzlyTg=="
+    end
+    let(:mocked_temporary_token) do
+      test_registration_id.mocked_sandbox_paypage_registration_id
+    end
+
+    it "the mocked response's public methods return the same as the live one" do
+      (
+        Vantiv::Api::TokenizationResponse.instance_methods(false) +
+        Vantiv::Api::Response.instance_methods(false) -
+        [:payment_account_id, :body, :load, :request_id, :transaction_id]
+      ).each do |method_name|
+          live_response_value = live_response.send(method_name)
+          mocked_response_value = mocked_response.send(method_name)
+
+          expect(mocked_response_value).to eq(live_response_value),
+            error_message_for_mocked_api_failure(
+              method_name: method_name,
+              expected_value: live_response_value,
+              got_value: mocked_response_value,
+              live_response: live_response
+            )
+        end
+    end
+
+    it "returns the same error message" do
+      expect(mocked_response.success?).to eq false
+      expect(mocked_response.error_message).to eq live_response.error_message
+    end
+
+    it "returns a dynamic transaction id" do
+      response_1 = run_mocked_response
+      response_2 = run_mocked_response
+      expect(response_1.transaction_id).not_to eq response_2.transaction_id
+    end
+  end
 end

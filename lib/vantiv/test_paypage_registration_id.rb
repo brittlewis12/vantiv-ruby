@@ -10,8 +10,13 @@ class TestPaypageRegistrationId
 
   def self.expired_registration_id
     MockedRegistrationId.new(
-      "RGFQNCt6U1d1M21SeVByVTM4dHlHb1FsVkUrSmpnWXhNY0o5UkMzRlZFanZiUHVnYjN1enJXbG1WSDF4aXlNcA==",
-      "1111111111112222"
+      "RGFQNCt6U1d1M21SeVByVTM4dHlHb1FsVkUrSmpnWXhNY0o5UkMzRlZFanZiUHVnYjN1enJXbG1WSDF4aXlNcA=="
+    )
+  end
+
+  def self.invalid_registration_id
+    MockedRegistrationId.new(
+      "pDZJcmd1VjNlYXNaSlRMTGpocVZQY1NWVXE4Z W5UTko4NU9KK3p1L1p1Vzg4YzVPQVlSUHNITG1 JN2I0NzlyTg=="
     )
   end
 
@@ -19,7 +24,7 @@ class TestPaypageRegistrationId
     attr_reader :mocked_sandbox_paypage_registration_id,
                 :mocked_sandbox_payment_account_id, :test_card
 
-    def initialize(mocked_sandbox_paypage_registration_id, mocked_sandbox_payment_account_id, test_card = nil)
+    def initialize(mocked_sandbox_paypage_registration_id, mocked_sandbox_payment_account_id = nil, test_card = nil)
       @mocked_sandbox_payment_account_id = mocked_sandbox_payment_account_id
       @mocked_sandbox_paypage_registration_id = mocked_sandbox_paypage_registration_id
       @test_card = test_card
