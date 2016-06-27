@@ -72,7 +72,7 @@ module Vantiv
       end
 
       def requires_live_paypage_response?(test_temporary_token)
-        test_temporary_token == "mocked-valid-temporary-token"
+        test_temporary_token == TestTemporaryToken.valid_temporary_token
       end
 
       def record_tokenize_by_direct_post
