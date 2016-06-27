@@ -28,7 +28,7 @@ describe "mocked API requests to .tokenize" do
   after { Vantiv::MockedSandbox.disable_self_mocked_requests! }
 
 
-  context "with a valid registration id" do
+  context "with a valid temporary token" do
     let(:card) { Vantiv::TestCard.valid_account }
     let(:live_temporary_token) do
       @test_paypage_driver.get_paypage_registration_id(
@@ -37,7 +37,7 @@ describe "mocked API requests to .tokenize" do
       )
     end
     let(:mocked_temporary_token) do
-      TestPaypageRegistrationId.valid_registration_id
+      TestTemporaryToken.valid_temporary_token
     end
 
     it "the mocked response's public methods return the same as the live one" do
@@ -71,13 +71,13 @@ describe "mocked API requests to .tokenize" do
     end
   end
 
-  context "with an expired registration id" do
+  context "with an expired temporary token" do
     let(:live_temporary_token) do
       # test token that always returns an expired response
       "RGFQNCt6U1d1M21SeVByVTM4dHlHb1FsVkUrSmpnWXhNY0o5UkMzRlZFanZiUHVnYjN1enJXbG1WSDF4aXlNcA=="
     end
     let(:mocked_temporary_token) do
-      TestPaypageRegistrationId.expired_registration_id
+      TestTemporaryToken.expired_temporary_token
     end
 
     it "the mocked response's public methods return the same as the live one" do
@@ -111,13 +111,13 @@ describe "mocked API requests to .tokenize" do
     end
   end
 
-  context "with an invalid registration id" do
+  context "with an invalid temporary token" do
     let(:live_temporary_token) do
       # test token that always returns an invalid response
       "pDZJcmd1VjNlYXNaSlRMTGpocVZQY1NWVXE4Z W5UTko4NU9KK3p1L1p1Vzg4YzVPQVlSUHNITG1 JN2I0NzlyTg=="
     end
     let(:mocked_temporary_token) do
-       TestPaypageRegistrationId.invalid_registration_id
+       TestTemporaryToken.invalid_temporary_token
     end
 
     it "the mocked response's public methods return the same as the live one" do
