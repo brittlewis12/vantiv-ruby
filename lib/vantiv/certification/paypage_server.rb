@@ -13,7 +13,13 @@ module Vantiv
 
       def start
         if threaded
-          @server_thread = Thread.new { start_server }
+          @server_thread = Thread.new do
+            compile_template
+            server = WEBrick::HTTPServer.new :Port => port, :DocumentRoot => document_root
+            Thread.current.thread_variable_set(:server, server)
+            trap('INT') { server.shutdown }
+            server.start
+          end
         else
           start_server
         end
@@ -24,7 +30,12 @@ module Vantiv
       end
 
       def stop
-        threaded ? Thread.kill(server_thread) : stop_server
+        if threaded
+          server_thread.thread_variable_get(:server).shutdown
+          Thread.kill(server_thread)
+        else
+          stop_server
+        end
       end
 
       private
