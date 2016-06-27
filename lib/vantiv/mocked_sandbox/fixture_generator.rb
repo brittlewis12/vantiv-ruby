@@ -13,7 +13,6 @@ module Vantiv
       attr_accessor :card
 
       def run
-        #possibly extract this to its own class
         record_tokenize
 
         TestCard.all.each do |card|
@@ -39,67 +38,42 @@ module Vantiv
         @paypage_driver = Vantiv::Certification::PaypageDriver.new
         @paypage_driver.start
 
-        record_valid_tokenize
-        record_expired_tokenize
-        record_invalid_tokenize
+        TestPaypageRegistrationId.all.each do |test_paypage_registration_id|
+          if requires_live_paypage_response?(test_paypage_registration_id)
+            test_card = Vantiv::TestCard.valid_account
+            mocked_payment_account_id = test_card.mocked_sandbox_payment_account_id
+            temporary_token = @paypage_driver.get_paypage_registration_id(test_card.card_number, test_card.cvv)
+          else
+            mocked_payment_account_id = nil
+            temporary_token = test_paypage_registration_id
+          end
+
+          record_tokenize_for_test_card(
+            registration_id: test_paypage_registration_id,
+            temporary_token: temporary_token,
+            mocked_payment_account_id: mocked_payment_account_id
+          )
+        end
 
         @paypage_driver.stop
       end
 
-      def record_invalid_tokenize
-        test_paypage_id = TestPaypageRegistrationId.invalid_registration_id
-        cert_response = Vantiv.tokenize(
-          temporary_token: test_paypage_id.mocked_sandbox_paypage_registration_id
-        )
+      def record_tokenize_for_test_card(registration_id:, temporary_token:, mocked_payment_account_id:)
+        cert_response = Vantiv.tokenize(temporary_token: temporary_token)
         dynamic_body = DynamicResponseBody.generate(
           body: cert_response.body,
           litle_txn_name: "registerTokenResponse",
+          mocked_payment_account_id: mocked_payment_account_id
         )
         write_fixture_to_file(
-          "tokenize--#{test_paypage_id.mocked_sandbox_paypage_registration_id}",
+          "tokenize--#{registration_id}",
           cert_response,
           dynamic_body
         )
       end
 
-      def record_expired_tokenize
-        test_paypage_id = TestPaypageRegistrationId.expired_registration_id
-        cert_response = Vantiv.tokenize(
-          temporary_token: test_paypage_id.mocked_sandbox_paypage_registration_id
-        )
-        dynamic_body = DynamicResponseBody.generate(
-          body: cert_response.body,
-          litle_txn_name: "registerTokenResponse",
-        )
-        write_fixture_to_file(
-          "tokenize--#{test_paypage_id.mocked_sandbox_paypage_registration_id}",
-          cert_response,
-          dynamic_body
-        )
-      end
-
-      def record_valid_tokenize
-        test_paypage_id = TestPaypageRegistrationId.valid_registration_id
-        cert_response = Vantiv.tokenize(
-          temporary_token: generate_real_registration_id(test_paypage_id.test_card)
-        )
-        dynamic_body = DynamicResponseBody.generate(
-          body: cert_response.body,
-          litle_txn_name: "registerTokenResponse",
-          mocked_payment_account_id: test_paypage_id.test_card.mocked_sandbox_payment_account_id
-        )
-        write_fixture_to_file(
-          "tokenize--#{test_paypage_id.mocked_sandbox_paypage_registration_id}",
-          cert_response,
-          dynamic_body
-        )
-      end
-
-      def generate_real_registration_id(card)
-        @paypage_driver.get_paypage_registration_id(
-          card.card_number,
-          card.cvv
-        )
+      def requires_live_paypage_response?(mocked_registration_id)
+        mocked_registration_id == "mocked-registration-id"
       end
 
       def record_tokenize_by_direct_post

@@ -30,8 +30,7 @@ describe "mocked API requests to .tokenize" do
 
 
   context "with a valid registration id" do
-    let(:test_registration_id) { TestPaypageRegistrationId.valid_registration_id }
-    let(:card) { test_registration_id.test_card }
+    let(:card) { Vantiv::TestCard.valid_account }
     let(:live_temporary_token) do
       @test_paypage_driver.get_paypage_registration_id(
         card.card_number,
@@ -39,7 +38,7 @@ describe "mocked API requests to .tokenize" do
       )
     end
     let(:mocked_temporary_token) do
-      test_registration_id.mocked_sandbox_paypage_registration_id
+      TestPaypageRegistrationId.valid_registration_id
     end
 
     it "the mocked response's public methods return the same as the live one" do
@@ -74,13 +73,12 @@ describe "mocked API requests to .tokenize" do
   end
 
   context "with an expired registration id" do
-    let(:test_registration_id) { TestPaypageRegistrationId.expired_registration_id }
     let(:live_temporary_token) do
       # test token that always returns an expired response
       "RGFQNCt6U1d1M21SeVByVTM4dHlHb1FsVkUrSmpnWXhNY0o5UkMzRlZFanZiUHVnYjN1enJXbG1WSDF4aXlNcA=="
     end
     let(:mocked_temporary_token) do
-      test_registration_id.mocked_sandbox_paypage_registration_id
+      TestPaypageRegistrationId.expired_registration_id
     end
 
     it "the mocked response's public methods return the same as the live one" do
@@ -115,13 +113,12 @@ describe "mocked API requests to .tokenize" do
   end
 
   context "with an invalid registration id" do
-    let(:test_registration_id) { TestPaypageRegistrationId.invalid_registration_id }
     let(:live_temporary_token) do
       # test token that always returns an invalid response
       "pDZJcmd1VjNlYXNaSlRMTGpocVZQY1NWVXE4Z W5UTko4NU9KK3p1L1p1Vzg4YzVPQVlSUHNITG1 JN2I0NzlyTg=="
     end
     let(:mocked_temporary_token) do
-      test_registration_id.mocked_sandbox_paypage_registration_id
+       TestPaypageRegistrationId.invalid_registration_id
     end
 
     it "the mocked response's public methods return the same as the live one" do
