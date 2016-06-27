@@ -53,7 +53,11 @@ module Vantiv
 
       def self.for_tokenization(paypage_registration_id:)
         RequestBodyGenerator.run(
-          card_element_for_tokenization(paypage_registration_id)
+          {
+            "Card" => {
+              "PaypageRegistrationID" => paypage_registration_id
+            }
+          }
         )
       end
 
@@ -72,14 +76,6 @@ module Vantiv
 
       def self.for_void(transaction_id:)
         RequestBodyGenerator.run(tied_transaction_element(transaction_id: transaction_id))
-      end
-
-      def self.card_element_for_tokenization(paypage_registration_id)
-        {
-          "Card" => {
-            "PaypageRegistrationID" => paypage_registration_id
-          }
-        }
       end
 
       def self.card_element_for_live_transactions(expiry_month:, expiry_year:)
