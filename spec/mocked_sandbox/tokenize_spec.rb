@@ -37,7 +37,7 @@ describe "mocked API requests to .tokenize" do
       )
     end
     let(:mocked_temporary_token) do
-      TestTemporaryToken.valid_temporary_token
+      Vantiv::TestTemporaryToken.valid_temporary_token
     end
 
     it "the mocked response's public methods return the same as the live one" do
@@ -77,7 +77,7 @@ describe "mocked API requests to .tokenize" do
       "RGFQNCt6U1d1M21SeVByVTM4dHlHb1FsVkUrSmpnWXhNY0o5UkMzRlZFanZiUHVnYjN1enJXbG1WSDF4aXlNcA=="
     end
     let(:mocked_temporary_token) do
-      TestTemporaryToken.expired_temporary_token
+      Vantiv::TestTemporaryToken.expired_temporary_token
     end
 
     it "the mocked response's public methods return the same as the live one" do
@@ -117,7 +117,7 @@ describe "mocked API requests to .tokenize" do
       "pDZJcmd1VjNlYXNaSlRMTGpocVZQY1NWVXE4Z W5UTko4NU9KK3p1L1p1Vzg4YzVPQVlSUHNITG1 JN2I0NzlyTg=="
     end
     let(:mocked_temporary_token) do
-       TestTemporaryToken.invalid_temporary_token
+       Vantiv::TestTemporaryToken.invalid_temporary_token
     end
 
     it "the mocked response's public methods return the same as the live one" do
