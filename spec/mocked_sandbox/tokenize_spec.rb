@@ -1,6 +1,5 @@
 require 'spec_helper'
 require 'vantiv/certification/paypage_driver'
-require 'vantiv/test_paypage_registration_id'
 include TestHelpers
 
 describe "mocked API requests to .tokenize" do

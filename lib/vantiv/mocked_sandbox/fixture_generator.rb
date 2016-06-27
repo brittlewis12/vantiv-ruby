@@ -1,6 +1,5 @@
 require 'vantiv/mocked_sandbox/dynamic_response_body'
 require 'vantiv/certification/paypage_driver'
-require 'vantiv/test_paypage_registration_id'
 
 module Vantiv
   module MockedSandbox
