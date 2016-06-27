@@ -17,6 +17,8 @@ module Vantiv
         if endpoint == Api::Endpoints::TOKENIZATION
           if direct_post?
             load_fixture("tokenize_by_direct_post", card_number)
+          else
+            load_fixture("tokenize", temporary_token)
           end
         elsif endpoint == Api::Endpoints::SALE
           load_fixture("auth_capture", card_number_from_payment_account_id)
@@ -50,6 +52,10 @@ module Vantiv
         request_body["Card"] && request_body["Card"]["AccountNumber"] != nil
       end
 
+      def temporary_token
+        request_body["Card"]["PaypageRegistrationID"]
+      end
+
       def card_number
         request_body["Card"]["AccountNumber"]
       end
@@ -60,8 +66,8 @@ module Vantiv
         ).card_number
       end
 
-      def load_fixture(api_method, card_number = nil)
-        fixture_file_name = card_number ? "#{api_method}--#{card_number}" : api_method
+      def load_fixture(api_method, card_number_or_temporary_token = nil)
+        fixture_file_name = card_number_or_temporary_token ? "#{api_method}--#{card_number_or_temporary_token}" : api_method
         begin
           self.fixture = File.open("#{MockedSandbox.fixtures_directory}#{fixture_file_name}.json.erb", 'r') do |f|
             raw_fixture = JSON.parse(f.read)
@@ -73,7 +79,7 @@ module Vantiv
             raw_fixture
           end
         rescue Errno::ENOENT
-          raise FixtureNotFound.new("Fixture not found for api method: #{api_method}, card number: #{card_number}")
+          raise FixtureNotFound.new("Fixture not found for api method: #{api_method}, card number or temporary token: #{card_number_or_temporary_token}")
         end
       end
     end

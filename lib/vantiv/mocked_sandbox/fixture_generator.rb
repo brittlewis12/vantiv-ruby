@@ -1,4 +1,5 @@
 require 'vantiv/mocked_sandbox/dynamic_response_body'
+require 'vantiv/certification/paypage_driver'
 
 module Vantiv
   module MockedSandbox
@@ -11,6 +12,8 @@ module Vantiv
       attr_accessor :card
 
       def run
+        record_tokenize
+
         TestCard.all.each do |card|
           self.card = CardforFixtureGeneration.new(card)
 
@@ -29,6 +32,48 @@ module Vantiv
       end
 
       private
+
+      def record_tokenize
+        @paypage_driver = Vantiv::Certification::PaypageDriver.new
+        @paypage_driver.start
+
+        TestTemporaryToken.all.each do |test_temporary_token|
+          if requires_live_paypage_response?(test_temporary_token)
+            test_card = Vantiv::TestCard.valid_account
+            mocked_payment_account_id = test_card.mocked_sandbox_payment_account_id
+            live_temporary_token = @paypage_driver.get_paypage_registration_id(test_card.card_number, test_card.cvv)
+          else
+            mocked_payment_account_id = nil
+            live_temporary_token = test_temporary_token
+          end
+
+          record_tokenize_for_test_token(
+            test_temporary_token: test_temporary_token,
+            live_temporary_token: live_temporary_token,
+            mocked_payment_account_id: mocked_payment_account_id
+          )
+        end
+
+        @paypage_driver.stop
+      end
+
+      def record_tokenize_for_test_token(test_temporary_token:, live_temporary_token:, mocked_payment_account_id:)
+        cert_response = Vantiv.tokenize(temporary_token: live_temporary_token)
+        dynamic_body = DynamicResponseBody.generate(
+          body: cert_response.body,
+          litle_txn_name: "registerTokenResponse",
+          mocked_payment_account_id: mocked_payment_account_id
+        )
+        write_fixture_to_file(
+          "tokenize--#{test_temporary_token}",
+          cert_response,
+          dynamic_body
+        )
+      end
+
+      def requires_live_paypage_response?(test_temporary_token)
+        test_temporary_token == TestTemporaryToken.valid_temporary_token
+      end
 
       def record_tokenize_by_direct_post
         cert_response = Vantiv.tokenize_by_direct_post(
