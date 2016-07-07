@@ -63,7 +63,7 @@ module Vantiv
       begin
         run_request
       rescue JSON::ParserError => e
-        self.retry_count += 1
+        self.retry_count = retry_count + 1
         if max_retries_exceeded?
           raise e
         else
