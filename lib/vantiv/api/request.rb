@@ -7,7 +7,7 @@ module Vantiv
       @endpoint = endpoint
       @body = body.to_json
       @response_object = response_object
-      self.retry_count = 0
+      @retry_count = 0
     end
 
     def run
@@ -34,7 +34,6 @@ module Vantiv
     private
 
     attr_reader :endpoint, :response_object
-    attr_accessor :retry_count
 
     def header
       {
@@ -55,20 +54,20 @@ module Vantiv
       end
     end
 
+    def increment_retry_count
+      @retry_count += 1
+    end
+
     def max_retries_exceeded?
-      retry_count > 3
+      @retry_count > 3
     end
 
     def run_request_with_retries
       begin
         run_request
       rescue JSON::ParserError => e
-        self.retry_count += 1
-        if max_retries_exceeded?
-          raise e
-        else
-          run_request_with_retries
-        end
+        increment_retry_count
+        max_retries_exceeded? ? raise(e) : retry
       end
     end
   end
