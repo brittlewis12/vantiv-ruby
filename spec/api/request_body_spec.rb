@@ -500,11 +500,12 @@ describe Vantiv::Api::RequestBody do
 
   describe ".transaction_element" do
     def transaction_element
-      Vantiv::Api::RequestBody.transaction_element(
+      transaction = Vantiv::Api::RequestBody.transaction_element(
         amount: @amount,
         customer_id: "some-cust",
         order_id: "some-order"
       )
+      Vantiv::Api::RequestBodyGenerator.new(transaction: transaction).run
     end
 
     before do

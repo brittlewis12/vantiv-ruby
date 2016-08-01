@@ -20,6 +20,8 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'selenium-webdriver'
   spec.add_dependency 'webrick'
+  spec.add_dependency 'representable'
+  spec.add_dependency 'multi_json'
 
   spec.add_development_dependency "bundler", "~> 1.10"
   spec.add_development_dependency 'dotenv'
