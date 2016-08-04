@@ -21,17 +21,17 @@ module Vantiv
       end
 
       def self.for_auth_reversal(transaction_id:, amount: nil)
-        transaction = tied_transaction_element(transaction_id: transaction_id, amount: amount)
+        transaction = Transaction.new(id: transaction_id, amount_in_cents: amount)
         RequestBodyGenerator.new(transaction: transaction).run
       end
 
       def self.for_capture(transaction_id:, amount: nil)
-        transaction = tied_transaction_element(transaction_id: transaction_id, amount: amount)
+        transaction = Transaction.new(id: transaction_id, amount_in_cents: amount)
         RequestBodyGenerator.new(transaction: transaction).run
       end
 
       def self.for_credit(transaction_id:, amount: nil)
-        transaction = tied_transaction_element(transaction_id: transaction_id, amount: amount)
+        transaction = Transaction.new(id: transaction_id, amount_in_cents: amount)
         RequestBodyGenerator.new(transaction: transaction).run
       end
 
@@ -73,13 +73,6 @@ module Vantiv
       def self.for_void(transaction_id:)
         transaction = Transaction.new(id: transaction_id)
         RequestBodyGenerator.new(transaction: transaction).run
-      end
-
-      def self.tied_transaction_element(transaction_id:, amount: nil)
-        Transaction.new(
-          id: transaction_id,
-          amount_in_cents: amount
-        )
       end
 
       def self.transaction_element(amount:, customer_id:, order_id:)
