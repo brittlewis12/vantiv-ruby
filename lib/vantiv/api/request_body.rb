@@ -8,8 +8,8 @@ module Vantiv
           customer_id: customer_id
         )
         card = Card.new(
-          expiry_month: format_expiry(expiry_month),
-          expiry_year: format_expiry(expiry_year)
+          expiry_month: expiry_month,
+          expiry_year: expiry_year
         )
         payment_account = PaymentAccount.new(id: payment_account_id)
 
@@ -43,8 +43,8 @@ module Vantiv
         )
         transaction.partial_approved_flag = nil
         card = Card.new(
-          expiry_month: format_expiry(expiry_month),
-          expiry_year: format_expiry(expiry_year)
+          expiry_month: expiry_month,
+          expiry_year: expiry_year
         )
         payment_account = PaymentAccount.new(id: payment_account_id)
 
@@ -63,8 +63,8 @@ module Vantiv
       def self.for_direct_post_tokenization(card_number:, expiry_month:, expiry_year:, cvv:)
         card = Card.new(
           card_number: card_number.to_s.gsub(/\D*/, ""),
-          expiry_month: format_expiry(expiry_month),
-          expiry_year: format_expiry(expiry_year),
+          expiry_month: expiry_month,
+          expiry_year: expiry_year,
           cvv: cvv.to_s
         )
         RequestBodyGenerator.new(card: card).run
@@ -91,10 +91,6 @@ module Vantiv
          customer_id: customer_id,
          partial_approved_flag: false
         )
-      end
-
-      def self.format_expiry(raw_value)
-        raw_value.to_s.reverse[0..1].reverse.rjust(2, "0")
       end
     end
   end

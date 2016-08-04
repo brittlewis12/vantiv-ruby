@@ -2,7 +2,6 @@ require 'securerandom'
 
 module Vantiv
   module Api
-    class Card < OpenStruct; end
     class Transaction < OpenStruct; end
     class PaymentAccount < OpenStruct; end
 

@@ -9,4 +9,6 @@ require 'vantiv/api/request_body_generator'
 require 'vantiv/api/request_body_generator_representer'
 require 'vantiv/api/request_body'
 
+require 'vantiv/api/card'
+
 require 'vantiv/api/endpoints'
