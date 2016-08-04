@@ -1,6 +1,24 @@
+require 'securerandom'
+
 module Vantiv
   module Api
-    module RequestBody
+    class RequestBody
+      attr_reader :acceptor_id, :application_id, :report_group, :card, :transaction, :payment_account
+
+      def initialize(card: nil, transaction: nil, payment_account: nil)
+        @card = card
+        @transaction = transaction
+        @payment_account = payment_account
+
+        @acceptor_id = Vantiv.acceptor_id
+        @application_id = SecureRandom.hex(12)
+        @report_group = Vantiv.default_report_group
+      end
+
+      def run
+        ::RequestBodyRepresenter.new(self).to_hash
+      end
+
       def self.for_auth_or_sale(amount:, customer_id:, order_id:, payment_account_id:, expiry_month:, expiry_year:)
         transaction = transaction_element(
           amount: amount,
@@ -13,7 +31,7 @@ module Vantiv
         )
         payment_account = PaymentAccount.new(id: payment_account_id)
 
-        RequestBodyGenerator.new(
+        new(
           transaction: transaction,
           card: card,
           payment_account: payment_account
@@ -22,17 +40,17 @@ module Vantiv
 
       def self.for_auth_reversal(transaction_id:, amount: nil)
         transaction = Transaction.new(id: transaction_id, amount_in_cents: amount)
-        RequestBodyGenerator.new(transaction: transaction).run
+        new(transaction: transaction).run
       end
 
       def self.for_capture(transaction_id:, amount: nil)
         transaction = Transaction.new(id: transaction_id, amount_in_cents: amount)
-        RequestBodyGenerator.new(transaction: transaction).run
+        new(transaction: transaction).run
       end
 
       def self.for_credit(transaction_id:, amount: nil)
         transaction = Transaction.new(id: transaction_id, amount_in_cents: amount)
-        RequestBodyGenerator.new(transaction: transaction).run
+        new(transaction: transaction).run
       end
 
       def self.for_return(amount:, customer_id:, order_id:, payment_account_id:, expiry_month:, expiry_year:)
@@ -48,7 +66,7 @@ module Vantiv
         )
         payment_account = PaymentAccount.new(id: payment_account_id)
 
-        RequestBodyGenerator.new(
+        new(
           transaction: transaction,
           card: card,
           payment_account: payment_account
@@ -57,7 +75,7 @@ module Vantiv
 
       def self.for_tokenization(paypage_registration_id:)
         card = Card.new(paypage_registration_id: paypage_registration_id)
-        RequestBodyGenerator.new(card: card).run
+        new(card: card).run
       end
 
       def self.for_direct_post_tokenization(card_number:, expiry_month:, expiry_year:, cvv:)
@@ -67,12 +85,12 @@ module Vantiv
           expiry_year: expiry_year,
           cvv: cvv
         )
-        RequestBodyGenerator.new(card: card).run
+        new(card: card).run
       end
 
       def self.for_void(transaction_id:)
         transaction = Transaction.new(id: transaction_id)
-        RequestBodyGenerator.new(transaction: transaction).run
+        new(transaction: transaction).run
       end
 
       def self.transaction_element(amount:, customer_id:, order_id:)

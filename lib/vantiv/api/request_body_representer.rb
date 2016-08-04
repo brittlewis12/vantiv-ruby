@@ -1,6 +1,6 @@
 require 'representable/json'
 
-class RequestBodyGeneratorRepresenter < Representable::Decorator
+class RequestBodyRepresenter < Representable::Decorator
   include Representable::JSON
 
   nested :Credentials do

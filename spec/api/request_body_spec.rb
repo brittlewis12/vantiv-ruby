@@ -505,7 +505,7 @@ describe Vantiv::Api::RequestBody do
         customer_id: "some-cust",
         order_id: "some-order"
       )
-      Vantiv::Api::RequestBodyGenerator.new(transaction: transaction).run
+      Vantiv::Api::RequestBody.new(transaction: transaction).run
     end
 
     before do
