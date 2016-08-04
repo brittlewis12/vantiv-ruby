@@ -37,7 +37,7 @@ module Vantiv
 
       def self.for_return(amount:, customer_id:, order_id:, payment_account_id:, expiry_month:, expiry_year:)
         transaction = Transaction.new(
-          reference_number: order_id.to_s,
+          order_id: order_id,
           amount_in_cents: amount,
           order_source: Vantiv.order_source,
           customer_id: customer_id
@@ -84,7 +84,7 @@ module Vantiv
 
       def self.transaction_element(amount:, customer_id:, order_id:)
         Transaction.new(
-         reference_number: order_id.to_s,
+         order_id: order_id,
          amount_in_cents: amount,
          order_source: Vantiv.order_source,
          customer_id: customer_id,

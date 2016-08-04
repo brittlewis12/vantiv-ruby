@@ -26,7 +26,7 @@ class RequestBodyGeneratorRepresenter < Representable::Decorator
   property :transaction, as: :Transaction do
     property :id, as: :TransactionID
     property :amount, as: :TransactionAmount
-    property :reference_number, as: :ReferenceNumber
+    property :order_id, as: :ReferenceNumber
     property :customer_id, as: :CustomerID
     property :order_source, as: :OrderSource
     property :partial_approved_flag, as: :PartialApprovedFlag
