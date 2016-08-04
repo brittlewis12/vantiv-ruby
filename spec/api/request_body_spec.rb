@@ -16,6 +16,24 @@ describe Vantiv::Api::RequestBody do
       )
     end
 
+    it "returns the expected body" do
+      allow(SecureRandom).to receive(:hex).and_return "the-application-id"
+      expected = {"Credentials"=>{"AcceptorID"=>"1166386"}, "Reports"=>{"ReportGroup"=>"1"}, "Application"=>{"ApplicationID"=>"the-application-id"}, "Card"=>{"AccountNumber"=>"1234", "ExpirationMonth"=>"10", "ExpirationYear"=>"18", "CVV"=>"222"}}
+      expect(request_body).to eq(expected)
+    end
+
+    it "includes the AcceptorID" do
+      expect(request_body["Credentials"]["AcceptorID"]).to eq("1166386")
+    end
+
+    it "includes the default ReportGroup" do
+      expect(request_body["Reports"]["ReportGroup"]).to eq("1")
+    end
+
+    it "include the ApplicationID" do
+      expect(request_body["Application"]["ApplicationID"]).to be
+    end
+
     it "includes stringified versions of card params" do
       expect(request_body["Card"]["AccountNumber"]).to eq(card_number.to_s)
       expect(request_body["Card"]["ExpirationMonth"]).to eq("10")
@@ -51,6 +69,24 @@ describe Vantiv::Api::RequestBody do
       @paypage_registration_id = "some-temp-token"
     end
 
+    it "returns the expected body" do
+      allow(SecureRandom).to receive(:hex).and_return "the-application-id"
+      expected = {"Credentials"=>{"AcceptorID"=>"1166386"}, "Reports"=>{"ReportGroup"=>"1"}, "Application"=>{"ApplicationID"=>"the-application-id"}, "Card"=>{"PaypageRegistrationID"=>"some-temp-token"}}
+      expect(request_body).to eq(expected)
+    end
+
+    it "includes the AcceptorID" do
+      expect(request_body["Credentials"]["AcceptorID"]).to eq("1166386")
+    end
+
+    it "includes the default ReportGroup" do
+      expect(request_body["Reports"]["ReportGroup"]).to eq("1")
+    end
+
+    it "include the ApplicationID" do
+      expect(request_body["Application"]["ApplicationID"]).to be
+    end
+
     it "includes the paypage registration ID correctly" do
       expect(request_body["Card"]["PaypageRegistrationID"]).to eq "some-temp-token"
     end
@@ -64,23 +100,62 @@ describe Vantiv::Api::RequestBody do
       )
     end
 
-    it "includes the transaction id" do
-      @amount = nil
-      expect(request_body["Transaction"]).to eq(
-        {
-          "TransactionID" => "transactionid123"
-        }
-      )
+    it "returns the expected body" do
+      allow(SecureRandom).to receive(:hex).and_return "the-application-id"
+      expected = {"Credentials"=>{"AcceptorID"=>"1166386"}, "Reports"=>{"ReportGroup"=>"1"}, "Application"=>{"ApplicationID"=>"the-application-id"}, "Transaction"=>{"TransactionID"=>"transactionid123"}}
+      expect(request_body).to eq(expected)
     end
 
-    it "can include a transaction amount" do
-      @amount = 58888
-      expect(request_body["Transaction"]).to eq(
-        {
-          "TransactionID" => "transactionid123",
-          "TransactionAmount" => "588.88"
-        }
-      )
+    context "when amount is nil" do
+      before do
+        @amount = nil
+      end
+
+      it "includes the AcceptorID" do
+        expect(request_body["Credentials"]["AcceptorID"]).to eq("1166386")
+      end
+
+      it "includes the default ReportGroup" do
+        expect(request_body["Reports"]["ReportGroup"]).to eq("1")
+      end
+
+      it "include the ApplicationID" do
+        expect(request_body["Application"]["ApplicationID"]).to be
+      end
+
+      it "includes the transaction id" do
+        expect(request_body["Transaction"]["TransactionID"]).to eq("transactionid123")
+      end
+
+      it "does not include the TransactionAmount" do
+        expect(request_body["Transaction"]["TransactionAmount"]).to be_nil
+      end
+    end
+
+    context "when amount is not nil" do
+      before do
+        @amount = 58888
+      end
+
+      it "includes the AcceptorID" do
+        expect(request_body["Credentials"]["AcceptorID"]).to eq("1166386")
+      end
+
+      it "includes the default ReportGroup" do
+        expect(request_body["Reports"]["ReportGroup"]).to eq("1")
+      end
+
+      it "include the ApplicationID" do
+        expect(request_body["Application"]["ApplicationID"]).to be
+      end
+
+      it "includes the transaction id" do
+        expect(request_body["Transaction"]["TransactionID"]).to eq("transactionid123")
+      end
+
+      it "includes the TransactionAmount" do
+        expect(request_body["Transaction"]["TransactionAmount"]).to eq("588.88")
+      end
     end
   end
 
@@ -96,8 +171,62 @@ describe Vantiv::Api::RequestBody do
       )
     end
 
-    it "includes a Transaction object" do
-      expect(request_body["Transaction"]).not_to eq nil
+    it "returns the expected body" do
+      allow(SecureRandom).to receive(:hex).and_return "the-application-id"
+      expected = {"Credentials"=>{"AcceptorID"=>"1166386"}, "Reports"=>{"ReportGroup"=>"1"}, "Application"=>{"ApplicationID"=>"the-application-id"}, "Transaction"=>{"ReferenceNumber"=>"SomeOrder123", "TransactionAmount"=>"42.24", "OrderSource"=>"ecommerce", "CustomerID"=>"extid123", "PartialApprovedFlag"=>false}, "Card"=>{"ExpirationMonth"=>"08", "ExpirationYear"=>"18"}, "PaymentAccount"=>{"PaymentAccountID"=>"paymentacct123"}}
+      expect(request_body).to eq(expected)
+    end
+
+    it "includes the AcceptorID" do
+      expect(request_body["Credentials"]["AcceptorID"]).to eq("1166386")
+    end
+
+    it "includes the default ReportGroup" do
+      expect(request_body["Reports"]["ReportGroup"]).to eq("1")
+    end
+
+    it "include the ApplicationID" do
+      expect(request_body["Application"]["ApplicationID"]).to be
+    end
+
+    context "Transaction object" do
+      it "is included" do
+        expect(request_body["Transaction"]).not_to eq nil
+      end
+
+      it "includes the ReferenceNumber" do
+        expect(request_body["Transaction"]["ReferenceNumber"]).to eq "SomeOrder123"
+      end
+
+      it "includes the TransactionAmount" do
+        expect(request_body["Transaction"]["TransactionAmount"]).to eq "42.24"
+      end
+
+      it "includes the OrderSource" do
+        expect(request_body["Transaction"]["OrderSource"]).to eq "ecommerce"
+      end
+
+      it "includes the CustomerID" do
+        expect(request_body["Transaction"]["CustomerID"]).to eq "extid123"
+      end
+
+      it "includes the PartialApprovedFlag" do
+        expect(request_body["Transaction"]["PartialApprovedFlag"]).to eq false
+      end
+    end
+
+    context "Card object" do
+      it "is included" do
+        expect(request_body["Card"]).not_to eq nil
+      end
+
+      it "includes ExpirationMonth" do
+        expect(request_body["Card"]["ExpirationMonth"]).to eq "08"
+      end
+
+      it "includes ExpirationYear" do
+        expect(request_body["Card"]["ExpirationYear"]).to eq "18"
+      end
     end
 
     it "includes the PaymentAccountID" do
@@ -116,9 +245,256 @@ describe Vantiv::Api::RequestBody do
       expect(body["Transaction"]["ReferenceNumber"]).to eq "123"
     end
 
-    it "includes expiry data" do
-      expect(request_body["Card"]["ExpirationMonth"]).to eq "08"
-      expect(request_body["Card"]["ExpirationYear"]).to eq "18"
+  end
+
+  describe ".for_auth_reversal" do
+    subject(:request_body) do
+      Vantiv::Api::RequestBody.for_auth_reversal(
+        amount: @amount,
+        transaction_id: "transactionid123"
+      )
+    end
+
+    context "when amount is nil" do
+      before do
+        @amount = nil
+      end
+
+      it "returns the expected body" do
+        allow(SecureRandom).to receive(:hex).and_return "the-application-id"
+        expected = {"Credentials"=>{"AcceptorID"=>"1166386"}, "Reports"=>{"ReportGroup"=>"1"}, "Application"=>{"ApplicationID"=>"the-application-id"}, "Transaction"=>{"TransactionID"=>"transactionid123"}}
+        expect(request_body).to eq(expected)
+      end
+
+      it "includes the AcceptorID" do
+        expect(request_body["Credentials"]["AcceptorID"]).to eq("1166386")
+      end
+
+      it "includes the default ReportGroup" do
+        expect(request_body["Reports"]["ReportGroup"]).to eq("1")
+      end
+
+      it "include the ApplicationID" do
+        expect(request_body["Application"]["ApplicationID"]).to be
+      end
+
+      it "includes the transaction id" do
+        expect(request_body["Transaction"]["TransactionID"]).to eq("transactionid123")
+      end
+
+      it "does not include the TransactionAmount" do
+        expect(request_body["Transaction"]["TransactionAmount"]).to be_nil
+      end
+    end
+
+    context "when amount is not nil" do
+      before do
+        @amount = 58888
+      end
+
+      it "returns the expected body" do
+        allow(SecureRandom).to receive(:hex).and_return "the-application-id"
+        expected = {"Credentials"=>{"AcceptorID"=>"1166386"}, "Reports"=>{"ReportGroup"=>"1"}, "Application"=>{"ApplicationID"=>"the-application-id"}, "Transaction"=>{"TransactionID"=>"transactionid123", "TransactionAmount"=>"588.88"}}
+        expect(request_body).to eq(expected)
+      end
+
+      it "includes the AcceptorID" do
+        expect(request_body["Credentials"]["AcceptorID"]).to eq("1166386")
+      end
+
+      it "includes the default ReportGroup" do
+        expect(request_body["Reports"]["ReportGroup"]).to eq("1")
+      end
+
+      it "include the ApplicationID" do
+        expect(request_body["Application"]["ApplicationID"]).to be
+      end
+
+      it "includes the transaction id" do
+        expect(request_body["Transaction"]["TransactionID"]).to eq("transactionid123")
+      end
+
+      it "includes the TransactionAmount" do
+        expect(request_body["Transaction"]["TransactionAmount"]).to eq("588.88")
+      end
+    end
+  end
+
+  describe ".for_credit" do
+    subject(:request_body) do
+      Vantiv::Api::RequestBody.for_credit(
+        amount: @amount,
+        transaction_id: "transactionid123"
+      )
+    end
+
+    context "when amount is nil" do
+      before do
+        @amount = nil
+      end
+
+      it "returns the expected body" do
+        allow(SecureRandom).to receive(:hex).and_return "the-application-id"
+        expected = {"Credentials"=>{"AcceptorID"=>"1166386"}, "Reports"=>{"ReportGroup"=>"1"}, "Application"=>{"ApplicationID"=>"the-application-id"}, "Transaction"=>{"TransactionID"=>"transactionid123"}}
+        expect(request_body).to eq(expected)
+      end
+
+      it "includes the AcceptorID" do
+        expect(request_body["Credentials"]["AcceptorID"]).to eq("1166386")
+      end
+
+      it "includes the default ReportGroup" do
+        expect(request_body["Reports"]["ReportGroup"]).to eq("1")
+      end
+
+      it "include the ApplicationID" do
+        expect(request_body["Application"]["ApplicationID"]).to be
+      end
+
+      it "includes the transaction id" do
+        expect(request_body["Transaction"]["TransactionID"]).to eq("transactionid123")
+      end
+
+      it "does not include the TransactionAmount" do
+        expect(request_body["Transaction"]["TransactionAmount"]).to be_nil
+      end
+    end
+
+    context "when amount is not nil" do
+      before do
+        @amount = 58888
+      end
+
+      it "returns the expected body" do
+        allow(SecureRandom).to receive(:hex).and_return "the-application-id"
+        expected = {"Credentials"=>{"AcceptorID"=>"1166386"}, "Reports"=>{"ReportGroup"=>"1"}, "Application"=>{"ApplicationID"=>"the-application-id"}, "Transaction"=>{"TransactionID"=>"transactionid123", "TransactionAmount"=>"588.88"}}
+        expect(request_body).to eq(expected)
+      end
+
+      it "includes the AcceptorID" do
+        expect(request_body["Credentials"]["AcceptorID"]).to eq("1166386")
+      end
+
+      it "includes the default ReportGroup" do
+        expect(request_body["Reports"]["ReportGroup"]).to eq("1")
+      end
+
+      it "include the ApplicationID" do
+        expect(request_body["Application"]["ApplicationID"]).to be
+      end
+
+      it "includes the transaction id" do
+        expect(request_body["Transaction"]["TransactionID"]).to eq("transactionid123")
+      end
+
+      it "includes the TransactionAmount" do
+        expect(request_body["Transaction"]["TransactionAmount"]).to eq("588.88")
+      end
+    end
+  end
+
+  describe ".for_return" do
+    subject(:request_body) do
+      Vantiv::Api::RequestBody.for_return(
+          amount: 4224,
+          customer_id: "extid123",
+          payment_account_id: "paymentacct123",
+          order_id: "SomeOrder123",
+          expiry_month: "8",
+          expiry_year: "2018"
+      )
+    end
+
+    it "returns the expected body" do
+      allow(SecureRandom).to receive(:hex).and_return "the-application-id"
+      expected = {"Credentials"=>{"AcceptorID"=>"1166386"}, "Reports"=>{"ReportGroup"=>"1"}, "Application"=>{"ApplicationID"=>"the-application-id"}, "Transaction"=>{"ReferenceNumber"=>"SomeOrder123", "TransactionAmount"=>"42.24", "OrderSource"=>"ecommerce", "CustomerID"=>"extid123"}, "Card"=>{"ExpirationMonth"=>"08", "ExpirationYear"=>"18"}, "PaymentAccount"=>{"PaymentAccountID"=>"paymentacct123"}}
+      expect(request_body).to eq(expected)
+    end
+
+    it "includes the AcceptorID" do
+      expect(request_body["Credentials"]["AcceptorID"]).to eq("1166386")
+    end
+
+    it "includes the default ReportGroup" do
+      expect(request_body["Reports"]["ReportGroup"]).to eq("1")
+    end
+
+    it "include the ApplicationID" do
+      expect(request_body["Application"]["ApplicationID"]).to be
+    end
+
+    context "Transaction object" do
+      it "is included" do
+        expect(request_body["Transaction"]).not_to eq nil
+      end
+
+      it "includes the ReferenceNumber" do
+        expect(request_body["Transaction"]["ReferenceNumber"]).to eq "SomeOrder123"
+      end
+
+      it "includes the TransactionAmount" do
+        expect(request_body["Transaction"]["TransactionAmount"]).to eq "42.24"
+      end
+
+      it "includes the OrderSource" do
+        expect(request_body["Transaction"]["OrderSource"]).to eq "ecommerce"
+      end
+
+      it "includes the CustomerID" do
+        expect(request_body["Transaction"]["CustomerID"]).to eq "extid123"
+      end
+
+      it "does not include the PartialApprovedFlag" do
+        expect(request_body["Transaction"]["PartialApprovedFlag"]).to be_nil
+      end
+    end
+
+    context "Card object" do
+      it "is included" do
+        expect(request_body["Card"]).not_to eq nil
+      end
+
+      it "includes ExpirationMonth" do
+        expect(request_body["Card"]["ExpirationMonth"]).to eq "08"
+      end
+
+      it "includes ExpirationYear" do
+        expect(request_body["Card"]["ExpirationYear"]).to eq "18"
+      end
+    end
+
+    it "includes the PaymentAccountID" do
+      expect(request_body["PaymentAccount"]["PaymentAccountID"]).to eq "paymentacct123"
+    end
+  end
+
+  describe ".for_void" do
+    subject(:request_body) do
+      Vantiv::Api::RequestBody.for_void(
+        transaction_id: "transactionid123"
+      )
+    end
+
+    it "returns the expected body" do
+      allow(SecureRandom).to receive(:hex).and_return "the-application-id"
+      expected = {"Credentials"=>{"AcceptorID"=>"1166386"}, "Reports"=>{"ReportGroup"=>"1"}, "Application"=>{"ApplicationID"=>"the-application-id"}, "Transaction"=>{"TransactionID"=>"transactionid123"}}
+      expect(request_body).to eq(expected)
+    end
+
+    it "includes the AcceptorID" do
+      expect(request_body["Credentials"]["AcceptorID"]).to eq("1166386")
+    end
+
+    it "includes the default ReportGroup" do
+      expect(request_body["Reports"]["ReportGroup"]).to eq("1")
+    end
+
+    it "include the ApplicationID" do
+      expect(request_body["Application"]["ApplicationID"]).to be
+    end
+
+    it "includes the transaction id" do
+      expect(request_body["Transaction"]["TransactionID"]).to eq("transactionid123")
     end
   end
 
