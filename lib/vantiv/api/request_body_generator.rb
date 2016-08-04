@@ -2,8 +2,6 @@ require 'securerandom'
 
 module Vantiv
   module Api
-    class PaymentAccount < OpenStruct; end
-
     class RequestBodyGenerator
       attr_reader :acceptor_id, :application_id, :report_group, :card, :transaction, :payment_account
 
