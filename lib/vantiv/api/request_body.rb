@@ -62,10 +62,10 @@ module Vantiv
 
       def self.for_direct_post_tokenization(card_number:, expiry_month:, expiry_year:, cvv:)
         card = Card.new(
-          card_number: card_number.to_s.gsub(/\D*/, ""),
+          card_number: card_number,
           expiry_month: expiry_month,
           expiry_year: expiry_year,
-          cvv: cvv.to_s
+          cvv: cvv
         )
         RequestBodyGenerator.new(card: card).run
       end
