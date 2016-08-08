@@ -43,4 +43,16 @@ describe Vantiv::Api::Transaction do
           .to change{ subject.amount_in_cents }.from(50).to(1010)
     end
   end
+
+  describe "#order_id" do
+    it "returns nil if no order_id is set" do
+      subject.order_id = nil
+      expect(subject.order_id).to eq nil
+    end
+
+    it "returns a string if a number is passed" do
+      subject.order_id = 123
+      expect(subject.order_id).to eq "123"
+    end
+  end
 end
