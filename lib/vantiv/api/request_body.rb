@@ -3,7 +3,8 @@ require 'securerandom'
 module Vantiv
   module Api
     class RequestBody
-      attr_reader :acceptor_id, :application_id, :report_group, :card, :transaction, :payment_account
+      attr_reader :acceptor_id, :application_id, :report_group
+      attr_accessor :card, :transaction, :payment_account, :address
 
       def initialize(card: nil, transaction: nil, payment_account: nil)
         @card = card
@@ -80,7 +81,7 @@ module Vantiv
 
       def self.for_direct_post_tokenization(card_number:, expiry_month:, expiry_year:, cvv:)
         card = Card.new(
-          card_number: card_number,
+          account_number: card_number,
           expiry_month: expiry_month,
           expiry_year: expiry_year,
           cvv: cvv

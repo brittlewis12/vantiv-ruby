@@ -1,9 +1,9 @@
 module Vantiv
   module Api
     class PaymentAccount
-      attr_reader :id
+      attr_accessor :id
 
-      def initialize(id:)
+      def initialize(id: nil)
         @id = id
       end
     end

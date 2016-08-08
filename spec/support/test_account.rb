@@ -127,16 +127,9 @@ module Vantiv
     end
 
     def tokenization_request_body
-      Api::RequestBodyGenerator.run({
-        "Transaction" => {
-          "CustomerID" => "123"
-        },
-        "Card" => {
-          "AccountNumber" => card_number,
-          "ExpirationMonth" => expiry_month,
-          "ExpirationYear" => expiry_year
-        }
-      })
+      transaction = Transaction.new(customer_id: "123")
+      card = Card.new(expiry_month: expiry_month, expiry_year: expiry_year, card_number: card_number)
+      Api::RequestBody.new(card: card, transaction: transaction).run
     end
 
     def request_payment_account_id

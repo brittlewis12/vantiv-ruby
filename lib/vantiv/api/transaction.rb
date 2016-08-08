@@ -1,8 +1,8 @@
 module Vantiv
   module Api
     class Transaction
-      attr_reader :id, :order_id, :customer_id, :order_source, :partial_approved_flag
-
+      attr_accessor :id, :order_id, :customer_id, :order_source, :partial_approved_flag
+      attr_writer :amount
       def initialize(id: nil, amount_in_cents: nil, order_id: nil, order_source: nil, customer_id: nil, partial_approved_flag: nil)
         @id = id
         @amount_in_cents = amount_in_cents
@@ -13,7 +13,7 @@ module Vantiv
       end
 
       def amount
-        '%.2f' % (@amount_in_cents / 100.0) if @amount_in_cents
+        @amount ||= ('%.2f' % (@amount_in_cents / 100.0) if @amount_in_cents)
       end
 
       def order_id
