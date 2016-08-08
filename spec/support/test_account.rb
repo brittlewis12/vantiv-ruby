@@ -127,8 +127,8 @@ module Vantiv
     end
 
     def tokenization_request_body
-      transaction = Transaction.new(customer_id: "123")
-      card = Card.new(expiry_month: expiry_month, expiry_year: expiry_year, card_number: card_number)
+      transaction = Api::Transaction.new(customer_id: "123")
+      card = Api::Card.new(expiry_month: expiry_month, expiry_year: expiry_year, card_number: card_number)
       Api::RequestBody.new(card: card, transaction: transaction).run
     end
 
