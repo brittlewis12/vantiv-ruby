@@ -21,10 +21,12 @@ module Vantiv
       end
 
       def self.for_auth_or_sale(amount:, customer_id:, order_id:, payment_account_id:, expiry_month:, expiry_year:)
-        transaction = transaction_element(
-          amount: amount,
-          order_id: order_id,
-          customer_id: customer_id
+        transaction = Transaction.new(
+            order_id: order_id,
+            amount_in_cents: amount,
+            order_source: Vantiv.order_source,
+            customer_id: customer_id,
+            partial_approved_flag: false
         )
         card = Card.new(
           expiry_month: expiry_month,
@@ -94,15 +96,6 @@ module Vantiv
         new(transaction: transaction).run
       end
 
-      def self.transaction_element(amount:, customer_id:, order_id:)
-        Transaction.new(
-         order_id: order_id,
-         amount_in_cents: amount,
-         order_source: Vantiv.order_source,
-         customer_id: customer_id,
-         partial_approved_flag: false
-        )
-      end
     end
   end
 end

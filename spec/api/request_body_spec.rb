@@ -482,27 +482,4 @@ describe Vantiv::Api::RequestBody do
     end
   end
 
-  describe ".transaction_element" do
-    def transaction_element
-      transaction = Vantiv::Api::RequestBody.transaction_element(
-        amount: 4224,
-        customer_id: "some-cust",
-        order_id: "some-order"
-      )
-      Vantiv::Api::RequestBody.new(transaction: transaction).run
-    end
-
-    it "includes a customer ID (required by Vantiv)" do
-      expect(transaction_element["Transaction"]["CustomerID"]).to eq "some-cust"
-    end
-
-    it "includes the default order source" do
-      expect(transaction_element["Transaction"]["OrderSource"]).to eq "ecommerce"
-    end
-
-    it "includes the merchant reference number for the order (required by Vantiv)" do
-      expect(transaction_element["Transaction"]["ReferenceNumber"]).to eq "some-order"
-    end
-  end
-
 end
