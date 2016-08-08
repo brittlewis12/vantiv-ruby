@@ -501,24 +501,11 @@ describe Vantiv::Api::RequestBody do
   describe ".transaction_element" do
     def transaction_element
       transaction = Vantiv::Api::RequestBody.transaction_element(
-        amount: @amount,
+        amount: 4224,
         customer_id: "some-cust",
         order_id: "some-order"
       )
       Vantiv::Api::RequestBody.new(transaction: transaction).run
-    end
-
-    before do
-      @amount = 4
-    end
-
-    it "formats the amount (in cents) as dollar 2 decimal format" do
-      @amount = 4224
-      expect(transaction_element["Transaction"]["TransactionAmount"]).to eq "42.24"
-      @amount = 424
-      expect(transaction_element["Transaction"]["TransactionAmount"]).to eq "4.24"
-      @amount = 881424
-      expect(transaction_element["Transaction"]["TransactionAmount"]).to eq "8814.24"
     end
 
     it "includes a customer ID (required by Vantiv)" do
