@@ -40,22 +40,6 @@ describe Vantiv::Api::RequestBody do
       expect(request_body["Card"]["ExpirationYear"]).to eq("18")
       expect(request_body["Card"]["CVV"]).to eq(cvv.to_s)
     end
-
-    context "with spaces in the credit card number" do
-      let(:card_number) { "1234 1234" }
-
-      it "strips whitespace" do
-        expect(request_body["Card"]["AccountNumber"]).to eq("12341234")
-      end
-    end
-
-    context "with non-numeric characters" do
-      let(:card_number) { "1234-1234_xx" }
-
-      it "strips the characters" do
-        expect(request_body["Card"]["AccountNumber"]).to eq("12341234")
-      end
-    end
   end
 
   describe ".for_tokenization" do

@@ -1,8 +1,8 @@
 module Vantiv
   module Api
     class Card
-      attr_writer :expiry_month, :expiry_year, :cvv, :card_number, :account_number
-      attr_accessor :type, :paypage_registration_id
+      attr_writer :cvv, :card_number, :account_number
+      attr_accessor :expiry_month, :expiry_year, :type, :paypage_registration_id
 
       def initialize(expiry_month: nil, expiry_year: nil, cvv: nil, card_number: nil, account_number: nil, paypage_registration_id: nil)
         @expiry_month = expiry_month
@@ -32,6 +32,8 @@ module Vantiv
       def cvv
         @cvv.to_s if @cvv
       end
+
+      private
 
       def format_expiry(raw_value)
         raw_value.to_s.reverse[0..1].reverse.rjust(2, "0")
