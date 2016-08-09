@@ -152,7 +152,7 @@ describe "account updater" do
     end
   end
 
-  context "when there is an extened card response and no new card token " do
+  context "when there is an extended card response and no new card token " do
     let(:test_account) { Vantiv::TestAccount.account_updater_contact_cardholder }
 
     it "has no new card token" do

@@ -23,11 +23,11 @@ module Vantiv
       end
 
       def payment_account_id
-        success? ? litle_transaction_response["PaymentAccountID"] : nil
+        success? ? litle_transaction_response.payment_account_id : nil
       end
 
       def card_type
-        success? ? litle_transaction_response["Type"] : nil
+        success? ? litle_transaction_response.type : nil
       end
 
       def invalid_card_number?

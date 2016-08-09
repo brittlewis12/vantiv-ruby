@@ -27,11 +27,11 @@ module Vantiv
       end
 
       def response_code
-        litle_transaction_response["response"]
+        litle_transaction_response.response_code
       end
 
       def transaction_id
-        litle_transaction_response["TransactionID"]
+        litle_transaction_response.transaction_id
       end
 
       private
@@ -40,7 +40,7 @@ module Vantiv
         # NOTE: this kind of sucks, but at the commit point, the DevHub
         #   Api sometimes gives 200OK when litle had a parse issue and returns
         #   'Error validating xml data...' instead of an actual error
-        !!@body["litleOnlineResponse"]["@message"].match(/error/i)
+        !!body.message.match(/error/i)
       end
 
       def api_level_error_message
@@ -54,7 +54,14 @@ module Vantiv
       end
 
       def litle_transaction_response
-        api_level_failure? ? {} : litle_response[transaction_response_name]
+        api_level_failure? ? nil: body.send(snake_case(transaction_response_name))
+      end
+
+      def snake_case(string)
+        return string.downcase if string.match(/\A[A-Z]+\z/)
+        string.gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2').
+            gsub(/([a-z])([A-Z])/, '\1_\2').
+            downcase
       end
     end
   end

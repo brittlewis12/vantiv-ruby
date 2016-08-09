@@ -1,6 +1,6 @@
 module Vantiv
   class Api::Request
-
+    require 'vantiv/api/response_representer'
     attr_reader :body
 
     def initialize(endpoint:, body:, response_object:)
@@ -23,11 +23,12 @@ module Vantiv
       request = Net::HTTP::Post.new(uri.request_uri, header)
       request.body = body
       raw_response = http.request(request)
-      parsed_body = JSON.parse(raw_response.body)
+      transaction_response = OpenStruct.new
+      t = ResponseRepresenter.new(transaction_response).from_json(raw_response.body)
       {
         httpok: raw_response.code_type == Net::HTTPOK,
         http_response_code: raw_response.code,
-        body: parsed_body
+        body: t
       }
     end
 
