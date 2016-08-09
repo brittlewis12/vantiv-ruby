@@ -1,127 +1,101 @@
+require 'securerandom'
+
 module Vantiv
   module Api
-    module RequestBody
+    class RequestBody
+      attr_reader :acceptor_id, :application_id, :report_group
+      attr_accessor :card, :transaction, :payment_account, :address
+
+      def initialize(card: nil, transaction: nil, payment_account: nil)
+        @card = card
+        @transaction = transaction
+        @payment_account = payment_account
+
+        @acceptor_id = Vantiv.acceptor_id
+        @application_id = SecureRandom.hex(12)
+        @report_group = Vantiv.default_report_group
+      end
+
+      def to_hash
+        ::RequestBodyRepresenter.new(self).to_hash
+      end
+
       def self.for_auth_or_sale(amount:, customer_id:, order_id:, payment_account_id:, expiry_month:, expiry_year:)
-        RequestBodyGenerator.run(
-          transaction_element(
-            amount: amount,
+        transaction = Transaction.new(
             order_id: order_id,
-            customer_id: customer_id
-          ),
-          card_element_for_live_transactions(
-            expiry_month: expiry_month,
-            expiry_year: expiry_year
-          ),
-          payment_account_element(payment_account_id: payment_account_id)
+            amount_in_cents: amount,
+            order_source: Vantiv.order_source,
+            customer_id: customer_id,
+            partial_approved_flag: false
         )
+        card = Card.new(
+          expiry_month: expiry_month,
+          expiry_year: expiry_year
+        )
+        payment_account = PaymentAccount.new(id: payment_account_id)
+
+        new(
+          transaction: transaction,
+          card: card,
+          payment_account: payment_account
+        ).to_hash
       end
 
       def self.for_auth_reversal(transaction_id:, amount: nil)
-        RequestBodyGenerator.run(
-          tied_transaction_element(transaction_id: transaction_id, amount: amount)
-        )
+        transaction = Transaction.new(id: transaction_id, amount_in_cents: amount)
+        new(transaction: transaction).to_hash
       end
 
       def self.for_capture(transaction_id:, amount: nil)
-        RequestBodyGenerator.run(
-          tied_transaction_element(transaction_id: transaction_id, amount: amount)
-        )
+        transaction = Transaction.new(id: transaction_id, amount_in_cents: amount)
+        new(transaction: transaction).to_hash
       end
 
       def self.for_credit(transaction_id:, amount: nil)
-        RequestBodyGenerator.run(
-          tied_transaction_element(transaction_id: transaction_id, amount: amount)
-        )
+        transaction = Transaction.new(id: transaction_id, amount_in_cents: amount)
+        new(transaction: transaction).to_hash
       end
 
       def self.for_return(amount:, customer_id:, order_id:, payment_account_id:, expiry_month:, expiry_year:)
-        transaction = transaction_element(
-          amount: amount,
+        transaction = Transaction.new(
           order_id: order_id,
+          amount_in_cents: amount,
+          order_source: Vantiv.order_source,
           customer_id: customer_id
         )
-        transaction["Transaction"].delete("PartialApprovedFlag")
-        RequestBodyGenerator.run(
-          transaction,
-          card_element_for_live_transactions(
-            expiry_month: expiry_month,
-            expiry_year: expiry_year
-          ),
-          payment_account_element(payment_account_id: payment_account_id)
+        card = Card.new(
+          expiry_month: expiry_month,
+          expiry_year: expiry_year
         )
+        payment_account = PaymentAccount.new(id: payment_account_id)
+
+        new(
+          transaction: transaction,
+          card: card,
+          payment_account: payment_account
+        ).to_hash
       end
 
       def self.for_tokenization(paypage_registration_id:)
-        RequestBodyGenerator.run(
-          {
-            "Card" => {
-              "PaypageRegistrationID" => paypage_registration_id
-            }
-          }
-        )
+        card = Card.new(paypage_registration_id: paypage_registration_id)
+        new(card: card).to_hash
       end
 
       def self.for_direct_post_tokenization(card_number:, expiry_month:, expiry_year:, cvv:)
-        RequestBodyGenerator.run(
-          {
-            "Card" => {
-              "AccountNumber" => card_number.to_s.gsub(/\D*/, ""),
-              "ExpirationMonth" => format_expiry(expiry_month),
-              "ExpirationYear" => format_expiry(expiry_year),
-              "CVV" => cvv.to_s
-            }
-          }
+        card = Card.new(
+          account_number: card_number,
+          expiry_month: expiry_month,
+          expiry_year: expiry_year,
+          cvv: cvv
         )
+        new(card: card).to_hash
       end
 
       def self.for_void(transaction_id:)
-        RequestBodyGenerator.run(tied_transaction_element(transaction_id: transaction_id))
+        transaction = Transaction.new(id: transaction_id)
+        new(transaction: transaction).to_hash
       end
 
-      def self.card_element_for_live_transactions(expiry_month:, expiry_year:)
-        {
-          "Card" => {
-            "ExpirationMonth" => format_expiry(expiry_month),
-            "ExpirationYear" => format_expiry(expiry_year)
-          }
-        }
-      end
-
-      def self.tied_transaction_element(transaction_id:, amount: nil)
-        res = {
-          "Transaction" => {
-            "TransactionID" => transaction_id
-          }
-        }
-        if amount
-          res["Transaction"]["TransactionAmount"] = '%.2f' % (amount / 100.0)
-        end
-        res
-      end
-
-      def self.transaction_element(amount:, customer_id:, order_id:)
-        {
-          "Transaction" => {
-            "ReferenceNumber" => order_id.to_s,
-            "TransactionAmount" => '%.2f' % (amount / 100.0),
-            "OrderSource" => Vantiv.order_source,
-            "CustomerID" => customer_id,
-            "PartialApprovedFlag" => false
-          }
-        }
-      end
-
-      def self.payment_account_element(payment_account_id:)
-        {
-          "PaymentAccount" => {
-            "PaymentAccountID" => payment_account_id
-          }
-        }
-      end
-
-      def self.format_expiry(raw_value)
-        raw_value.to_s.reverse[0..1].reverse.rjust(2, "0")
-      end
     end
   end
 end

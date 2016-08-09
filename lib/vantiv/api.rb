@@ -5,7 +5,12 @@ require 'vantiv/api/account_updater_response'
 require 'vantiv/api/tokenization_response'
 
 require 'vantiv/api/request'
-require 'vantiv/api/request_body_generator'
+require 'vantiv/api/request_body_representer'
 require 'vantiv/api/request_body'
+
+require 'vantiv/api/card'
+require 'vantiv/api/transaction'
+require 'vantiv/api/payment_account'
+require 'vantiv/api/address'
 
 require 'vantiv/api/endpoints'
