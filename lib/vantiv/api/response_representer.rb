@@ -11,6 +11,8 @@ class ResponseRepresenter < Representable::Decorator
 
   property :authorization_response, as: :authorizationResponse, decorator: TransactionResponseRepresenter, class: OpenStruct
   property :sale_response, as: :saleResponse, decorator: TransactionResponseRepresenter, class: OpenStruct
+  property :credit_response, as: :creditResponse, decorator: TransactionResponseRepresenter, class: OpenStruct
+  property :void_response, as: :voidResponse, decorator: TransactionResponseRepresenter, class: OpenStruct
   property :auth_reversal_response, as: :authReversalResponse, decorator: TransactionResponseRepresenter, class: OpenStruct
   property :capture_response, as: :captureResponse, decorator: TransactionResponseRepresenter, class: OpenStruct
   property :register_token_response, as: :registerTokenResponse, decorator: TransactionResponseRepresenter, class: OpenStruct
