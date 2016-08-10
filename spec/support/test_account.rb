@@ -139,7 +139,7 @@ module Vantiv
         response_object: Api::Response.new
       ).run
       raise "Tokenization Request not 200 OK, it's #{response.http_response_code}\n Response: #{response.body}" unless response.httpok
-      response.body["litleOnlineResponse"]["registerTokenResponse"]["PaymentAccountID"]
+      response.body.register_token_response.payment_account_id
     end
   end
 end
