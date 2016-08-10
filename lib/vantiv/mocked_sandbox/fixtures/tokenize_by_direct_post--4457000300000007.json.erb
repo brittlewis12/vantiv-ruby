@@ -3,21 +3,20 @@
   "http_response_code": "200",
   "response_body": {
     "litleOnlineResponse": {
-      "@version": "10.2",
-      "@response": "0",
       "@message": "Valid Format",
+      "@response": "0",
+      "@version": "10.2",
       "registerTokenResponse": {
-        "@id": "3184cbf03f86c15efb4caad0",
-        "@reportGroup": "<%= Vantiv.default_report_group %>",
         "response": "802",
         "responseTime": "<%= Time.now.strftime('%FT%T') %>",
+        "@id": "62f451bf86dc337735f57866",
         "message": "Account number was previously registered",
-        "bin": "445700",
+        "@reportGroup": "<%= Vantiv.default_report_group %>",
         "TransactionID": "<%= rand(10**17) %>",
-        "PaymentAccountID": "1111111111120007",
-        "Type": "VI"
+        "Type": "VI",
+        "bin": "445700",
+        "PaymentAccountID": "1111111111120007"
       }
-    },
-    "RequestID": "de076c5d-43d0-43ff-d1a2-65f8103de2c7"
+    }
   }
 }

@@ -1,7 +1,18 @@
 module Vantiv
   module Api
+    class LitleTransactionResponse
+      attr_accessor :message, :response_code, :transaction_id
+    end
+
     class Response
-      attr_reader :httpok, :http_response_code, :body
+      attr_reader :httpok, :http_response_code, :body, :response, :version, :fault
+
+      attr_writer :message, :response_code, :response, :version, :httpok, :http_response_code
+
+      attr_accessor :body_message
+
+      attr_accessor :authorization_response, :sale_response, :credit_response, :void_response,
+                    :auth_reversal_response, :capture_response, :register_token_response
 
       def load(httpok:, http_response_code:, body:)
         @httpok = httpok
@@ -19,7 +30,7 @@ module Vantiv
       end
 
       def message
-        litle_transaction_response["message"]
+        litle_transaction_response.message if litle_transaction_response
       end
 
       def error_message
@@ -40,7 +51,7 @@ module Vantiv
         # NOTE: this kind of sucks, but at the commit point, the DevHub
         #   Api sometimes gives 200OK when litle had a parse issue and returns
         #   'Error validating xml data...' instead of an actual error
-        !!body.message.match(/error/i)
+        !!body.body_message.match(/error/i)
       end
 
       def api_level_error_message

@@ -3,18 +3,17 @@
   "http_response_code": "200",
   "response_body": {
     "litleOnlineResponse": {
-      "@version": "10.2",
-      "@response": "0",
       "@message": "Valid Format",
+      "@response": "0",
+      "@version": "10.2",
       "registerTokenResponse": {
-        "@id": "dfac10a02cafc4f734d64a7b",
-        "@reportGroup": "<%= Vantiv.default_report_group %>",
         "response": "878",
         "responseTime": "<%= Time.now.strftime('%FT%T') %>",
+        "@id": "b6659921b1f10cfcfdb5d7f7",
         "message": "Expired paypage registration id",
+        "@reportGroup": "<%= Vantiv.default_report_group %>",
         "TransactionID": "<%= rand(10**17) %>"
       }
-    },
-    "RequestID": "1df59b9d-23fe-4ae9-a674-eb575077e4ac"
+    }
   }
 }

@@ -1,6 +1,8 @@
+require 'vantiv/api/response_representer'
+require 'vantiv/api/response'
+
 module Vantiv
   class Api::Request
-    require 'vantiv/api/response_representer'
     attr_reader :body
 
     def initialize(endpoint:, body:, response_object:)
@@ -23,7 +25,7 @@ module Vantiv
       request = Net::HTTP::Post.new(uri.request_uri, header)
       request.body = body
       raw_response = http.request(request)
-      transaction_response = OpenStruct.new
+      transaction_response = Vantiv::Api::Response.new
       t = ResponseRepresenter.new(transaction_response).from_json(raw_response.body)
       {
         httpok: raw_response.code_type == Net::HTTPOK,

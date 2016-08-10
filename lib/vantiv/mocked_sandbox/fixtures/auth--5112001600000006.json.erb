@@ -3,24 +3,23 @@
   "http_response_code": "200",
   "response_body": {
     "litleOnlineResponse": {
-      "@version": "10.2",
-      "@response": "0",
       "@message": "Valid Format",
+      "@response": "0",
+      "@version": "10.2",
       "authorizationResponse": {
-        "@id": "cf0c933b3ade43bda28faa3c",
-        "@reportGroup": "<%= Vantiv.default_report_group %>",
         "@customerId": "not-dynamic-cust-id",
         "orderId": "not-dynamic-order-id",
         "response": "301",
         "responseTime": "<%= Time.now.strftime('%FT%T') %>",
         "postDate": "<%= Time.now.strftime('%F') %>",
-        "message": "Invalid Account Number",
+        "@id": "b4ea0fac5d17168413c5d33c",
         "fraudResult": {
           "avsResult": "00"
         },
+        "message": "Invalid Account Number",
+        "@reportGroup": "<%= Vantiv.default_report_group %>",
         "TransactionID": "<%= rand(10**17) %>"
       }
-    },
-    "RequestID": "7c88df5b-8e7d-49fc-eb45-b024f9981e66"
+    }
   }
 }

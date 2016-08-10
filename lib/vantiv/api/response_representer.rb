@@ -5,7 +5,7 @@ class ResponseRepresenter < Representable::Decorator
   include Representable::JSON
   self.representation_wrap= :litleOnlineResponse
 
-  property :message, as: :@message
+  property :body_message, as: :@message
   property :response, as: :@response
   property :version, as: :@version
 

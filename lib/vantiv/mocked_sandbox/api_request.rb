@@ -1,3 +1,6 @@
+require 'vantiv/api/response_representer'
+require 'vantiv/api/response'
+
 module Vantiv
   module MockedSandbox
     class ApiRequest
@@ -38,9 +41,9 @@ module Vantiv
           raise EndpointNotMocked.new("#{endpoint} is not mocked!")
         end
         {
-          httpok: fixture["httpok"],
-          http_response_code: fixture["http_response_code"],
-          body: JSON.parse(ERB.new(fixture["response_body"]).result(binding))
+          httpok: fixture.httpok,
+          http_response_code: fixture.http_response_code,
+          body: fixture
         }
       end
 
@@ -76,7 +79,11 @@ module Vantiv
               .instance_method(:to_json)
               .bind(raw_fixture["response_body"])
               .call
-            raw_fixture
+            response = Vantiv::Api::Response.new
+            response = ResponseRepresenter.new(response).from_json(ERB.new(raw_fixture["response_body"]).result(binding))
+            response.httpok = raw_fixture["httpok"]
+            response.http_response_code = raw_fixture["http_response_code"]
+            response
           end
         rescue Errno::ENOENT
           raise FixtureNotFound.new("Fixture not found for api method: #{api_method}, card number or temporary token: #{card_number_or_temporary_token}")

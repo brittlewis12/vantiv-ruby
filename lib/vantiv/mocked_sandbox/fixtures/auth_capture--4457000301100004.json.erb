@@ -3,31 +3,32 @@
   "http_response_code": "200",
   "response_body": {
     "litleOnlineResponse": {
-      "@version": "10.2",
-      "@response": "0",
       "@message": "Valid Format",
+      "@response": "0",
+      "@version": "10.2",
       "saleResponse": {
-        "@id": "dcfb9b1146c325ae2b81ef8b",
-        "@reportGroup": "<%= Vantiv.default_report_group %>",
+        "authCode": "123457",
         "@customerId": "not-dynamic-cust-id",
         "orderId": "not-dynamic-order-id",
         "response": "000",
         "responseTime": "<%= Time.now.strftime('%FT%T') %>",
         "postDate": "<%= Time.now.strftime('%F') %>",
+        "@id": "7e5bf10aa0a4ddc91bedb01a",
+        "fraudResult": {
+          "avsResult": "00"
+        },
         "message": "Approved",
-        "authCode": "123457",
+        "@reportGroup": "<%= Vantiv.default_report_group %>",
+        "TransactionID": "<%= rand(10**17) %>",
         "accountUpdater": {
+          "newCardTokenInfo": {
+          },
           "extendedCardResponse": {
             "code": "504",
             "message": "Contact the cardholder for updated information"
           }
-        },
-        "fraudResult": {
-          "avsResult": "00"
-        },
-        "TransactionID": "<%= rand(10**17) %>"
+        }
       }
-    },
-    "RequestID": "91fc5e75-8c73-4236-9294-950045eb8e18"
+    }
   }
 }

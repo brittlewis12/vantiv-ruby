@@ -3,25 +3,24 @@
   "http_response_code": "200",
   "response_body": {
     "litleOnlineResponse": {
-      "@version": "10.2",
-      "@response": "0",
       "@message": "Valid Format",
+      "@response": "0",
+      "@version": "10.2",
       "authorizationResponse": {
-        "@id": "c9ce8150c1fdaae6b6ae6e97",
-        "@reportGroup": "<%= Vantiv.default_report_group %>",
+        "authCode": "11111 ",
         "@customerId": "not-dynamic-cust-id",
         "orderId": "not-dynamic-order-id",
         "response": "000",
         "responseTime": "<%= Time.now.strftime('%FT%T') %>",
         "postDate": "<%= Time.now.strftime('%F') %>",
-        "message": "Approved",
-        "authCode": "11111 ",
+        "@id": "9df5d93bb999e862019a4d7d",
         "fraudResult": {
           "avsResult": "34"
         },
+        "message": "Approved",
+        "@reportGroup": "<%= Vantiv.default_report_group %>",
         "TransactionID": "<%= rand(10**17) %>"
       }
-    },
-    "RequestID": "beba5767-a3b2-4623-92be-db51a300a22f"
+    }
   }
 }

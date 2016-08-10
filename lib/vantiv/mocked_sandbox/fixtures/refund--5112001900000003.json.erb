@@ -3,20 +3,19 @@
   "http_response_code": "200",
   "response_body": {
     "litleOnlineResponse": {
-      "@version": "10.2",
-      "@response": "0",
       "@message": "Valid Format",
+      "@response": "0",
+      "@version": "10.2",
       "creditResponse": {
-        "@id": "978fadc121dc8c018fd9a316",
-        "@reportGroup": "<%= Vantiv.default_report_group %>",
         "@customerId": "not-dynamic-cust-id",
         "response": "001",
         "responseTime": "<%= Time.now.strftime('%FT%T') %>",
         "postDate": "<%= Time.now.strftime('%F') %>",
+        "@id": "78d5c599bf5a118dc9499bfa",
         "message": "Transaction Received",
+        "@reportGroup": "<%= Vantiv.default_report_group %>",
         "TransactionID": "<%= rand(10**17) %>"
       }
-    },
-    "RequestID": "fc45b8c9-4930-443a-bc7c-2de5421d40a7"
+    }
   }
 }
