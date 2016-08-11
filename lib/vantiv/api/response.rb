@@ -38,11 +38,11 @@ module Vantiv
       end
 
       def response_code
-        litle_transaction_response.response_code
+        litle_transaction_response.response_code if litle_transaction_response
       end
 
       def transaction_id
-        litle_transaction_response.transaction_id
+        litle_transaction_response.transaction_id if litle_transaction_response
       end
 
       private

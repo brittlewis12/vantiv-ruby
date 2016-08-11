@@ -57,14 +57,14 @@ describe Vantiv::Api::Request do
         double(
           code_type: Net::HTTPOK,
           code: "200",
-          body: {something: "in json"}.to_json
+          body: {"litleOnlineResponse":{"@version": "blabla"}}.to_json
         )
       ]
       allow_any_instance_of(Net::HTTP).to receive(:request) { vantiv_responses.shift }
       expect{
         @response = run_api_request
       }.not_to raise_error
-      expect(@response.body).to eq({"something" => "in json"})
+      expect(@response.body.version).to eq "blabla"
     end
   end
 end
