@@ -52,7 +52,8 @@ describe "toggling mocked API requests" do
     expect{
       Vantiv::MockedSandbox::ApiRequest.run(
         endpoint: "/not/a/mocked/endpoint",
-        body: {}.to_json
+        body: {}.to_json,
+        response_object: Vantiv::Api::Response.new
       )
     }.to raise_error(/not mocked/i)
   end
