@@ -1,2 +1,21 @@
-o:)Vantiv::Api::LiveTransactionResponse	:@transaction_response_nameI"saleResponse:ET:
-@bodyo:Vantiv::Api::ResponseBody	:@body_messageI"Valid Format;T:@responseI"0;T:@versionI"	10.2;T:@sale_responseo:%Vantiv::Api::TransactionResponse:@response_codeI"110;T:@response_time0:@idI"71cb19b7215a8408fafb6ae6;T:@messageI"Insufficient Funds;T:@report_group0:@transaction_id0:@customer_idI"not-dynamic-cust-id;T:@order_idI"not-dynamic-order-id;T:@post_date0:@fraud_resultU:OpenStruct{:avs_resultI"00;T:@httpokT:@http_response_codeI"200;T
+{
+  "httpok": true,
+  "http_response_code": "200",
+  "body": {
+    "litleOnlineResponse": {
+      "@message": "Valid Format",
+      "@response": "0",
+      "@version": "10.2",
+      "saleResponse": {
+        "@customerId": "not-dynamic-cust-id",
+        "orderId": "not-dynamic-order-id",
+        "response": "110",
+        "@id": "5ec1163884fd5457a4a5f1a3",
+        "fraudResult": {
+          "avsResult": "00"
+        },
+        "message": "Insufficient Funds"
+      }
+    }
+  }
+}

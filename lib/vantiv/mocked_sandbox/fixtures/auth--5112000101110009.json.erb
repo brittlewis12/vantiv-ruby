@@ -1,3 +1,34 @@
-o:)Vantiv::Api::LiveTransactionResponse	:@transaction_response_nameI"authorizationResponse:ET:
-@bodyo:Vantiv::Api::ResponseBody	:@body_messageI"Valid Format;T:@responseI"0;T:@versionI"	10.2;T:@authorization_responseo:%Vantiv::Api::TransactionResponse:@response_codeI"000;T:@response_time0:@idI"4f6ea65a9b159eb3d2868857;T:@messageI"Approved;T:@report_group0:@transaction_id0:@auth_codeI"123457;T:@customer_idI"not-dynamic-cust-id;T:@order_idI"not-dynamic-order-id;T:@post_date0:@fraud_resultU:OpenStruct{:avs_resultI"00;T:@account_updatero:(Vantiv::Api::AccountUpdaterResponse:@new_card_token_infoo:Vantiv::Api::CardTokenInfo	:@card_typeI"VI;T:@payment_account_idI"1111000288150001;T:@expiry_monthI"11;T:@expiry_yearI"99;T:@extended_card_responseo:&Vantiv::Api::ExtendedCardResponse:
-@codeI"501;T;I"The account was closed;T:@httpokT:@http_response_codeI"200;T
+{
+  "httpok": true,
+  "http_response_code": "200",
+  "body": {
+    "litleOnlineResponse": {
+      "@message": "Valid Format",
+      "@response": "0",
+      "@version": "10.2",
+      "authorizationResponse": {
+        "authCode": "123457",
+        "@customerId": "not-dynamic-cust-id",
+        "orderId": "not-dynamic-order-id",
+        "response": "000",
+        "@id": "6fbbb518db62ffe8a4e5353e",
+        "fraudResult": {
+          "avsResult": "00"
+        },
+        "message": "Approved",
+        "accountUpdater": {
+          "newCardTokenInfo": {
+            "Type": "VI",
+            "PaymentAccountID": "1111000288150001",
+            "ExpirationMonth": "11",
+            "ExpirationYear": "99"
+          },
+          "extendedCardResponse": {
+            "code": "501",
+            "message": "The account was closed"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,10 +1,10 @@
 require 'vantiv/mocked_sandbox/dynamic_response_body'
 require 'vantiv/certification/paypage_driver'
+require 'vantiv/mocked_sandbox/mocked_response_representer'
 
 module Vantiv
   module MockedSandbox
     class FixtureGenerator
-
       def self.generate_all
         new.run
       end
@@ -184,7 +184,9 @@ module Vantiv
 
       def write_fixture_to_file(file_name, response)
         File.open("#{MockedSandbox.fixtures_directory}/#{file_name}.json.erb", 'w') do |fixture|
-          fixture << Marshal.dump(response)
+          fixture << JSON.pretty_generate(
+            MockedResponseRepresenter.new(response).to_hash
+          )
         end
       end
     end

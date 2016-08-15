@@ -1,4 +1,6 @@
 require 'vantiv/api/response'
+require 'vantiv/api/live_transaction_response'
+require 'vantiv/mocked_sandbox/mocked_response_representer'
 
 module Vantiv
   module MockedSandbox
@@ -6,13 +8,14 @@ module Vantiv
       class EndpointNotMocked < StandardError; end
       class FixtureNotFound < StandardError; end
 
-      def self.run(endpoint:, body:)
-        new(endpoint, body).run
+      def self.run(endpoint:, body:, response_object:)
+        new(endpoint, body, response_object).run
       end
 
-      def initialize(endpoint, request_body)
+      def initialize(endpoint, request_body, response_object)
         self.endpoint = endpoint
         self.request_body = JSON.parse(request_body)
+        self.response_object = response_object
       end
 
       def run
@@ -43,7 +46,7 @@ module Vantiv
 
       private
 
-      attr_accessor :endpoint, :request_body, :fixture
+      attr_accessor :endpoint, :request_body, :fixture, :response_object
 
       def direct_post?
         request_body["Card"] && request_body["Card"]["AccountNumber"] != nil
@@ -67,12 +70,12 @@ module Vantiv
         fixture_file_name = card_number_or_temporary_token ? "#{api_method}--#{card_number_or_temporary_token}" : api_method
         begin
           self.fixture = File.open("#{MockedSandbox.fixtures_directory}#{fixture_file_name}.json.erb", 'r') do |f|
-            response_object = Marshal.load(f.read)
+            response = MockedResponseRepresenter.new(response_object).from_json(f.read)
 
-            transaction_response = response_object.body.authorization_response || response_object.body.sale_response ||
-              response_object.body.credit_response || response_object.body.void_response ||
-              response_object.body.auth_reversal_response || response_object.body.capture_response ||
-              response_object.body.register_token_response
+            transaction_response = response.body.authorization_response || response.body.sale_response ||
+              response.body.credit_response || response.body.void_response ||
+              response.body.auth_reversal_response || response.body.capture_response ||
+              response.body.register_token_response
 
             transaction_response.report_group = Vantiv.default_report_group
             transaction_response.response_time = Time.now.strftime('%FT%T')
@@ -81,7 +84,7 @@ module Vantiv
             if transaction_response.post_date
               transaction_response.post_date = Time.now.strftime('%F')
             end
-            response_object
+            response
           end
         rescue Errno::ENOENT
           raise FixtureNotFound.new("Fixture not found for api method: #{api_method}, card number or temporary token: #{card_number_or_temporary_token}")

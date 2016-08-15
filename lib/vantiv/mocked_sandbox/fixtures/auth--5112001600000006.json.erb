@@ -1,2 +1,21 @@
-o:)Vantiv::Api::LiveTransactionResponse	:@transaction_response_nameI"authorizationResponse:ET:
-@bodyo:Vantiv::Api::ResponseBody	:@body_messageI"Valid Format;T:@responseI"0;T:@versionI"	10.2;T:@authorization_responseo:%Vantiv::Api::TransactionResponse:@response_codeI"301;T:@response_time0:@idI"8fc9ecbfedc805e7ee381da8;T:@messageI"Invalid Account Number;T:@report_group0:@transaction_id0:@customer_idI"not-dynamic-cust-id;T:@order_idI"not-dynamic-order-id;T:@post_date0:@fraud_resultU:OpenStruct{:avs_resultI"00;T:@httpokT:@http_response_codeI"200;T
+{
+  "httpok": true,
+  "http_response_code": "200",
+  "body": {
+    "litleOnlineResponse": {
+      "@message": "Valid Format",
+      "@response": "0",
+      "@version": "10.2",
+      "authorizationResponse": {
+        "@customerId": "not-dynamic-cust-id",
+        "orderId": "not-dynamic-order-id",
+        "response": "301",
+        "@id": "1450ed8ee801d99c8b528f64",
+        "fraudResult": {
+          "avsResult": "00"
+        },
+        "message": "Invalid Account Number"
+      }
+    }
+  }
+}

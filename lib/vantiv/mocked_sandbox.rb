@@ -11,7 +11,8 @@ module Vantiv
       Vantiv::Api::Request.send(:define_method, :run_request) do
         Vantiv::MockedSandbox::ApiRequest.run(
           endpoint: endpoint,
-          body: body
+          body: body,
+          response_object: response_object
         )
       end
     end
