@@ -58,11 +58,10 @@ describe "mocked API requests to void" do
         (
           Vantiv::Api::TiedTransactionResponse.instance_methods(false) +
           Vantiv::Api::Response.instance_methods(false) -
-          [:payment_account_id, :body, :load, :request_id, :transaction_id,
-           :version=, :message=, :response_code=, :response=, :httpok=, :http_response_code=, :body_message=,
-           :authorization_response=, :sale_response=, :credit_response=, :void_response=,
-           :auth_reversal_response=, :capture_response=, :register_token_response=]
+          [:payment_account_id, :body, :load, :request_id, :transaction_id]
         ).each do |method_name|
+          next if method_name.to_s.end_with?("=")
+
           live_response_value = live_response.send(method_name)
           mocked_response_value = mocked_response.send(method_name)
 
