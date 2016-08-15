@@ -1,22 +1,3 @@
-{
-  "httpok": true,
-  "http_response_code": "200",
-  "response_body": {
-    "litleOnlineResponse": {
-      "@message": "Valid Format",
-      "@response": "0",
-      "@version": "10.2",
-      "registerTokenResponse": {
-        "response": "802",
-        "responseTime": "<%= Time.now.strftime('%FT%T') %>",
-        "@id": "2407143469c4a3f80eddb44d",
-        "message": "Account number was previously registered",
-        "@reportGroup": "<%= Vantiv.default_report_group %>",
-        "TransactionID": "<%= rand(10**17) %>",
-        "Type": "MC",
-        "bin": "511200",
-        "PaymentAccountID": "1111111111160009"
-      }
-    }
-  }
-}
+o:&Vantiv::Api::TokenizationResponse:
+@bodyo:Vantiv::Api::ResponseBody	:@body_messageI"Valid Format:ET:@responseI"0;	T:@versionI"	10.2;	T:@register_token_responseo:%Vantiv::Api::TransactionResponse:@response_codeI"802;	T:@response_time0:@idI"88ce598be63a7abbafe17e3b;	T:@messageI"-Account number was previously registered;	T:@report_group0:@transaction_id0:
+@typeI"MC;	T:	@binI"511200;	T:@payment_account_idI"1111111111160009;	T:@httpokT:@http_response_codeI"200;	T

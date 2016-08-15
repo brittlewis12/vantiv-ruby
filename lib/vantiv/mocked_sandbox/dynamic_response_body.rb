@@ -1,4 +1,4 @@
-require 'vantiv/api/response_representer'
+require 'vantiv/api/response_body_representer'
 
 module Vantiv
   module MockedSandbox
@@ -14,18 +14,18 @@ module Vantiv
       end
 
       def run
-        litle_transaction_response.report_group = "<%= Vantiv.default_report_group %>"
-        litle_transaction_response.response_time = "<%= Time.now.strftime('%FT%T') %>"
-        litle_transaction_response.transaction_id = "<%= rand(10**17) %>"
+        litle_transaction_response.report_group = nil
+        litle_transaction_response.response_time = nil
+        litle_transaction_response.transaction_id = nil
 
         if litle_transaction_response.payment_account_id
           litle_transaction_response.payment_account_id = mocked_payment_account_id
         end
 
         if litle_transaction_response.post_date
-          litle_transaction_response.post_date = "<%= Time.now.strftime('%F') %>"
+          litle_transaction_response.post_date = nil
         end
-        ResponseRepresenter.new(dynamic_body).to_hash
+        dynamic_body
       end
 
       private

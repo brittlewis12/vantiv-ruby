@@ -9,14 +9,6 @@ class TransactionResponseRepresenter < Representable::Decorator
   property :customer_id, as: :@customerId
   property :order_id, as: :orderId
 
-  # property :token_response, as: :tokenResponse, class: OpenStruct do
-  #   property :token_reponse_code, as: :tokenResponseCode
-  #   property :token_message, as: :tokenMessage
-  #   property :type, as: :Type
-  #   property :bin
-  #   property :payment_account_id, as: :PaymentAccountID
-  # end
-
   property :response_code, as: :response
   property :response_time, as: :responseTime
   property :post_date, as: :postDate
@@ -31,14 +23,11 @@ class TransactionResponseRepresenter < Representable::Decorator
   property :report_group, as: :@reportGroup
   property :transaction_id, as: :TransactionID
 
-
-  property :token_reponse_code, as: :tokenResponseCode
+  property :token_response_code, as: :tokenResponseCode
   property :token_message, as: :tokenMessage
   property :type, as: :Type
   property :bin
   property :payment_account_id, as: :PaymentAccountID
-
-
 
   property :account_updater, as: :accountUpdater, class: Vantiv::Api::AccountUpdaterResponse do
     property :new_card_token_info, as: :newCardTokenInfo, class: Vantiv::Api::CardTokenInfo do

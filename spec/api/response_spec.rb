@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Vantiv::Api::Response do
   let(:httpok) { true }
-  let(:transaction_response_name) { "responseName" }
+  let(:transaction_response_name) { "authorizationResponse" }
   let(:response) do
     response = Vantiv::Api::Response.new
     response.load(
@@ -14,11 +14,14 @@ describe Vantiv::Api::Response do
   end
 
   def body_with_params(params)
-    {
+    body_hash = {
       "litleOnlineResponse" => {
         "@message" => "this is a message"
       }.merge(params)
     }
+
+    response = Vantiv::Api::Response.new
+    ResponseBodyRepresenter.new(response).from_json(body_hash.to_json)
   end
 
   def set_transaction_response_name

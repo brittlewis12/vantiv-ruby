@@ -59,15 +59,14 @@ module Vantiv
 
       def record_tokenize_for_test_token(test_temporary_token:, live_temporary_token:, mocked_payment_account_id:)
         cert_response = Vantiv.tokenize(temporary_token: live_temporary_token)
-        dynamic_body = DynamicResponseBody.generate(
+        cert_response.body = DynamicResponseBody.generate(
           body: cert_response.body,
           litle_txn_name: "registerTokenResponse",
           mocked_payment_account_id: mocked_payment_account_id
         )
         write_fixture_to_file(
           "tokenize--#{test_temporary_token}",
-          cert_response,
-          dynamic_body
+          cert_response
         )
       end
 
@@ -82,12 +81,12 @@ module Vantiv
           expiry_year: card.expiry_year,
           cvv: card.cvv
         )
-        dynamic_body = DynamicResponseBody.generate(
+        cert_response.body = DynamicResponseBody.generate(
           body: cert_response.body,
           litle_txn_name: "registerTokenResponse",
           mocked_payment_account_id: card.mocked_sandbox_payment_account_id
         )
-        write_fixture_to_file("tokenize_by_direct_post--#{card.card_number}", cert_response, dynamic_body)
+        write_fixture_to_file("tokenize_by_direct_post--#{card.card_number}", cert_response)
       end
 
       def record_auth_capture
@@ -99,11 +98,11 @@ module Vantiv
           customer_id: "not-dynamic-cust-id",
           order_id: "not-dynamic-order-id"
         )
-        dynamic_body = DynamicResponseBody.generate(
+        cert_response.body = DynamicResponseBody.generate(
           body: cert_response.body,
           litle_txn_name: "saleResponse"
         )
-        write_fixture_to_file("auth_capture--#{card.card_number}", cert_response, dynamic_body)
+        write_fixture_to_file("auth_capture--#{card.card_number}", cert_response)
       end
 
       def record_auth
@@ -115,11 +114,11 @@ module Vantiv
           customer_id: "not-dynamic-cust-id",
           order_id: "not-dynamic-order-id"
         )
-        dynamic_body = DynamicResponseBody.generate(
+        cert_response.body = DynamicResponseBody.generate(
           body: cert_response.body,
           litle_txn_name: "authorizationResponse"
         )
-        write_fixture_to_file("auth--#{card.card_number}", cert_response, dynamic_body)
+        write_fixture_to_file("auth--#{card.card_number}", cert_response)
       end
 
       def record_refund
@@ -131,33 +130,33 @@ module Vantiv
           customer_id: "not-dynamic-cust-id",
           order_id: "not-dynamic-order-id"
         )
-        dynamic_body = DynamicResponseBody.generate(
+        cert_response.body = DynamicResponseBody.generate(
           body: cert_response.body,
           litle_txn_name: "creditResponse"
         )
-        write_fixture_to_file("refund--#{card.card_number}", cert_response, dynamic_body)
+        write_fixture_to_file("refund--#{card.card_number}", cert_response)
       end
 
       def record_capture
         cert_response = Vantiv.capture(
           transaction_id: rand(10**17).to_s
         )
-        dynamic_body = DynamicResponseBody.generate(
+        cert_response.body = DynamicResponseBody.generate(
           body: cert_response.body,
           litle_txn_name: "captureResponse"
         )
-        write_fixture_to_file("capture", cert_response, dynamic_body)
+        write_fixture_to_file("capture", cert_response)
       end
 
       def record_auth_reversal
         cert_response = Vantiv.auth_reversal(
           transaction_id: rand(10**17).to_s
         )
-        dynamic_body = DynamicResponseBody.generate(
+        cert_response.body = DynamicResponseBody.generate(
           body: cert_response.body,
           litle_txn_name: "authReversalResponse"
         )
-        write_fixture_to_file("auth_reversal", cert_response, dynamic_body)
+        write_fixture_to_file("auth_reversal", cert_response)
       end
 
       def record_credit
@@ -165,31 +164,27 @@ module Vantiv
           transaction_id: rand(10**17).to_s,
           amount: 1010
         )
-        dynamic_body = DynamicResponseBody.generate(
+        cert_response.body = DynamicResponseBody.generate(
           body: cert_response.body,
           litle_txn_name: "creditResponse"
         )
-        write_fixture_to_file("credit", cert_response, dynamic_body)
+        write_fixture_to_file("credit", cert_response)
       end
 
       def record_void
         cert_response = Vantiv.void(
           transaction_id: rand(10**17).to_s
         )
-        dynamic_body = DynamicResponseBody.generate(
+        cert_response.body = DynamicResponseBody.generate(
           body: cert_response.body,
           litle_txn_name: "voidResponse"
         )
-        write_fixture_to_file("void", cert_response, dynamic_body)
+        write_fixture_to_file("void", cert_response)
       end
 
-      def write_fixture_to_file(file_name, response, dynamic_body)
+      def write_fixture_to_file(file_name, response)
         File.open("#{MockedSandbox.fixtures_directory}/#{file_name}.json.erb", 'w') do |fixture|
-          fixture << JSON.pretty_generate({
-            httpok: response.httpok,
-            http_response_code: response.http_response_code,
-            response_body: dynamic_body
-          })
+          fixture << Marshal.dump(response)
         end
       end
     end

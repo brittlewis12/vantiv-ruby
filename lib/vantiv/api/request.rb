@@ -1,5 +1,5 @@
-require 'vantiv/api/response_representer'
-require 'vantiv/api/response'
+require 'vantiv/api/response_body_representer'
+require 'vantiv/api/response_body'
 
 module Vantiv
   class Api::Request
@@ -13,9 +13,7 @@ module Vantiv
     end
 
     def run
-      vantiv_response = run_request_with_retries
-      response_object.load(vantiv_response)
-      response_object
+      run_request_with_retries
     end
 
     def run_request
@@ -25,13 +23,12 @@ module Vantiv
       request = Net::HTTP::Post.new(uri.request_uri, header)
       request.body = body
       raw_response = http.request(request)
-      transaction_response = Vantiv::Api::Response.new
-      t = ResponseRepresenter.new(transaction_response).from_json(raw_response.body)
-      {
-        httpok: raw_response.code_type == Net::HTTPOK,
-        http_response_code: raw_response.code,
-        body: t
-      }
+      response_body_object = Vantiv::Api::ResponseBody.new
+      response_body_object = ResponseBodyRepresenter.new(response_body_object).from_json(raw_response.body)
+      response_object.body = response_body_object
+      response_object.httpok = raw_response.code_type == Net::HTTPOK
+      response_object.http_response_code = raw_response.code
+      response_object
     end
 
     private

@@ -1,4 +1,3 @@
-require 'vantiv/api/response_representer'
 require 'vantiv/api/response'
 
 module Vantiv
@@ -40,11 +39,6 @@ module Vantiv
         else
           raise EndpointNotMocked.new("#{endpoint} is not mocked!")
         end
-        {
-          httpok: fixture.httpok,
-          http_response_code: fixture.http_response_code,
-          body: fixture
-        }
       end
 
       private
@@ -73,17 +67,21 @@ module Vantiv
         fixture_file_name = card_number_or_temporary_token ? "#{api_method}--#{card_number_or_temporary_token}" : api_method
         begin
           self.fixture = File.open("#{MockedSandbox.fixtures_directory}#{fixture_file_name}.json.erb", 'r') do |f|
-            raw_fixture = JSON.parse(f.read)
-            # Prevent rails overridden version of to_json from encoding erb sepcial characters
-            raw_fixture["response_body"] = JSON::Ext::Generator::GeneratorMethods::Hash
-              .instance_method(:to_json)
-              .bind(raw_fixture["response_body"])
-              .call
-            response = Vantiv::Api::Response.new
-            response = ResponseRepresenter.new(response).from_json(ERB.new(raw_fixture["response_body"]).result(binding))
-            response.httpok = raw_fixture["httpok"]
-            response.http_response_code = raw_fixture["http_response_code"]
-            response
+            response_object = Marshal.load(f.read)
+
+            transaction_response = response_object.body.authorization_response || response_object.body.sale_response ||
+              response_object.body.credit_response || response_object.body.void_response ||
+              response_object.body.auth_reversal_response || response_object.body.capture_response ||
+              response_object.body.register_token_response
+
+            transaction_response.report_group = Vantiv.default_report_group
+            transaction_response.response_time = Time.now.strftime('%FT%T')
+            transaction_response.transaction_id = rand(10**17)
+
+            if transaction_response.post_date
+              transaction_response.post_date = Time.now.strftime('%F')
+            end
+            response_object
           end
         rescue Errno::ENOENT
           raise FixtureNotFound.new("Fixture not found for api method: #{api_method}, card number or temporary token: #{card_number_or_temporary_token}")

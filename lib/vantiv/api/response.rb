@@ -1,18 +1,13 @@
 module Vantiv
   module Api
-    class LitleTransactionResponse
-      attr_accessor :message, :response_code, :transaction_id
+    class TransactionResponse
+      attr_accessor :message, :response_code, :transaction_id, :response_time, :id, :report_group, :payment_account_id,
+                    :post_date, :type, :bin, :auth_code, :customer_id, :order_id, :token_response_code, :token_message,
+                    :fraud_result, :account_updater
     end
 
     class Response
-      attr_reader :httpok, :http_response_code, :body, :response, :version, :fault
-
-      attr_writer :message, :response_code, :response, :version, :httpok, :http_response_code
-
-      attr_accessor :body_message
-
-      attr_accessor :authorization_response, :sale_response, :credit_response, :void_response,
-                    :auth_reversal_response, :capture_response, :register_token_response
+      attr_accessor :httpok, :http_response_code, :body
 
       def load(httpok:, http_response_code:, body:)
         @httpok = httpok

@@ -1,25 +1,2 @@
-{
-  "httpok": true,
-  "http_response_code": "200",
-  "response_body": {
-    "litleOnlineResponse": {
-      "@message": "Valid Format",
-      "@response": "0",
-      "@version": "10.2",
-      "authorizationResponse": {
-        "@customerId": "not-dynamic-cust-id",
-        "orderId": "not-dynamic-order-id",
-        "response": "305",
-        "responseTime": "<%= Time.now.strftime('%FT%T') %>",
-        "postDate": "<%= Time.now.strftime('%F') %>",
-        "@id": "c58e1b6ee4c3910022f28a77",
-        "fraudResult": {
-          "avsResult": "00"
-        },
-        "message": "Expired Card",
-        "@reportGroup": "<%= Vantiv.default_report_group %>",
-        "TransactionID": "<%= rand(10**17) %>"
-      }
-    }
-  }
-}
+o:)Vantiv::Api::LiveTransactionResponse	:@transaction_response_nameI"authorizationResponse:ET:
+@bodyo:Vantiv::Api::ResponseBody	:@body_messageI"Valid Format;T:@responseI"0;T:@versionI"	10.2;T:@authorization_responseo:%Vantiv::Api::TransactionResponse:@response_codeI"305;T:@response_time0:@idI"430bd3f85169e6ec0b6c8579;T:@messageI"Expired Card;T:@report_group0:@transaction_id0:@customer_idI"not-dynamic-cust-id;T:@order_idI"not-dynamic-order-id;T:@post_date0:@fraud_resultU:OpenStruct{:avs_resultI"00;T:@httpokT:@http_response_codeI"200;T
