@@ -20,7 +20,7 @@ describe Vantiv::Api::Response do
       }.merge(params)
     }
 
-    response = Vantiv::Api::Response.new
+    response = Vantiv::Api::ResponseBody.new
     ResponseBodyRepresenter.new(response).from_json(body_hash.to_json)
   end
 
