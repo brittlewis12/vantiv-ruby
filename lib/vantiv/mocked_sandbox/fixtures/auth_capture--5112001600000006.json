@@ -1,0 +1,22 @@
+{
+  "httpok": true,
+  "http_response_code": "200",
+  "body": {
+    "litleOnlineResponse": {
+      "@message": "Valid Format",
+      "@response": "0",
+      "@version": "10.2",
+      "saleResponse": {
+        "@customerId": "not-dynamic-cust-id",
+        "orderId": "not-dynamic-order-id",
+        "response": "301",
+        "@id": "977a38652e49f02c867eaeae",
+        "fraudResult": {
+          "avsResult": "00"
+        },
+        "message": "Invalid Account Number"
+      }
+    },
+    "RequestID": "afda3511-fa40-4af8-a3f8-ad6f076a6e3b"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "httpok": true,
+  "http_response_code": "200",
+  "body": {
+    "litleOnlineResponse": {
+      "@message": "Valid Format",
+      "@response": "0",
+      "@version": "10.2",
+      "registerTokenResponse": {
+        "response": "878",
+        "@id": "fba127705e4c869b187df99e",
+        "message": "Expired paypage registration id"
+      }
+    },
+    "RequestID": "44b572e5-92da-48dd-830d-e1da2cf29f26"
+  }
+}

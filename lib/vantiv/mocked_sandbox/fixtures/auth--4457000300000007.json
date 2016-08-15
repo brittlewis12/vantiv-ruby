@@ -1,0 +1,41 @@
+{
+  "httpok": true,
+  "http_response_code": "200",
+  "body": {
+    "litleOnlineResponse": {
+      "@message": "Valid Format",
+      "@response": "0",
+      "@version": "10.2",
+      "authorizationResponse": {
+        "authCode": "654321",
+        "@customerId": "not-dynamic-cust-id",
+        "orderId": "not-dynamic-order-id",
+        "response": "000",
+        "@id": "f4ed39d5a82b0f50ef188943",
+        "fraudResult": {
+          "avsResult": "12"
+        },
+        "message": "Approved",
+        "accountUpdater": {
+          "originalCardTokenInfo": {
+            "bin": "445700",
+            "Type": "VI",
+            "PaymentAccountID": "1111000242220007",
+            "ExpirationMonth": "01",
+            "ExpirationYear": "15"
+          },
+          "newCardTokenInfo": {
+            "bin": "511200",
+            "Type": "MC",
+            "PaymentAccountID": "1112000247040003",
+            "ExpirationMonth": "01",
+            "ExpirationYear": "15"
+          },
+          "extendedCardResponse": {
+          }
+        }
+      }
+    },
+    "RequestID": "3aff2148-6d66-4713-8f93-fa2d119f755a"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "httpok": true,
+  "http_response_code": "200",
+  "body": {
+    "litleOnlineResponse": {
+      "@message": "Valid Format",
+      "@response": "0",
+      "@version": "10.2",
+      "authorizationResponse": {
+        "authCode": "123457",
+        "@customerId": "not-dynamic-cust-id",
+        "orderId": "not-dynamic-order-id",
+        "response": "000",
+        "@id": "155917a44098609f641d1b4c",
+        "fraudResult": {
+          "avsResult": "00"
+        },
+        "message": "Approved",
+        "accountUpdater": {
+          "newCardTokenInfo": {
+          },
+          "extendedCardResponse": {
+            "code": "504",
+            "message": "Contact the cardholder for updated information"
+          }
+        }
+      }
+    },
+    "RequestID": "0e0440f6-26c7-4609-bd2c-9a60829d12ee"
+  }
+}

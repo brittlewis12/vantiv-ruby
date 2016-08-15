@@ -1,0 +1,22 @@
+{
+  "httpok": true,
+  "http_response_code": "200",
+  "body": {
+    "litleOnlineResponse": {
+      "@message": "Valid Format",
+      "@response": "0",
+      "@version": "10.2",
+      "saleResponse": {
+        "@customerId": "not-dynamic-cust-id",
+        "orderId": "not-dynamic-order-id",
+        "response": "110",
+        "@id": "04a75646990affa7b611bbc8",
+        "fraudResult": {
+          "avsResult": "00"
+        },
+        "message": "Insufficient Funds"
+      }
+    },
+    "RequestID": "dfd9becd-da5b-44c9-a657-36a08f5bd878"
+  }
+}

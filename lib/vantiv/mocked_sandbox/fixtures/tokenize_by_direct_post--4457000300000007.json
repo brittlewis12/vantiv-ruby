@@ -1,0 +1,20 @@
+{
+  "httpok": true,
+  "http_response_code": "200",
+  "body": {
+    "litleOnlineResponse": {
+      "@message": "Valid Format",
+      "@response": "0",
+      "@version": "10.2",
+      "registerTokenResponse": {
+        "response": "802",
+        "@id": "b945a68778883d6f44cec832",
+        "message": "Account number was previously registered",
+        "Type": "VI",
+        "bin": "445700",
+        "PaymentAccountID": "1111111111120007"
+      }
+    },
+    "RequestID": "73bba86b-42d1-44c9-9438-c6d050b12143"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "httpok": true,
+  "http_response_code": "200",
+  "body": {
+    "litleOnlineResponse": {
+      "@message": "Valid Format",
+      "@response": "0",
+      "@version": "10.2",
+      "saleResponse": {
+        "authCode": "11111 ",
+        "@customerId": "not-dynamic-cust-id",
+        "orderId": "not-dynamic-order-id",
+        "response": "000",
+        "@id": "25a3a0abda4669ceb790f2b0",
+        "fraudResult": {
+          "avsResult": "34"
+        },
+        "message": "Approved"
+      }
+    },
+    "RequestID": "b7abf91c-0bf4-494f-de14-532a8934e683"
+  }
+}

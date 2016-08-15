@@ -1,0 +1,22 @@
+{
+  "httpok": true,
+  "http_response_code": "200",
+  "body": {
+    "litleOnlineResponse": {
+      "@message": "Valid Format",
+      "@response": "0",
+      "@version": "10.2",
+      "saleResponse": {
+        "@customerId": "not-dynamic-cust-id",
+        "orderId": "not-dynamic-order-id",
+        "response": "305",
+        "@id": "b5791a1e0ead1bea01499167",
+        "fraudResult": {
+          "avsResult": "00"
+        },
+        "message": "Expired Card"
+      }
+    },
+    "RequestID": "24c9408b-7841-436d-c0a6-51f23edb0e38"
+  }
+}
