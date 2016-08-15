@@ -10,13 +10,17 @@
         "@customerId": "not-dynamic-cust-id",
         "orderId": "not-dynamic-order-id",
         "response": "305",
-        "@id": "b5791a1e0ead1bea01499167",
+        "responseTime": "2016-08-15T20:29:38",
+        "postDate": "2016-08-15",
+        "@id": "2a417a3243d4d66956033810",
         "fraudResult": {
           "avsResult": "00"
         },
-        "message": "Expired Card"
+        "message": "Expired Card",
+        "@reportGroup": "1",
+        "TransactionID": "82918650608928645"
       }
     },
-    "RequestID": "24c9408b-7841-436d-c0a6-51f23edb0e38"
+    "RequestID": "87d88461-3981-420d-fa25-72235ddb2c52"
   }
 }

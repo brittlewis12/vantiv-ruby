@@ -8,10 +8,13 @@
       "@version": "10.2",
       "registerTokenResponse": {
         "response": "878",
-        "@id": "fba127705e4c869b187df99e",
-        "message": "Expired paypage registration id"
+        "responseTime": "2016-08-15T20:29:31",
+        "@id": "17ec76f9d4b23cb75fe16735",
+        "message": "Expired paypage registration id",
+        "@reportGroup": "1",
+        "TransactionID": "82918650608928025"
       }
     },
-    "RequestID": "44b572e5-92da-48dd-830d-e1da2cf29f26"
+    "RequestID": "52730f2e-04c3-4a44-dbd6-4f69faeb6889"
   }
 }

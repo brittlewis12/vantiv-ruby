@@ -11,13 +11,17 @@
         "@customerId": "not-dynamic-cust-id",
         "orderId": "not-dynamic-order-id",
         "response": "000",
-        "@id": "d998de7e01017f1063256235",
+        "responseTime": "2016-08-15T20:29:36",
+        "postDate": "2016-08-15",
+        "@id": "52f7daf4cf60cc93cd80c23f",
         "fraudResult": {
           "avsResult": "34"
         },
-        "message": "Approved"
+        "message": "Approved",
+        "@reportGroup": "1",
+        "TransactionID": "82918650608928249"
       }
     },
-    "RequestID": "c637fbfc-f083-46fc-8a29-20ab2f4fc300"
+    "RequestID": "2114411e-de04-4978-c5f0-965799fe36ed"
   }
 }

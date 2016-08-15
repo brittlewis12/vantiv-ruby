@@ -10,13 +10,17 @@
         "@customerId": "not-dynamic-cust-id",
         "orderId": "not-dynamic-order-id",
         "response": "301",
-        "@id": "977a38652e49f02c867eaeae",
+        "responseTime": "2016-08-15T20:29:36",
+        "postDate": "2016-08-15",
+        "@id": "6cdf0aa6bbd799d8d6f99216",
         "fraudResult": {
           "avsResult": "00"
         },
-        "message": "Invalid Account Number"
+        "message": "Invalid Account Number",
+        "@reportGroup": "1",
+        "TransactionID": "82918650608928405"
       }
     },
-    "RequestID": "afda3511-fa40-4af8-a3f8-ad6f076a6e3b"
+    "RequestID": "c2851ec5-8c42-4521-9908-adde33595bfd"
   }
 }

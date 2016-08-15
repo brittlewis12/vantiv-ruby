@@ -10,13 +10,17 @@
         "@customerId": "not-dynamic-cust-id",
         "orderId": "not-dynamic-order-id",
         "response": "110",
-        "@id": "06e374b2425e4e95fd5fc071",
+        "responseTime": "2016-08-15T20:29:38",
+        "postDate": "2016-08-15",
+        "@id": "279a49422b99029107bc0170",
         "fraudResult": {
           "avsResult": "00"
         },
-        "message": "Insufficient Funds"
+        "message": "Insufficient Funds",
+        "@reportGroup": "1",
+        "TransactionID": "82918650608928579"
       }
     },
-    "RequestID": "08de7d61-0cb6-4dfc-ac2c-2f875955c0af"
+    "RequestID": "5f940cf4-316f-4390-eb89-09fef5802aeb"
   }
 }

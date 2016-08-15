@@ -8,13 +8,16 @@
       "@version": "10.2",
       "registerTokenResponse": {
         "response": "802",
-        "@id": "3e3d884a5cf52fbf63b8a5c4",
+        "responseTime": "2016-08-15T20:29:31",
+        "@id": "85f7d618893b7cb27083469c",
         "message": "Account number was previously registered",
+        "@reportGroup": "1",
+        "TransactionID": "82918650608928066",
         "Type": "VI",
         "bin": "445701",
-        "PaymentAccountID": "1111111111110009"
+        "PaymentAccountID": "1111000229350009"
       }
     },
-    "RequestID": "c2938dac-1f84-4330-abe1-cd122c53eb66"
+    "RequestID": "9c3c495d-c6f9-4220-a27e-20b365b1dbc2"
   }
 }

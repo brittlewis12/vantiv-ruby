@@ -8,10 +8,13 @@
       "@version": "10.2",
       "registerTokenResponse": {
         "response": "877",
-        "@id": "a8a88b2e662182081531122f",
-        "message": "Invalid paypage registration id"
+        "responseTime": "2016-08-15T20:29:30",
+        "@id": "6b306a1da6262911e72a7b8a",
+        "message": "Invalid paypage registration id",
+        "@reportGroup": "1",
+        "TransactionID": "82918650608927977"
       }
     },
-    "RequestID": "916fa86e-a0dc-44ed-af37-5c15ba9ed8c1"
+    "RequestID": "f5a21dcd-e86f-4f15-e7fd-a085b81869d4"
   }
 }

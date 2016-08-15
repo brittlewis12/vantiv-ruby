@@ -8,10 +8,14 @@
       "@version": "10.2",
       "captureResponse": {
         "response": "001",
-        "@id": "767a4c782d53f6e3a3bf5fba",
-        "message": "Transaction Received"
+        "responseTime": "2016-08-15T20:29:44",
+        "postDate": "2016-08-15",
+        "@id": "4f481b907e5af8eaa2ee5fd9",
+        "message": "Transaction Received",
+        "@reportGroup": "1",
+        "TransactionID": "82918650611384851"
       }
     },
-    "RequestID": "11822bd5-2b4d-424f-f160-543be7665ba0"
+    "RequestID": "1deedd99-9fcf-465b-bdcc-45d97fe30e53"
   }
 }

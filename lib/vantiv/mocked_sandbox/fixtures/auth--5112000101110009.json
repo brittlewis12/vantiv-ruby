@@ -11,11 +11,15 @@
         "@customerId": "not-dynamic-cust-id",
         "orderId": "not-dynamic-order-id",
         "response": "000",
-        "@id": "fb3e7e81783f6548bc512dfc",
+        "responseTime": "2016-08-15T20:29:41",
+        "postDate": "2016-08-15",
+        "@id": "281e3ebb279a147b5da094ab",
         "fraudResult": {
           "avsResult": "00"
         },
         "message": "Approved",
+        "@reportGroup": "1",
+        "TransactionID": "82918650611384570",
         "accountUpdater": {
           "originalCardTokenInfo": {
             "bin": "511200",
@@ -38,6 +42,6 @@
         }
       }
     },
-    "RequestID": "fe8cdb25-497a-4459-c2e7-1914a10be113"
+    "RequestID": "34bbd9a8-4347-4495-e090-df42d0f841c0"
   }
 }
