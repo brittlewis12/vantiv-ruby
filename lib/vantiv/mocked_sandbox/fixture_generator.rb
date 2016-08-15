@@ -183,7 +183,7 @@ module Vantiv
       end
 
       def write_fixture_to_file(file_name, response)
-        File.open("#{MockedSandbox.fixtures_directory}/#{file_name}.json.erb", 'w') do |fixture|
+        File.open("#{MockedSandbox.fixtures_directory}/#{file_name}.json", 'w') do |fixture|
           fixture << JSON.pretty_generate(
             MockedResponseRepresenter.new(response).to_hash
           )

@@ -69,7 +69,7 @@ module Vantiv
       def load_fixture(api_method, card_number_or_temporary_token = nil)
         fixture_file_name = card_number_or_temporary_token ? "#{api_method}--#{card_number_or_temporary_token}" : api_method
         begin
-          self.fixture = File.open("#{MockedSandbox.fixtures_directory}#{fixture_file_name}.json.erb", 'r') do |f|
+          self.fixture = File.open("#{MockedSandbox.fixtures_directory}#{fixture_file_name}.json", 'r') do |f|
             response = MockedResponseRepresenter.new(response_object).from_json(f.read)
 
             transaction_response = response.body.authorization_response || response.body.sale_response ||

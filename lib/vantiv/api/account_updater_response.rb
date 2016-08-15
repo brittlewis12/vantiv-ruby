@@ -1,7 +1,7 @@
 module Vantiv
   module Api
     class CardTokenInfo
-      attr_accessor :payment_account_id, :card_type, :expiry_month, :expiry_year
+      attr_accessor :payment_account_id, :card_type, :expiry_month, :expiry_year, :bin
     end
 
     class ExtendedCardResponse
@@ -9,7 +9,7 @@ module Vantiv
     end
 
     class AccountUpdaterResponse
-      attr_accessor :new_card_token_info, :extended_card_response
+      attr_accessor :original_card_token_info, :new_card_token_info, :extended_card_response
 
       def initialize
         @new_card_token_info = CardTokenInfo.new

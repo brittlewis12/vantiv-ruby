@@ -31,19 +31,6 @@ describe Vantiv::Api::Response do
     )
   end
 
-  describe "#request_id" do
-    let(:request_id) { "request id" }
-    let(:body) do
-      {
-        "RequestID" => request_id
-      }
-    end
-
-    it "returns the response body's request id" do
-      expect(response.request_id).to eq(request_id)
-    end
-  end
-
   describe "api_level_failure?" do
 
     context "when the http response code is not ok" do

@@ -15,11 +15,6 @@ module Vantiv
         @body = body
       end
 
-      # Only returned by cert API?
-      def request_id
-        body["RequestID"]
-      end
-
       def api_level_failure?
         !httpok || litle_response_has_error?
       end

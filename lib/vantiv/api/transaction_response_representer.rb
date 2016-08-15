@@ -30,7 +30,16 @@ class TransactionResponseRepresenter < Representable::Decorator
   property :payment_account_id, as: :PaymentAccountID
 
   property :account_updater, as: :accountUpdater, class: Vantiv::Api::AccountUpdaterResponse do
+    property :original_card_token_info, as: :originalCardTokenInfo, class: Vantiv::Api::CardTokenInfo do
+      property :bin
+      property :card_type, as: :Type
+      property :payment_account_id, as: :PaymentAccountID
+      property :expiry_month, as: :ExpirationMonth
+      property :expiry_year, as: :ExpirationYear
+    end
+
     property :new_card_token_info, as: :newCardTokenInfo, class: Vantiv::Api::CardTokenInfo do
+      property :bin
       property :card_type, as: :Type
       property :payment_account_id, as: :PaymentAccountID
       property :expiry_month, as: :ExpirationMonth
