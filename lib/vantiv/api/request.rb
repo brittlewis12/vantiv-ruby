@@ -1,6 +1,3 @@
-require 'vantiv/api/response_body_representer'
-require 'vantiv/api/response_body'
-
 module Vantiv
   class Api::Request
     attr_reader :body
