@@ -1,26 +1,20 @@
+require "forwardable"
+
 module Vantiv
   module Api
     class Response
+      extend Forwardable
+
       attr_accessor :httpok, :http_response_code, :body, :raw_body
+
+      def_delegators :litle_transaction_response, :message, :response_code, :transaction_id
 
       def api_level_failure?
         !httpok || litle_response_has_error?
       end
 
-      def message
-        litle_transaction_response.message
-      end
-
       def error_message
         api_level_failure? ? api_level_error_message : message
-      end
-
-      def response_code
-        litle_transaction_response.response_code
-      end
-
-      def transaction_id
-        litle_transaction_response.transaction_id
       end
 
       private
