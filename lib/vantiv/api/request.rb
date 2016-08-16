@@ -65,7 +65,7 @@ module Vantiv
     def run_request_with_retries
       begin
         run_request
-      rescue JSON::ParserError, MultiJson::ParseError => e
+      rescue MultiJson::ParseError => e
         increment_retry_count
         max_retries_exceeded? ? raise(e) : retry
       end
