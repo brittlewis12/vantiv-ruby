@@ -40,6 +40,11 @@ describe Vantiv::Api::Request do
       expect(response.transaction_id).to eq nil
     end
 
+    it "returns the API level error message" do
+      response = run_api_request
+      expect(response.error_message).to eq "API level error"
+    end
+
     it "returns an api level failure" do
       expect(run_api_request.api_level_failure?).to eq true
     end

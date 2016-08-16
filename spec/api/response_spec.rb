@@ -35,7 +35,7 @@ describe Vantiv::Api::Response do
 
     context "when the http response code is not ok" do
       let(:httpok) { false }
-      let(:body) { {} }
+      let(:body) { Vantiv::Api::ResponseBody.new }
 
       it "is true" do
         expect(response.api_level_failure?).to eq(true)
@@ -79,17 +79,10 @@ describe Vantiv::Api::Response do
     context "when configuration leads to API level failure" do
       let(:api_error_message) { "error message" }
       let(:httpok) { false }
-      let(:body) do
-        {
-          "errorcode"=>"400",
-          "errormsg"=> api_error_message,
-          "errortype"=>"sender",
-          "correlationid"=>"b9c1f38b-0fb8-416c-deef-3eb7288634ee"
-        }
-       end
+      let(:body) { Vantiv::Api::ResponseBody.new }
 
-      it "returns the given error message" do
-        expect(response.error_message).to eq(api_error_message)
+      it "returns the API level error message" do
+        expect(response.error_message).to eq("API level error")
       end
     end
 

@@ -39,7 +39,7 @@ module Vantiv
       end
 
       def api_level_error_message
-        body["errormsg"]
+        "API level error"
       end
 
       attr_reader :transaction_response_name
