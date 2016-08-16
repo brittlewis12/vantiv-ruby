@@ -54,7 +54,7 @@ describe "mocked API requests to auth" do
         (
           Vantiv::Api::LiveTransactionResponse.instance_methods(false) +
           Vantiv::Api::Response.instance_methods(false) -
-          [:payment_account_id, :body, :load, :request_id, :transaction_id, :account_updater]
+          [:payment_account_id, :body, :raw_body, :load, :request_id, :transaction_id, :account_updater]
         ).each do |method_name|
           next if method_name.to_s.end_with?("=")
 

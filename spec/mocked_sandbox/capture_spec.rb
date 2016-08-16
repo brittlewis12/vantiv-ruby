@@ -60,7 +60,7 @@ describe "mocked API requests to capture" do
         (
           Vantiv::Api::TiedTransactionResponse.instance_methods(false) +
           Vantiv::Api::Response.instance_methods(false) -
-          [:payment_account_id, :body, :load, :request_id, :transaction_id]
+          [:payment_account_id, :body, :raw_body, :load, :request_id, :transaction_id]
         ).each do |method_name|
           next if method_name.to_s.end_with?("=")
 
