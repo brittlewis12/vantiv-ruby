@@ -1,4 +1,5 @@
 require 'vantiv/api/response'
+require 'vantiv/api/transaction_response'
 require 'vantiv/api/tied_transaction_response'
 require 'vantiv/api/live_transaction_response'
 require 'vantiv/api/account_updater_response'
