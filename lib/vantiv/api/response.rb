@@ -3,12 +3,6 @@ module Vantiv
     class Response
       attr_accessor :httpok, :http_response_code, :body
 
-      def load(httpok:, http_response_code:, body:)
-        @httpok = httpok
-        @http_response_code = http_response_code
-        @body = body
-      end
-
       def api_level_failure?
         !httpok || litle_response_has_error?
       end

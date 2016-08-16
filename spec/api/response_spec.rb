@@ -5,11 +5,9 @@ describe Vantiv::Api::Response do
   let(:transaction_response_name) { "authorizationResponse" }
   let(:response) do
     response = Vantiv::Api::Response.new
-    response.load(
-      httpok: httpok,
-      http_response_code: "1234",
-      body: body
-    )
+    response.httpok = httpok
+    response.http_response_code = "1234"
+    response.body = body
     response
   end
 
