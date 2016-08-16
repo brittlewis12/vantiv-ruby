@@ -16,8 +16,6 @@ module Vantiv
         sale: "saleResponse"
       }
 
-      attr_accessor :account_updater
-
       def initialize(transaction_name)
         unless @transaction_response_name = LIVE_TRANSACTION_RESPONSE_NAMES[transaction_name]
           raise "Implementation Error: Live transactions do not include #{transaction_name}"
