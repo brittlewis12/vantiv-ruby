@@ -22,18 +22,25 @@ module Vantiv
 
       request = Net::HTTP::Post.new(uri.request_uri, header)
       request.body = body
-      raw_response = http.request(request)
-      response_body_object = Vantiv::Api::ResponseBody.new
-      response_body_object = ResponseBodyRepresenter.new(response_body_object).from_json(raw_response.body)
-      response_object.body = response_body_object
-      response_object.httpok = raw_response.code_type == Net::HTTPOK
-      response_object.http_response_code = raw_response.code
-      response_object
+
+      http_response = http.request(request)
+
+      populated_response(@response_object, http_response)
     end
 
     private
 
-    attr_reader :endpoint, :response_object
+    def populated_response(response, http_response)
+      new_response = response.dup
+      response_body = ResponseBodyRepresenter.new(
+        Vantiv::Api::ResponseBody.new
+      ).from_json(http_response.body)
+
+      new_response.body = response_body
+      new_response.httpok = http_response.code_type == Net::HTTPOK
+      new_response.http_response_code = http_response.code
+      new_response
+    end
 
     def header
       {
@@ -43,7 +50,7 @@ module Vantiv
     end
 
     def uri
-      @uri ||= URI.parse("#{root_uri}/#{endpoint}")
+      @uri ||= URI.parse("#{root_uri}/#{@endpoint}")
     end
 
     def root_uri
