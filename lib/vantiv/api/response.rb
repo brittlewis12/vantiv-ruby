@@ -44,10 +44,6 @@ module Vantiv
 
       attr_reader :transaction_response_name
 
-      def litle_response
-        api_level_failure? ? {} : body["litleOnlineResponse"]
-      end
-
       def litle_transaction_response
         api_level_failure? ? TransactionResponse.new : body.send(transaction_response_name)
       end
