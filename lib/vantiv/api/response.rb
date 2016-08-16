@@ -20,7 +20,7 @@ module Vantiv
       end
 
       def message
-        litle_transaction_response.message if litle_transaction_response
+        litle_transaction_response.message
       end
 
       def error_message
@@ -28,11 +28,11 @@ module Vantiv
       end
 
       def response_code
-        litle_transaction_response.response_code if litle_transaction_response
+        litle_transaction_response.response_code
       end
 
       def transaction_id
-        litle_transaction_response.transaction_id if litle_transaction_response
+        litle_transaction_response.transaction_id
       end
 
       private
@@ -55,7 +55,7 @@ module Vantiv
       end
 
       def litle_transaction_response
-        api_level_failure? ? nil: body.send(snake_case(transaction_response_name))
+        api_level_failure? ? TransactionResponse.new : body.send(snake_case(transaction_response_name))
       end
 
       def snake_case(string)
