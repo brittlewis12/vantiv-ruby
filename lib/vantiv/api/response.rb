@@ -1,7 +1,7 @@
 module Vantiv
   module Api
     class Response
-      attr_accessor :httpok, :http_response_code, :body
+      attr_accessor :httpok, :http_response_code, :body, :raw_body
 
       def api_level_failure?
         !httpok || litle_response_has_error?

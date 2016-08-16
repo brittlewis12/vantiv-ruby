@@ -72,4 +72,15 @@ describe Vantiv::Api::Request do
       expect(@response.body.version).to eq "blabla"
     end
   end
+
+  it "sets the raw response on the response object" do
+    allow_any_instance_of(Net::HTTP)
+      .to receive(:request)
+      .and_return(double('http response', body: "some body").as_null_object)
+
+    allow_any_instance_of(ResponseBodyRepresenter)
+      .to receive(:from_json)
+
+    expect(run_api_request.raw_body).to eq("some body")
+  end
 end

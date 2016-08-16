@@ -29,13 +29,16 @@ module Vantiv
 
     def populated_response(response, http_response)
       new_response = response.dup
+
+      new_response.raw_body = http_response.body
+      new_response.httpok = http_response.code_type == Net::HTTPOK
+      new_response.http_response_code = http_response.code
+
       response_body = ResponseBodyRepresenter.new(
         Vantiv::Api::ResponseBody.new
       ).from_json(http_response.body)
-
       new_response.body = response_body
-      new_response.httpok = http_response.code_type == Net::HTTPOK
-      new_response.http_response_code = http_response.code
+
       new_response
     end
 
