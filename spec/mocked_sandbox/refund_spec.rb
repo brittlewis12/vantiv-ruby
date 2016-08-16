@@ -55,9 +55,9 @@ describe "mocked API requests to refund" do
         Vantiv::Api::Response.instance_methods(false) -
         [:payment_account_id, :body, :load, :request_id, :transaction_id]
       ).each do |method_name|
-        next if method_name.to_s.end_with?("=")
+          next if method_name.to_s.end_with?("=")
 
-        live_response_value = live_response.send(method_name)
+          live_response_value = live_response.send(method_name)
           mocked_response_value = mocked_response.send(method_name)
 
           expect(mocked_response_value).to eq(live_response_value),
