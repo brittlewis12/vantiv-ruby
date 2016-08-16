@@ -6,11 +6,11 @@ module Vantiv
       }.freeze
 
       TIED_TRANSACTION_RESPONSE_NAMES = {
-        auth_reversal: 'authReversalResponse',
-        capture: "captureResponse",
-        credit: "creditResponse",
-        return: "creditResponse",
-        void: "voidResponse"
+        auth_reversal: 'auth_reversal_response',
+        capture: "capture_response",
+        credit: "credit_response",
+        return: "credit_response",
+        void: "void_response"
       }
 
       def initialize(transaction_name)

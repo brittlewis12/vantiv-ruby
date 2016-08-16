@@ -42,7 +42,7 @@ module Vantiv
       end
 
       def transaction_response_name
-        "registerTokenResponse"
+        "register_token_response"
       end
     end
   end

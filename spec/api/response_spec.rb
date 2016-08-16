@@ -27,7 +27,7 @@ describe Vantiv::Api::Response do
   def set_transaction_response_name
     response.instance_variable_set(
       :@transaction_response_name,
-      transaction_response_name
+      "authorization_response"
     )
   end
 

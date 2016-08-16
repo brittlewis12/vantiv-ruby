@@ -4,7 +4,7 @@ describe Vantiv::Api::Request do
   let(:general_response_class) do
     Class.new(Vantiv::Api::Response) do
       def initialize
-        @transaction_response_name = "tokenizationResponse"
+        @transaction_response_name = "tokenization_response"
       end
     end
   end

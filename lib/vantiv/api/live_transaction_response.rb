@@ -12,8 +12,8 @@ module Vantiv
       }.freeze
 
       LIVE_TRANSACTION_RESPONSE_NAMES = {
-        auth: "authorizationResponse",
-        sale: "saleResponse"
+        auth: "authorization_response",
+        sale: "sale_response"
       }
 
       def initialize(transaction_name)
