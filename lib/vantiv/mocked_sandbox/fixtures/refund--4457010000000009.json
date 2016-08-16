@@ -9,14 +9,14 @@
       "creditResponse": {
         "@customerId": "not-dynamic-cust-id",
         "response": "001",
-        "responseTime": "2016-08-15T20:29:36",
-        "postDate": "2016-08-15",
-        "@id": "7c1d7efb2f727da365b20f5d",
+        "responseTime": "2016-08-16T14:31:29",
+        "postDate": "2016-08-16",
+        "@id": "ad672242d0cdf88be7e5173f",
         "message": "Transaction Received",
         "@reportGroup": "1",
-        "TransactionID": "82918650608928306"
+        "TransactionID": "82918655926355678"
       }
     },
-    "RequestID": "144ccdc1-84b3-417d-b8ad-fd4cb4846805"
+    "RequestID": "256d3791-fcf6-48ed-9db1-f273a86e4761"
   }
 }

@@ -58,6 +58,7 @@ module Vantiv
 
       def record_tokenize_for_test_token(test_temporary_token:, live_temporary_token:, mocked_payment_account_id:)
         cert_response = Vantiv.tokenize(temporary_token: live_temporary_token)
+        cert_response.body.register_token_response.payment_account_id = mocked_payment_account_id
         write_fixture_to_file(
           "tokenize--#{test_temporary_token}",
           cert_response
@@ -75,6 +76,7 @@ module Vantiv
           expiry_year: card.expiry_year,
           cvv: card.cvv
         )
+        cert_response.body.register_token_response.payment_account_id = card.mocked_sandbox_payment_account_id
         write_fixture_to_file("tokenize_by_direct_post--#{card.card_number}", cert_response)
       end
 
