@@ -72,23 +72,25 @@ module Vantiv
           self.fixture = File.open("#{MockedSandbox.fixtures_directory}#{fixture_file_name}.json", 'r') do |f|
             response = MockedResponseRepresenter.new(response_object).from_json(f.read)
 
-            transaction_response = response.body.authorization_response || response.body.sale_response ||
-              response.body.credit_response || response.body.void_response ||
-              response.body.auth_reversal_response || response.body.capture_response ||
-              response.body.register_token_response
-
-            transaction_response.report_group = Vantiv.default_report_group
-            transaction_response.response_time = Time.now.strftime('%FT%T')
-            transaction_response.transaction_id = rand(10**17)
-
-            if transaction_response.post_date
-              transaction_response.post_date = Time.now.strftime('%F')
-            end
-            response
+            populated_dynamic_response(response)
           end
         rescue Errno::ENOENT
           raise FixtureNotFound.new("Fixture not found for api method: #{api_method}, card number or temporary token: #{card_number_or_temporary_token}")
         end
+      end
+
+      def populated_dynamic_response(response)
+        dynamic_response = response.dup
+        transaction_response = dynamic_response.send(:litle_transaction_response)
+
+        transaction_response.report_group = Vantiv.default_report_group
+        transaction_response.response_time = Time.now.strftime('%FT%T')
+        transaction_response.transaction_id = rand(10**17)
+
+        if transaction_response.post_date
+          transaction_response.post_date = Time.now.strftime('%F')
+        end
+        dynamic_response
       end
     end
   end
