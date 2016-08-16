@@ -17,13 +17,6 @@ class ResponseBodyRepresenter < Representable::Decorator
     property :auth_reversal_response, as: :authReversalResponse, decorator: TransactionResponseRepresenter, class: Vantiv::Api::TransactionResponse
     property :capture_response, as: :captureResponse, decorator: TransactionResponseRepresenter, class: Vantiv::Api::TransactionResponse
     property :register_token_response, as: :registerTokenResponse, decorator: TransactionResponseRepresenter, class: Vantiv::Api::TransactionResponse
-
-    property :fault, class: OpenStruct do
-      property :faultstring
-      property :detail do
-        property :errorcode
-      end
-    end
   end
 
   property :request_id, as: :RequestID

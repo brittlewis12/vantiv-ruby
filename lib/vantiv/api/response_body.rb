@@ -1,8 +1,6 @@
 module Vantiv
   module Api
     class ResponseBody
-      attr_reader :fault
-
       attr_writer :message, :response_code
 
       attr_accessor :body_message, :response, :version, :request_id
