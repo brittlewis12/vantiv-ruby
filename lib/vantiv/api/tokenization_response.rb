@@ -18,7 +18,11 @@ module Vantiv
         generic_token_use_error: '899'
       }.freeze
 
-      def_delegators :litle_transaction_response, :payment_account_id, :type
+      def_delegators :litle_transaction_response, :payment_account_id
+
+      def card_type
+        litle_transaction_response.type
+      end
 
       def success?
         !api_level_failure? && tokenization_successful?
