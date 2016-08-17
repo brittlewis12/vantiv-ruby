@@ -75,7 +75,7 @@ module Vantiv
 
             populated_response = populate_dynamic_response(response)
 
-            raw_body = JSON.parse(raw_fixture)["body"]
+            raw_body = JSON.parse(raw_fixture)["body"].to_s
             populated_response.raw_body = raw_body
             populated_response
           end
