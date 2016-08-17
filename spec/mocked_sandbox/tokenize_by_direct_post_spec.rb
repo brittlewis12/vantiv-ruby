@@ -56,6 +56,10 @@ describe "mocked API requests to tokenize_by_direct_post" do
         expect(mocked_response.payment_account_id).to eq card.mocked_sandbox_payment_account_id
       end
 
+      it "returns a raw body" do
+        expect(mocked_response.raw_body).to be
+      end
+
       it "returns a dynamic transaction id" do
         response_1 = run_mocked_response
         response_2 = run_mocked_response

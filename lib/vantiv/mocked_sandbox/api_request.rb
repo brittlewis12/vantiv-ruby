@@ -70,16 +70,21 @@ module Vantiv
         fixture_file_name = card_number_or_temporary_token ? "#{api_method}--#{card_number_or_temporary_token}" : api_method
         begin
           self.fixture = File.open("#{MockedSandbox.fixtures_directory}#{fixture_file_name}.json", 'r') do |f|
-            response = MockedResponseRepresenter.new(response_object).from_json(f.read)
+            raw_fixture = f.read
+            response = MockedResponseRepresenter.new(response_object).from_json(raw_fixture)
 
-            populated_dynamic_response(response)
+            populated_response = populate_dynamic_response(response)
+
+            raw_body = JSON.parse(raw_fixture)["body"]
+            populated_response.raw_body = raw_body
+            populated_response
           end
         rescue Errno::ENOENT
           raise FixtureNotFound.new("Fixture not found for api method: #{api_method}, card number or temporary token: #{card_number_or_temporary_token}")
         end
       end
 
-      def populated_dynamic_response(response)
+      def populate_dynamic_response(response)
         dynamic_response = response.dup
         transaction_response = dynamic_response.send(:litle_transaction_response)
 

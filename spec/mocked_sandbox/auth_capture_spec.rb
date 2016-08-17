@@ -70,6 +70,10 @@ describe "mocked API requests to auth_capture" do
         end
       end
 
+      it "returns a raw body" do
+        expect(mocked_response.raw_body).to be
+      end
+
       it "returns a dynamic transaction id" do
         response_1 = run_mocked_response
         response_2 = run_mocked_response
