@@ -90,7 +90,7 @@ module Vantiv
 
         transaction_response.report_group = Vantiv.default_report_group
         transaction_response.response_time = Time.now.strftime('%FT%T')
-        transaction_response.transaction_id = rand(10**17)
+        transaction_response.transaction_id = rand(10**17).to_s
 
         if transaction_response.post_date
           transaction_response.post_date = Time.now.strftime('%F')
