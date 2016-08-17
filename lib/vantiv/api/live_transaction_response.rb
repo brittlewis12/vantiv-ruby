@@ -43,7 +43,8 @@ module Vantiv
       end
 
       def account_updater
-        litle_transaction_response.account_updater || AccountUpdaterResponse.new
+        @account_updater ||=
+          litle_transaction_response.account_updater || AccountUpdaterResponse.new
       end
 
       private
