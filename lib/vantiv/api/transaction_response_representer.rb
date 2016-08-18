@@ -52,4 +52,10 @@ class TransactionResponseRepresenter < Representable::Decorator
     end
   end
 
+  property :token_response, as: :tokenResponse, class: Vantiv::Api::CardTokenInfo do
+    property :bin
+    property :card_type, as: :Type
+    property :payment_account_id, as: :PaymentAccountID
+  end
+
 end

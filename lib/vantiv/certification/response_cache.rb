@@ -6,22 +6,15 @@ module Vantiv
       end
 
       def push(cert_name, response)
-        responses[cert_name] = response
+        @responses[cert_name] = response
       end
 
       def access_value(values_tree)
         cert_name = values_tree.shift
-        response_body = responses[cert_name].body
-
-        get_value(response_body, values_tree)
-      end
-
-      private
-
-      attr_reader :responses
-
-      def get_value(source, keys)
-        keys.any? ? get_value(source[keys.shift], keys) : source
+        response = @responses[cert_name]
+        method_chain = values_tree.join('.')
+        p response
+        response.instance_eval(method_chain)
       end
     end
 

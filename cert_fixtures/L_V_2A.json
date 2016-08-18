@@ -2,7 +2,7 @@
   "endpoint": "VOID",
   "body": {
     "Transaction": {
-      "TransactionID": "#{L_V_2.litleOnlineResponse.saleResponse.TransactionID}"
+      "TransactionID": "#{L_V_2.body.sale_response.transaction_id}"
     }
   }
 }
