@@ -34,8 +34,10 @@ describe "mocked API requests to tokenize_by_direct_post" do
       (
         Vantiv::Api::TokenizationResponse.instance_methods(false) +
         Vantiv::Api::Response.instance_methods(false) -
-        [:payment_account_id, :body, :load, :request_id, :transaction_id]
+        [:payment_account_id, :body, :raw_body, :load, :request_id, :transaction_id]
       ).each do |method_name|
+          next if method_name.to_s.end_with?("=")
+
           live_response_value = live_response.send(method_name)
           mocked_response_value = mocked_response.send(method_name)
 
@@ -52,6 +54,10 @@ describe "mocked API requests to tokenize_by_direct_post" do
       it "returns the whitelisted payment account id" do
         expect(mocked_response.success?).to eq true
         expect(mocked_response.payment_account_id).to eq card.mocked_sandbox_payment_account_id
+      end
+
+      it "returns a raw body string" do
+        expect(mocked_response.raw_body).to be_an_instance_of String
       end
 
       it "returns a dynamic transaction id" do

@@ -9,7 +9,7 @@
       "PartialApprovedFlag": "false"
     },
     "PaymentAccount": {
-      "PaymentAccountID": "#{L_AU_3.litleOnlineResponse.saleResponse.tokenResponse.PaymentAccountID}"
+      "PaymentAccountID": "#{L_AU_3.body.sale_response.token_response.payment_account_id}"
     },
     "Card": {
       "ExpirationMonth": "01",

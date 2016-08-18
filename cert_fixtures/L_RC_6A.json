@@ -2,7 +2,7 @@
   "endpoint": "CREDIT",
   "body": {
     "Transaction": {
-      "TransactionID": "#{L_RC_6.litleOnlineResponse.saleResponse.TransactionID}"
+      "TransactionID": "#{L_RC_6.body.sale_response.transaction_id}"
     }
   }
 }

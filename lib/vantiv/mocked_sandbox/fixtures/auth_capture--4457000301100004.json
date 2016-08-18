@@ -1,0 +1,35 @@
+{
+  "httpok": true,
+  "http_response_code": "200",
+  "body": {
+    "litleOnlineResponse": {
+      "@message": "Valid Format",
+      "@response": "0",
+      "@version": "10.2",
+      "saleResponse": {
+        "authCode": "123457",
+        "@customerId": "not-dynamic-cust-id",
+        "orderId": "not-dynamic-order-id",
+        "response": "000",
+        "responseTime": "2016-08-16T14:31:35",
+        "postDate": "2016-08-16",
+        "@id": "a58c07cc837febbc49aa977c",
+        "fraudResult": {
+          "avsResult": "00"
+        },
+        "message": "Approved",
+        "@reportGroup": "1",
+        "TransactionID": "82918655929057578",
+        "accountUpdater": {
+          "newCardTokenInfo": {
+          },
+          "extendedCardResponse": {
+            "code": "504",
+            "message": "Contact the cardholder for updated information"
+          }
+        }
+      }
+    },
+    "RequestID": "d216a847-70b2-4be2-91a7-4a638c18980f"
+  }
+}

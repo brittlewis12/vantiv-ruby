@@ -1,16 +1,21 @@
+require 'vantiv/api/response'
+require 'vantiv/api/live_transaction_response'
+require 'vantiv/mocked_sandbox/mocked_response_representer'
+
 module Vantiv
   module MockedSandbox
     class ApiRequest
       class EndpointNotMocked < StandardError; end
       class FixtureNotFound < StandardError; end
 
-      def self.run(endpoint:, body:)
-        new(endpoint, body).run
+      def self.run(endpoint:, body:, response_object:)
+        new(endpoint, body, response_object).run
       end
 
-      def initialize(endpoint, request_body)
+      def initialize(endpoint, request_body, response_object)
         self.endpoint = endpoint
         self.request_body = JSON.parse(request_body)
+        self.response_object = response_object
       end
 
       def run
@@ -37,16 +42,11 @@ module Vantiv
         else
           raise EndpointNotMocked.new("#{endpoint} is not mocked!")
         end
-        {
-          httpok: fixture["httpok"],
-          http_response_code: fixture["http_response_code"],
-          body: JSON.parse(ERB.new(fixture["response_body"]).result(binding))
-        }
       end
 
       private
 
-      attr_accessor :endpoint, :request_body, :fixture
+      attr_accessor :endpoint, :request_body, :fixture, :response_object
 
       def direct_post?
         request_body["Card"] && request_body["Card"]["AccountNumber"] != nil
@@ -69,18 +69,33 @@ module Vantiv
       def load_fixture(api_method, card_number_or_temporary_token = nil)
         fixture_file_name = card_number_or_temporary_token ? "#{api_method}--#{card_number_or_temporary_token}" : api_method
         begin
-          self.fixture = File.open("#{MockedSandbox.fixtures_directory}#{fixture_file_name}.json.erb", 'r') do |f|
-            raw_fixture = JSON.parse(f.read)
-            # Prevent rails overridden version of to_json from encoding erb sepcial characters
-            raw_fixture["response_body"] = JSON::Ext::Generator::GeneratorMethods::Hash
-              .instance_method(:to_json)
-              .bind(raw_fixture["response_body"])
-              .call
-            raw_fixture
+          self.fixture = File.open("#{MockedSandbox.fixtures_directory}#{fixture_file_name}.json", 'r') do |f|
+            raw_fixture = f.read
+            response = MockedResponseRepresenter.new(response_object).from_json(raw_fixture)
+
+            populated_response = populate_dynamic_response(response)
+
+            raw_body = JSON.parse(raw_fixture)["body"].to_s
+            populated_response.raw_body = raw_body
+            populated_response
           end
         rescue Errno::ENOENT
           raise FixtureNotFound.new("Fixture not found for api method: #{api_method}, card number or temporary token: #{card_number_or_temporary_token}")
         end
+      end
+
+      def populate_dynamic_response(response)
+        dynamic_response = response.dup
+        transaction_response = dynamic_response.send(:litle_transaction_response)
+
+        transaction_response.report_group = Vantiv.default_report_group
+        transaction_response.response_time = Time.now.strftime('%FT%T')
+        transaction_response.transaction_id = rand(10**17).to_s
+
+        if transaction_response.post_date
+          transaction_response.post_date = Time.now.strftime('%F')
+        end
+        dynamic_response
       end
     end
   end

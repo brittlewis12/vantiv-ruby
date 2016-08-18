@@ -2,7 +2,7 @@
   "endpoint": "CAPTURE",
   "body": {
     "Transaction": {
-      "TransactionID": "#{L_V_1.litleOnlineResponse.authorizationResponse.TransactionID}"
+      "TransactionID": "#{L_V_1.body.authorization_response.transaction_id}"
     }
   }
 }

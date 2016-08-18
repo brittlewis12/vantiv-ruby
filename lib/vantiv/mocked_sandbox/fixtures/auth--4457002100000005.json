@@ -1,0 +1,26 @@
+{
+  "httpok": true,
+  "http_response_code": "200",
+  "body": {
+    "litleOnlineResponse": {
+      "@message": "Valid Format",
+      "@response": "0",
+      "@version": "10.2",
+      "authorizationResponse": {
+        "@customerId": "not-dynamic-cust-id",
+        "orderId": "not-dynamic-order-id",
+        "response": "110",
+        "responseTime": "2016-08-16T14:31:31",
+        "postDate": "2016-08-16",
+        "@id": "295033dae8fea9339bf0c2d4",
+        "fraudResult": {
+          "avsResult": "00"
+        },
+        "message": "Insufficient Funds",
+        "@reportGroup": "1",
+        "TransactionID": "82918655926355850"
+      }
+    },
+    "RequestID": "65fa5e6d-1068-4b88-f9f9-895c87cdf197"
+  }
+}

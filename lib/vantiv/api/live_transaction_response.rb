@@ -12,8 +12,8 @@ module Vantiv
       }.freeze
 
       LIVE_TRANSACTION_RESPONSE_NAMES = {
-        auth: "authorizationResponse",
-        sale: "saleResponse"
+        auth: "authorization_response",
+        sale: "sale_response"
       }
 
       def initialize(transaction_name)
@@ -43,9 +43,8 @@ module Vantiv
       end
 
       def account_updater
-        @account_updater ||= AccountUpdaterResponse.new(
-          litle_transaction_response.fetch("accountUpdater", {})
-        )
+        @account_updater ||=
+          litle_transaction_response.account_updater || AccountUpdaterResponse.new
       end
 
       private

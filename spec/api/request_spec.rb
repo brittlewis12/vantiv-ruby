@@ -4,7 +4,7 @@ describe Vantiv::Api::Request do
   let(:general_response_class) do
     Class.new(Vantiv::Api::Response) do
       def initialize
-        @transaction_response_name = "tokenizationResponse"
+        @transaction_response_name = "tokenization_response"
       end
     end
   end
@@ -40,6 +40,11 @@ describe Vantiv::Api::Request do
       expect(response.transaction_id).to eq nil
     end
 
+    it "returns the API level error message" do
+      response = run_api_request
+      expect(response.error_message).to eq "API level error"
+    end
+
     it "returns an api level failure" do
       expect(run_api_request.api_level_failure?).to eq true
     end
@@ -57,14 +62,25 @@ describe Vantiv::Api::Request do
         double(
           code_type: Net::HTTPOK,
           code: "200",
-          body: {something: "in json"}.to_json
+          body: {"litleOnlineResponse":{"@version": "blabla"}}.to_json
         )
       ]
       allow_any_instance_of(Net::HTTP).to receive(:request) { vantiv_responses.shift }
       expect{
         @response = run_api_request
       }.not_to raise_error
-      expect(@response.body).to eq({"something" => "in json"})
+      expect(@response.body.version).to eq "blabla"
     end
+  end
+
+  it "sets the raw response on the response object" do
+    allow_any_instance_of(Net::HTTP)
+      .to receive(:request)
+      .and_return(double('http response', body: "some body").as_null_object)
+
+    allow_any_instance_of(ResponseBodyRepresenter)
+      .to receive(:from_json)
+
+    expect(run_api_request.raw_body).to eq("some body")
   end
 end

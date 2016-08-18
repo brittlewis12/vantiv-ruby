@@ -1,6 +1,5 @@
 module Vantiv
   class Api::Request
-
     attr_reader :body
 
     def initialize(endpoint:, body:, response_object:)
@@ -11,9 +10,7 @@ module Vantiv
     end
 
     def run
-      vantiv_response = run_request_with_retries
-      response_object.load(vantiv_response)
-      response_object
+      run_request_with_retries
     end
 
     def run_request
@@ -22,18 +19,28 @@ module Vantiv
 
       request = Net::HTTP::Post.new(uri.request_uri, header)
       request.body = body
-      raw_response = http.request(request)
-      parsed_body = JSON.parse(raw_response.body)
-      {
-        httpok: raw_response.code_type == Net::HTTPOK,
-        http_response_code: raw_response.code,
-        body: parsed_body
-      }
+
+      http_response = http.request(request)
+
+      populated_response(@response_object, http_response)
     end
 
     private
 
-    attr_reader :endpoint, :response_object
+    def populated_response(response, http_response)
+      new_response = response.dup
+
+      new_response.raw_body = http_response.body
+      new_response.httpok = http_response.code_type == Net::HTTPOK
+      new_response.http_response_code = http_response.code
+
+      response_body = ResponseBodyRepresenter.new(
+        Vantiv::Api::ResponseBody.new
+      ).from_json(http_response.body)
+      new_response.body = response_body
+
+      new_response
+    end
 
     def header
       {
@@ -43,7 +50,7 @@ module Vantiv
     end
 
     def uri
-      @uri ||= URI.parse("#{root_uri}/#{endpoint}")
+      @uri ||= URI.parse("#{root_uri}/#{@endpoint}")
     end
 
     def root_uri
@@ -65,7 +72,7 @@ module Vantiv
     def run_request_with_retries
       begin
         run_request
-      rescue JSON::ParserError => e
+      rescue MultiJson::ParseError => e
         increment_retry_count
         max_retries_exceeded? ? raise(e) : retry
       end

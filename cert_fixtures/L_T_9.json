@@ -14,7 +14,7 @@
       "CVV": "987"
     },
     "PaymentAccount": {
-      "PaymentAccountID": "#{L_T_8.litleOnlineResponse.authorizationResponse.tokenResponse.PaymentAccountID}"
+      "PaymentAccountID": "#{L_T_8.body.authorization_response.token_response.payment_account_id}"
     }
   }
 }

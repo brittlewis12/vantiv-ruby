@@ -19,7 +19,7 @@ module Vantiv
       private
 
       def transaction_response_name
-        "captureResponse"
+        "capture_response"
       end
     end
   end

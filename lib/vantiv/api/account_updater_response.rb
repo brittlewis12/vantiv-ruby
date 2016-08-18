@@ -1,51 +1,41 @@
+require "forwardable"
+
 module Vantiv
   module Api
+    class CardTokenInfo
+      attr_accessor :payment_account_id, :card_type, :expiry_month, :expiry_year, :bin
+    end
+
+    class ExtendedCardResponse
+      attr_accessor :code, :message
+    end
+
     class AccountUpdaterResponse
-      def initialize(account_updater)
-        @account_updater_response = account_updater
+      extend Forwardable
+
+      attr_accessor :original_card_token_info, :new_card_token_info, :extended_card_response
+
+      def initialize
+        @new_card_token_info = CardTokenInfo.new
+        @extended_card_response = ExtendedCardResponse.new
       end
 
-      def payment_account_id
-        new_card_token_info["PaymentAccountID"]
-      end
-
-      def card_type
-        new_card_token_info["Type"]
-      end
-
-      def expiry_month
-        new_card_token_info["ExpirationMonth"]
-      end
-
-      def expiry_year
-        new_card_token_info["ExpirationYear"]
-      end
+      def_delegators :new_card_token_info, :payment_account_id, :card_type, :expiry_month, :expiry_year
 
       def extended_card_response_code
-        extended_card_response["code"]
+        extended_card_response.code
       end
 
       def extended_card_response_message
-        extended_card_response["message"]
+        extended_card_response.message
       end
 
       def new_card_token?
-        new_card_token_info.any?
+        !!payment_account_id
       end
 
       def extended_card_response?
-        extended_card_response.any?
-      end
-
-      private
-      attr_reader :account_updater_response
-
-      def new_card_token_info
-        account_updater_response.fetch("newCardTokenInfo", {})
-      end
-
-      def extended_card_response
-        account_updater_response.fetch("extendedCardResponse", {})
+        !!extended_card_response_code || !!extended_card_response_message
       end
     end
   end

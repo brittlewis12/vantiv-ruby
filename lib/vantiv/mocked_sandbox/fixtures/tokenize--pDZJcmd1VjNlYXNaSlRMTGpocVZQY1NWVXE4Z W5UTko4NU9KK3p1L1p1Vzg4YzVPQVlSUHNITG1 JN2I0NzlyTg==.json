@@ -1,0 +1,20 @@
+{
+  "httpok": true,
+  "http_response_code": "200",
+  "body": {
+    "litleOnlineResponse": {
+      "@message": "Valid Format",
+      "@response": "0",
+      "@version": "10.2",
+      "registerTokenResponse": {
+        "response": "877",
+        "responseTime": "2016-08-16T14:31:26",
+        "@id": "4a38730259683aec0ccfa6cc",
+        "message": "Invalid paypage registration id",
+        "@reportGroup": "1",
+        "TransactionID": "82918655926355447"
+      }
+    },
+    "RequestID": "0d6b658a-37dd-4d7d-8cda-ae3fd5de1445"
+  }
+}

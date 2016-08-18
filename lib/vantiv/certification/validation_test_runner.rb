@@ -102,7 +102,7 @@ module Vantiv
         end
 
         response_cache.push(cert_name, response)
-        results_file << "#{cert_name},#{response.request_id}\n"
+        results_file << "#{cert_name},#{response.body.request_id}\n"
       end
     end
   end

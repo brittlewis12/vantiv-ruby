@@ -1,6 +1,10 @@
+require "forwardable"
+
 module Vantiv
   module Api
     class TokenizationResponse < Api::Response
+      extend Forwardable
+
       RESPONSE_CODES = {
         account_successfully_registered: '801',
         account_already_registered: '802',
@@ -14,20 +18,18 @@ module Vantiv
         generic_token_use_error: '899'
       }.freeze
 
+      def_delegators :litle_transaction_response, :payment_account_id
+
+      def card_type
+        litle_transaction_response.type
+      end
+
       def success?
         !api_level_failure? && tokenization_successful?
       end
 
       def failure?
         !success?
-      end
-
-      def payment_account_id
-        success? ? litle_transaction_response["PaymentAccountID"] : nil
-      end
-
-      def card_type
-        success? ? litle_transaction_response["Type"] : nil
       end
 
       def invalid_card_number?
@@ -42,7 +44,7 @@ module Vantiv
       end
 
       def transaction_response_name
-        "registerTokenResponse"
+        "register_token_response"
       end
     end
   end

@@ -1,0 +1,22 @@
+{
+  "httpok": true,
+  "http_response_code": "200",
+  "body": {
+    "litleOnlineResponse": {
+      "@message": "Valid Format",
+      "@response": "0",
+      "@version": "10.2",
+      "creditResponse": {
+        "@customerId": "not-dynamic-cust-id",
+        "response": "001",
+        "responseTime": "2016-08-16T14:31:31",
+        "postDate": "2016-08-16",
+        "@id": "7847224d9ae6da7d0061e7e5",
+        "message": "Transaction Received",
+        "@reportGroup": "1",
+        "TransactionID": "82918655926355876"
+      }
+    },
+    "RequestID": "e5c3ff5d-204d-4311-f1eb-9b713a539658"
+  }
+}

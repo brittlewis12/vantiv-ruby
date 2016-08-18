@@ -25,7 +25,8 @@ describe Vantiv::MockedSandbox::ApiRequest do
   let(:run_mocked_request) {
     Vantiv::MockedSandbox::ApiRequest.run(
       endpoint: Vantiv::Api::Endpoints::TOKENIZATION,
-      body: body
+      body: body,
+      response_object: Vantiv::Api::TokenizationResponse.new
     )
   }
 
@@ -44,10 +45,9 @@ describe Vantiv::MockedSandbox::ApiRequest do
         .and_return({ something: "bad" })
     end
 
-    it "returns the correct response body" do
-      response_body = run_mocked_request[:body]
-      expect(response_body["litleOnlineResponse"]).to be
-      expect(response_body[:something]).to be_nil
+    it "returns a response body" do
+      response_body = run_mocked_request.body
+      expect(response_body).to be
     end
   end
 end

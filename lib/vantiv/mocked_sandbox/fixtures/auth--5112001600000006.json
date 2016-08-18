@@ -1,0 +1,26 @@
+{
+  "httpok": true,
+  "http_response_code": "200",
+  "body": {
+    "litleOnlineResponse": {
+      "@message": "Valid Format",
+      "@response": "0",
+      "@version": "10.2",
+      "authorizationResponse": {
+        "@customerId": "not-dynamic-cust-id",
+        "orderId": "not-dynamic-order-id",
+        "response": "301",
+        "responseTime": "2016-08-16T14:31:30",
+        "postDate": "2016-08-16",
+        "@id": "46d3275bf71b907d9d019521",
+        "fraudResult": {
+          "avsResult": "00"
+        },
+        "message": "Invalid Account Number",
+        "@reportGroup": "1",
+        "TransactionID": "82918655926355769"
+      }
+    },
+    "RequestID": "596d7dc4-3e83-4c0f-87aa-dc68b0b413f8"
+  }
+}

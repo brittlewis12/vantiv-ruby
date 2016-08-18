@@ -1,0 +1,27 @@
+{
+  "httpok": true,
+  "http_response_code": "200",
+  "body": {
+    "litleOnlineResponse": {
+      "@message": "Valid Format",
+      "@response": "0",
+      "@version": "10.2",
+      "saleResponse": {
+        "authCode": "11111 ",
+        "@customerId": "not-dynamic-cust-id",
+        "orderId": "not-dynamic-order-id",
+        "response": "000",
+        "responseTime": "2016-08-16T14:31:28",
+        "postDate": "2016-08-16",
+        "@id": "3688efaeed84191451284b43",
+        "fraudResult": {
+          "avsResult": "34"
+        },
+        "message": "Approved",
+        "@reportGroup": "1",
+        "TransactionID": "82918655926355561"
+      }
+    },
+    "RequestID": "ed4de30a-4742-4187-926c-d1ee1000c15c"
+  }
+}

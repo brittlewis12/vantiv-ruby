@@ -2,7 +2,7 @@
   "endpoint": "AUTH_REVERSAL",
   "body": {
     "Transaction": {
-      "TransactionID": "#{L_AR_5.litleOnlineResponse.authorizationResponse.TransactionID}",
+      "TransactionID": "#{L_AR_5.body.authorization_response.transaction_id}",
       "TransactionAmount": "100.00"
     }
   }

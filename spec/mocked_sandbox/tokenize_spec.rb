@@ -44,8 +44,10 @@ describe "mocked API requests to .tokenize" do
       (
         Vantiv::Api::TokenizationResponse.instance_methods(false) +
         Vantiv::Api::Response.instance_methods(false) -
-        [:payment_account_id, :body, :load, :request_id, :transaction_id]
+        [:payment_account_id, :body, :raw_body, :load, :request_id, :transaction_id]
       ).each do |method_name|
+          next if method_name.to_s.end_with?("=")
+
           live_response_value = live_response.send(method_name)
           mocked_response_value = mocked_response.send(method_name)
 
@@ -84,8 +86,10 @@ describe "mocked API requests to .tokenize" do
       (
         Vantiv::Api::TokenizationResponse.instance_methods(false) +
         Vantiv::Api::Response.instance_methods(false) -
-        [:payment_account_id, :body, :load, :request_id, :transaction_id]
+        [:payment_account_id, :body, :raw_body, :load, :request_id, :transaction_id]
       ).each do |method_name|
+          next if method_name.to_s.end_with?("=")
+
           live_response_value = live_response.send(method_name)
           mocked_response_value = mocked_response.send(method_name)
 
@@ -102,6 +106,10 @@ describe "mocked API requests to .tokenize" do
     it "returns the same error message" do
       expect(mocked_response.success?).to eq false
       expect(mocked_response.error_message).to eq live_response.error_message
+    end
+
+    it "returns a raw body string" do
+      expect(mocked_response.raw_body).to be_an_instance_of String
     end
 
     it "returns a dynamic transaction id" do
@@ -124,8 +132,10 @@ describe "mocked API requests to .tokenize" do
       (
         Vantiv::Api::TokenizationResponse.instance_methods(false) +
         Vantiv::Api::Response.instance_methods(false) -
-        [:payment_account_id, :body, :load, :request_id, :transaction_id]
+        [:payment_account_id, :body, :raw_body, :load, :request_id, :transaction_id]
       ).each do |method_name|
+          next if method_name.to_s.end_with?("=")
+
           live_response_value = live_response.send(method_name)
           mocked_response_value = mocked_response.send(method_name)
 

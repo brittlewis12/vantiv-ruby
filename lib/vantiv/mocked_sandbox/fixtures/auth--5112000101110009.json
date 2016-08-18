@@ -1,0 +1,47 @@
+{
+  "httpok": true,
+  "http_response_code": "200",
+  "body": {
+    "litleOnlineResponse": {
+      "@message": "Valid Format",
+      "@response": "0",
+      "@version": "10.2",
+      "authorizationResponse": {
+        "authCode": "123457",
+        "@customerId": "not-dynamic-cust-id",
+        "orderId": "not-dynamic-order-id",
+        "response": "000",
+        "responseTime": "2016-08-16T14:31:34",
+        "postDate": "2016-08-16",
+        "@id": "f03ae4aba989493c359ecb51",
+        "fraudResult": {
+          "avsResult": "00"
+        },
+        "message": "Approved",
+        "@reportGroup": "1",
+        "TransactionID": "82918655929057495",
+        "accountUpdater": {
+          "originalCardTokenInfo": {
+            "bin": "511200",
+            "Type": "MC",
+            "PaymentAccountID": "1112000239160009",
+            "ExpirationMonth": "11",
+            "ExpirationYear": "99"
+          },
+          "newCardTokenInfo": {
+            "bin": "445700",
+            "Type": "VI",
+            "PaymentAccountID": "1111000288150001",
+            "ExpirationMonth": "11",
+            "ExpirationYear": "99"
+          },
+          "extendedCardResponse": {
+            "code": "501",
+            "message": "The account was closed"
+          }
+        }
+      }
+    },
+    "RequestID": "8f820e6e-fcf1-466f-b1f6-5a8a0a138048"
+  }
+}

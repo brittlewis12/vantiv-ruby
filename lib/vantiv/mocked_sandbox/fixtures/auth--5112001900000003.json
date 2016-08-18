@@ -1,0 +1,26 @@
+{
+  "httpok": true,
+  "http_response_code": "200",
+  "body": {
+    "litleOnlineResponse": {
+      "@message": "Valid Format",
+      "@response": "0",
+      "@version": "10.2",
+      "authorizationResponse": {
+        "@customerId": "not-dynamic-cust-id",
+        "orderId": "not-dynamic-order-id",
+        "response": "305",
+        "responseTime": "2016-08-16T14:31:32",
+        "postDate": "2016-08-16",
+        "@id": "21e407a7d9dcb7c9d6c0c925",
+        "fraudResult": {
+          "avsResult": "00"
+        },
+        "message": "Expired Card",
+        "@reportGroup": "1",
+        "TransactionID": "82918655929057297"
+      }
+    },
+    "RequestID": "a1f71d93-41ac-4b49-9ba8-a2a6a0ece139"
+  }
+}
