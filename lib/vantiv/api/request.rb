@@ -4,7 +4,7 @@ module Vantiv
 
     def initialize(endpoint:, body:, response_object:)
       @endpoint = endpoint
-      @body = body.to_json
+      @body = body
       @response_object = response_object
       @retry_count = 0
     end
@@ -18,7 +18,7 @@ module Vantiv
       http.use_ssl = true
 
       request = Net::HTTP::Post.new(uri.request_uri, header)
-      request.body = body
+      request.body = body.to_json
 
       http_response = http.request(request)
 
