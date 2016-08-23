@@ -14,7 +14,7 @@ module Vantiv
 
       def initialize(endpoint, request_body, response_object)
         self.endpoint = endpoint
-        self.request_body = JSON.parse(request_body)
+        self.request_body = request_body
         self.response_object = response_object
       end
 
