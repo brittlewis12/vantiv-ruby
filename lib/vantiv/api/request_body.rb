@@ -17,7 +17,11 @@ module Vantiv
       end
 
       def to_hash
-        ::RequestBodyRepresenter.new(self).to_hash
+        self
+      end
+
+      def to_json
+        ::RequestBodyRepresenter.new(self).to_json
       end
 
       def self.for_auth_or_sale(amount:, customer_id:, order_id:, payment_account_id:, expiry_month:, expiry_year:)
