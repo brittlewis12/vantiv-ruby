@@ -19,7 +19,7 @@ describe Vantiv::MockedSandbox::ApiRequest do
       expiry_month: card.expiry_month,
       expiry_year: card.expiry_year,
       cvv: card.cvv
-    ).to_json
+    )
   end
 
   let(:run_mocked_request) {

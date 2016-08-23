@@ -16,10 +16,6 @@ module Vantiv
         @report_group = Vantiv.default_report_group
       end
 
-      def to_hash
-        self
-      end
-
       def to_json
         ::RequestBodyRepresenter.new(self).to_json
       end
@@ -42,22 +38,22 @@ module Vantiv
           transaction: transaction,
           card: card,
           payment_account: payment_account
-        ).to_hash
+        )
       end
 
       def self.for_auth_reversal(transaction_id:, amount: nil)
         transaction = Transaction.new(id: transaction_id, amount_in_cents: amount)
-        new(transaction: transaction).to_hash
+        new(transaction: transaction)
       end
 
       def self.for_capture(transaction_id:, amount: nil)
         transaction = Transaction.new(id: transaction_id, amount_in_cents: amount)
-        new(transaction: transaction).to_hash
+        new(transaction: transaction)
       end
 
       def self.for_credit(transaction_id:, amount: nil)
         transaction = Transaction.new(id: transaction_id, amount_in_cents: amount)
-        new(transaction: transaction).to_hash
+        new(transaction: transaction)
       end
 
       def self.for_return(amount:, customer_id:, order_id:, payment_account_id:, expiry_month:, expiry_year:)
@@ -77,12 +73,12 @@ module Vantiv
           transaction: transaction,
           card: card,
           payment_account: payment_account
-        ).to_hash
+        )
       end
 
       def self.for_tokenization(paypage_registration_id:)
         card = Card.new(paypage_registration_id: paypage_registration_id)
-        new(card: card).to_hash
+        new(card: card)
       end
 
       def self.for_direct_post_tokenization(card_number:, expiry_month:, expiry_year:, cvv:)
@@ -92,12 +88,12 @@ module Vantiv
           expiry_year: expiry_year,
           cvv: cvv
         )
-        new(card: card).to_hash
+        new(card: card)
       end
 
       def self.for_void(transaction_id:)
         transaction = Transaction.new(id: transaction_id)
-        new(transaction: transaction).to_hash
+        new(transaction: transaction)
       end
 
     end

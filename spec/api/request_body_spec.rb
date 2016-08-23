@@ -16,29 +16,29 @@ describe Vantiv::Api::RequestBody do
       )
     end
 
-    it "returns the expected body" do
+    it "returns the expected json" do
       allow(SecureRandom).to receive(:hex).and_return "the-application-id"
       expected = {"Credentials"=>{"AcceptorID"=>"1166386"}, "Reports"=>{"ReportGroup"=>"1"}, "Application"=>{"ApplicationID"=>"the-application-id"}, "Card"=>{"AccountNumber"=>"1234", "ExpirationMonth"=>"10", "ExpirationYear"=>"18", "CVV"=>"222"}}
-      expect(request_body).to eq(expected)
+      expect(request_body.to_json).to eq expected.to_json
     end
 
-    it "includes the AcceptorID" do
-      expect(request_body["Credentials"]["AcceptorID"]).to eq("1166386")
+    it "includes the acceptor id" do
+      expect(request_body.acceptor_id).to eq "1166386"
     end
 
-    it "includes the default ReportGroup" do
-      expect(request_body["Reports"]["ReportGroup"]).to eq("1")
+    it "includes the default report group" do
+      expect(request_body.report_group).to eq "1"
     end
 
-    it "include the ApplicationID" do
-      expect(request_body["Application"]["ApplicationID"]).to be
+    it "include the application id" do
+      expect(request_body.application_id).to be
     end
 
     it "includes stringified versions of card params" do
-      expect(request_body["Card"]["AccountNumber"]).to eq(card_number.to_s)
-      expect(request_body["Card"]["ExpirationMonth"]).to eq("10")
-      expect(request_body["Card"]["ExpirationYear"]).to eq("18")
-      expect(request_body["Card"]["CVV"]).to eq(cvv.to_s)
+      expect(request_body.card.account_number).to eq card_number.to_s
+      expect(request_body.card.expiry_month).to eq "10"
+      expect(request_body.card.expiry_year).to eq "18"
+      expect(request_body.card.cvv).to eq cvv.to_s
     end
   end
 
@@ -53,26 +53,26 @@ describe Vantiv::Api::RequestBody do
       @paypage_registration_id = "some-temp-token"
     end
 
-    it "returns the expected body" do
+    it "returns the expected json" do
       allow(SecureRandom).to receive(:hex).and_return "the-application-id"
       expected = {"Credentials"=>{"AcceptorID"=>"1166386"}, "Reports"=>{"ReportGroup"=>"1"}, "Application"=>{"ApplicationID"=>"the-application-id"}, "Card"=>{"PaypageRegistrationID"=>"some-temp-token"}}
-      expect(request_body).to eq(expected)
+      expect(request_body.to_json).to eq expected.to_json
     end
 
-    it "includes the AcceptorID" do
-      expect(request_body["Credentials"]["AcceptorID"]).to eq("1166386")
+    it "includes the acceptor id" do
+      expect(request_body.acceptor_id).to eq "1166386"
     end
 
-    it "includes the default ReportGroup" do
-      expect(request_body["Reports"]["ReportGroup"]).to eq("1")
+    it "includes the default report group" do
+      expect(request_body.report_group).to eq "1"
     end
 
-    it "include the ApplicationID" do
-      expect(request_body["Application"]["ApplicationID"]).to be
+    it "include the application id" do
+      expect(request_body.application_id).to be
     end
 
-    it "includes the paypage registration ID correctly" do
-      expect(request_body["Card"]["PaypageRegistrationID"]).to eq "some-temp-token"
+    it "includes the paypage registration id" do
+      expect(request_body.card.paypage_registration_id).to eq "some-temp-token"
     end
   end
 
@@ -84,10 +84,10 @@ describe Vantiv::Api::RequestBody do
       )
     end
 
-    it "returns the expected body" do
+    it "returns the expected json" do
       allow(SecureRandom).to receive(:hex).and_return "the-application-id"
       expected = {"Credentials"=>{"AcceptorID"=>"1166386"}, "Reports"=>{"ReportGroup"=>"1"}, "Application"=>{"ApplicationID"=>"the-application-id"}, "Transaction"=>{"TransactionID"=>"transactionid123"}}
-      expect(request_body).to eq(expected)
+      expect(request_body.to_json).to eq expected.to_json
     end
 
     context "when amount is nil" do
@@ -95,24 +95,24 @@ describe Vantiv::Api::RequestBody do
         @amount = nil
       end
 
-      it "includes the AcceptorID" do
-        expect(request_body["Credentials"]["AcceptorID"]).to eq("1166386")
+      it "includes the acceptor id" do
+        expect(request_body.acceptor_id).to eq "1166386"
       end
 
-      it "includes the default ReportGroup" do
-        expect(request_body["Reports"]["ReportGroup"]).to eq("1")
+      it "includes the default report group" do
+        expect(request_body.report_group).to eq "1"
       end
 
-      it "include the ApplicationID" do
-        expect(request_body["Application"]["ApplicationID"]).to be
+      it "include the application id" do
+        expect(request_body.application_id).to be
       end
 
       it "includes the transaction id" do
-        expect(request_body["Transaction"]["TransactionID"]).to eq("transactionid123")
+        expect(request_body.transaction.id).to eq "transactionid123"
       end
 
-      it "does not include the TransactionAmount" do
-        expect(request_body["Transaction"]["TransactionAmount"]).to be_nil
+      it "does not include the transaction amount" do
+        expect(request_body.transaction.amount).to be_nil
       end
     end
 
@@ -121,24 +121,24 @@ describe Vantiv::Api::RequestBody do
         @amount = 58888
       end
 
-      it "includes the AcceptorID" do
-        expect(request_body["Credentials"]["AcceptorID"]).to eq("1166386")
+      it "includes the acceptor id" do
+        expect(request_body.acceptor_id).to eq "1166386"
       end
 
-      it "includes the default ReportGroup" do
-        expect(request_body["Reports"]["ReportGroup"]).to eq("1")
+      it "includes the default report group" do
+        expect(request_body.report_group).to eq "1"
       end
 
-      it "include the ApplicationID" do
-        expect(request_body["Application"]["ApplicationID"]).to be
+      it "include the application id" do
+        expect(request_body.application_id).to be
       end
 
       it "includes the transaction id" do
-        expect(request_body["Transaction"]["TransactionID"]).to eq("transactionid123")
+        expect(request_body.transaction.id).to eq "transactionid123"
       end
 
-      it "includes the TransactionAmount" do
-        expect(request_body["Transaction"]["TransactionAmount"]).to eq("588.88")
+      it "includes the transaction amount" do
+        expect(request_body.transaction.amount).to eq "588.88"
       end
     end
   end
@@ -155,66 +155,66 @@ describe Vantiv::Api::RequestBody do
       )
     end
 
-    it "returns the expected body" do
+    it "returns the expected json" do
       allow(SecureRandom).to receive(:hex).and_return "the-application-id"
       expected = {"Credentials"=>{"AcceptorID"=>"1166386"}, "Reports"=>{"ReportGroup"=>"1"}, "Application"=>{"ApplicationID"=>"the-application-id"}, "Transaction"=>{"ReferenceNumber"=>"SomeOrder123", "TransactionAmount"=>"42.24", "OrderSource"=>"ecommerce", "CustomerID"=>"extid123", "PartialApprovedFlag"=>false}, "Card"=>{"ExpirationMonth"=>"08", "ExpirationYear"=>"18"}, "PaymentAccount"=>{"PaymentAccountID"=>"paymentacct123"}}
-      expect(request_body).to eq(expected)
+      expect(request_body.to_json).to eq expected.to_json
     end
 
-    it "includes the AcceptorID" do
-      expect(request_body["Credentials"]["AcceptorID"]).to eq("1166386")
+    it "includes the acceptor id" do
+      expect(request_body.acceptor_id).to eq "1166386"
     end
 
-    it "includes the default ReportGroup" do
-      expect(request_body["Reports"]["ReportGroup"]).to eq("1")
+    it "includes the default report group" do
+      expect(request_body.report_group).to eq "1"
     end
 
-    it "include the ApplicationID" do
-      expect(request_body["Application"]["ApplicationID"]).to be
+    it "include the application id" do
+      expect(request_body.application_id).to be
     end
 
     context "Transaction object" do
       it "is included" do
-        expect(request_body["Transaction"]).not_to eq nil
+        expect(request_body.transaction).to be
       end
 
-      it "includes the ReferenceNumber" do
-        expect(request_body["Transaction"]["ReferenceNumber"]).to eq "SomeOrder123"
+      it "includes the order id" do
+        expect(request_body.transaction.order_id).to eq "SomeOrder123"
       end
 
-      it "includes the TransactionAmount" do
-        expect(request_body["Transaction"]["TransactionAmount"]).to eq "42.24"
+      it "includes the transaction amount" do
+        expect(request_body.transaction.amount).to eq "42.24"
       end
 
-      it "includes the OrderSource" do
-        expect(request_body["Transaction"]["OrderSource"]).to eq "ecommerce"
+      it "includes the order source" do
+        expect(request_body.transaction.order_source).to eq "ecommerce"
       end
 
-      it "includes the CustomerID" do
-        expect(request_body["Transaction"]["CustomerID"]).to eq "extid123"
+      it "includes the customer id" do
+        expect(request_body.transaction.customer_id).to eq "extid123"
       end
 
-      it "includes the PartialApprovedFlag" do
-        expect(request_body["Transaction"]["PartialApprovedFlag"]).to eq false
+      it "includes the partial approved flag" do
+        expect(request_body.transaction.partial_approved_flag).to eq false
       end
     end
 
     context "Card object" do
       it "is included" do
-        expect(request_body["Card"]).not_to eq nil
+        expect(request_body.card).to be
       end
 
-      it "includes ExpirationMonth" do
-        expect(request_body["Card"]["ExpirationMonth"]).to eq "08"
+      it "includes expiry month" do
+        expect(request_body.card.expiry_month).to eq "08"
       end
 
-      it "includes ExpirationYear" do
-        expect(request_body["Card"]["ExpirationYear"]).to eq "18"
+      it "includes expiry year" do
+        expect(request_body.card.expiry_year).to eq "18"
       end
     end
 
-    it "includes the PaymentAccountID" do
-      expect(request_body["PaymentAccount"]["PaymentAccountID"]).to eq "paymentacct123"
+    it "includes the payment account id" do
+      expect(request_body.payment_account.id).to eq "paymentacct123"
     end
 
     it "casts order id to string" do
@@ -226,7 +226,7 @@ describe Vantiv::Api::RequestBody do
         expiry_month: "12",
         expiry_year: "2099"
       )
-      expect(body["Transaction"]["ReferenceNumber"]).to eq "123"
+      expect(body.transaction.order_id).to eq "123"
     end
 
   end
@@ -244,30 +244,30 @@ describe Vantiv::Api::RequestBody do
         @amount = nil
       end
 
-      it "returns the expected body" do
+      it "returns the expected json" do
         allow(SecureRandom).to receive(:hex).and_return "the-application-id"
         expected = {"Credentials"=>{"AcceptorID"=>"1166386"}, "Reports"=>{"ReportGroup"=>"1"}, "Application"=>{"ApplicationID"=>"the-application-id"}, "Transaction"=>{"TransactionID"=>"transactionid123"}}
-        expect(request_body).to eq(expected)
+        expect(request_body.to_json).to eq expected.to_json
       end
 
-      it "includes the AcceptorID" do
-        expect(request_body["Credentials"]["AcceptorID"]).to eq("1166386")
+      it "includes the acceptor id" do
+        expect(request_body.acceptor_id).to eq "1166386"
       end
 
-      it "includes the default ReportGroup" do
-        expect(request_body["Reports"]["ReportGroup"]).to eq("1")
+      it "includes the default report group" do
+        expect(request_body.report_group).to eq "1"
       end
 
-      it "include the ApplicationID" do
-        expect(request_body["Application"]["ApplicationID"]).to be
+      it "include the application id" do
+        expect(request_body.application_id).to be
       end
 
       it "includes the transaction id" do
-        expect(request_body["Transaction"]["TransactionID"]).to eq("transactionid123")
+        expect(request_body.transaction.id).to eq "transactionid123"
       end
 
-      it "does not include the TransactionAmount" do
-        expect(request_body["Transaction"]["TransactionAmount"]).to be_nil
+      it "does not include the transaction amount" do
+        expect(request_body.transaction.amount).to be_nil
       end
     end
 
@@ -276,30 +276,30 @@ describe Vantiv::Api::RequestBody do
         @amount = 58888
       end
 
-      it "returns the expected body" do
+      it "returns the expected json" do
         allow(SecureRandom).to receive(:hex).and_return "the-application-id"
         expected = {"Credentials"=>{"AcceptorID"=>"1166386"}, "Reports"=>{"ReportGroup"=>"1"}, "Application"=>{"ApplicationID"=>"the-application-id"}, "Transaction"=>{"TransactionID"=>"transactionid123", "TransactionAmount"=>"588.88"}}
-        expect(request_body).to eq(expected)
+        expect(request_body.to_json).to eq expected.to_json
       end
 
-      it "includes the AcceptorID" do
-        expect(request_body["Credentials"]["AcceptorID"]).to eq("1166386")
+      it "includes the acceptor id" do
+        expect(request_body.acceptor_id).to eq "1166386"
       end
 
-      it "includes the default ReportGroup" do
-        expect(request_body["Reports"]["ReportGroup"]).to eq("1")
+      it "includes the default report group" do
+        expect(request_body.report_group).to eq "1"
       end
 
-      it "include the ApplicationID" do
-        expect(request_body["Application"]["ApplicationID"]).to be
+      it "include the application id" do
+        expect(request_body.application_id).to be
       end
 
       it "includes the transaction id" do
-        expect(request_body["Transaction"]["TransactionID"]).to eq("transactionid123")
+        expect(request_body.transaction.id).to eq "transactionid123"
       end
 
-      it "includes the TransactionAmount" do
-        expect(request_body["Transaction"]["TransactionAmount"]).to eq("588.88")
+      it "includes the transaction amount" do
+        expect(request_body.transaction.amount).to eq "588.88"
       end
     end
   end
@@ -317,30 +317,30 @@ describe Vantiv::Api::RequestBody do
         @amount = nil
       end
 
-      it "returns the expected body" do
+      it "returns the expected json" do
         allow(SecureRandom).to receive(:hex).and_return "the-application-id"
         expected = {"Credentials"=>{"AcceptorID"=>"1166386"}, "Reports"=>{"ReportGroup"=>"1"}, "Application"=>{"ApplicationID"=>"the-application-id"}, "Transaction"=>{"TransactionID"=>"transactionid123"}}
-        expect(request_body).to eq(expected)
+        expect(request_body.to_json).to eq expected.to_json
       end
 
-      it "includes the AcceptorID" do
-        expect(request_body["Credentials"]["AcceptorID"]).to eq("1166386")
+      it "includes the acceptor id" do
+        expect(request_body.acceptor_id).to eq "1166386"
       end
 
-      it "includes the default ReportGroup" do
-        expect(request_body["Reports"]["ReportGroup"]).to eq("1")
+      it "includes the default report group" do
+        expect(request_body.report_group).to eq "1"
       end
 
-      it "include the ApplicationID" do
-        expect(request_body["Application"]["ApplicationID"]).to be
+      it "include the application id" do
+        expect(request_body.application_id).to be
       end
 
       it "includes the transaction id" do
-        expect(request_body["Transaction"]["TransactionID"]).to eq("transactionid123")
+        expect(request_body.transaction.id).to eq "transactionid123"
       end
 
-      it "does not include the TransactionAmount" do
-        expect(request_body["Transaction"]["TransactionAmount"]).to be_nil
+      it "does not include the transaction amount" do
+        expect(request_body.transaction.amount).to be_nil
       end
     end
 
@@ -349,30 +349,30 @@ describe Vantiv::Api::RequestBody do
         @amount = 58888
       end
 
-      it "returns the expected body" do
+      it "returns the expected json" do
         allow(SecureRandom).to receive(:hex).and_return "the-application-id"
         expected = {"Credentials"=>{"AcceptorID"=>"1166386"}, "Reports"=>{"ReportGroup"=>"1"}, "Application"=>{"ApplicationID"=>"the-application-id"}, "Transaction"=>{"TransactionID"=>"transactionid123", "TransactionAmount"=>"588.88"}}
-        expect(request_body).to eq(expected)
+        expect(request_body.to_json).to eq expected.to_json
       end
 
-      it "includes the AcceptorID" do
-        expect(request_body["Credentials"]["AcceptorID"]).to eq("1166386")
+      it "includes the acceptor id" do
+        expect(request_body.acceptor_id).to eq "1166386"
       end
 
-      it "includes the default ReportGroup" do
-        expect(request_body["Reports"]["ReportGroup"]).to eq("1")
+      it "includes the default report group" do
+        expect(request_body.report_group).to eq "1"
       end
 
-      it "include the ApplicationID" do
-        expect(request_body["Application"]["ApplicationID"]).to be
+      it "include the application id" do
+        expect(request_body.application_id).to be
       end
 
       it "includes the transaction id" do
-        expect(request_body["Transaction"]["TransactionID"]).to eq("transactionid123")
+        expect(request_body.transaction.id).to eq "transactionid123"
       end
 
-      it "includes the TransactionAmount" do
-        expect(request_body["Transaction"]["TransactionAmount"]).to eq("588.88")
+      it "includes the transaction amount" do
+        expect(request_body.transaction.amount).to eq "588.88"
       end
     end
   end
@@ -389,66 +389,66 @@ describe Vantiv::Api::RequestBody do
       )
     end
 
-    it "returns the expected body" do
+    it "returns the expected json" do
       allow(SecureRandom).to receive(:hex).and_return "the-application-id"
       expected = {"Credentials"=>{"AcceptorID"=>"1166386"}, "Reports"=>{"ReportGroup"=>"1"}, "Application"=>{"ApplicationID"=>"the-application-id"}, "Transaction"=>{"ReferenceNumber"=>"SomeOrder123", "TransactionAmount"=>"42.24", "OrderSource"=>"ecommerce", "CustomerID"=>"extid123"}, "Card"=>{"ExpirationMonth"=>"08", "ExpirationYear"=>"18"}, "PaymentAccount"=>{"PaymentAccountID"=>"paymentacct123"}}
-      expect(request_body).to eq(expected)
+      expect(request_body.to_json).to eq expected.to_json
     end
 
-    it "includes the AcceptorID" do
-      expect(request_body["Credentials"]["AcceptorID"]).to eq("1166386")
+    it "includes the acceptor id" do
+      expect(request_body.acceptor_id).to eq "1166386"
     end
 
-    it "includes the default ReportGroup" do
-      expect(request_body["Reports"]["ReportGroup"]).to eq("1")
+    it "includes the default report group" do
+      expect(request_body.report_group).to eq "1"
     end
 
-    it "include the ApplicationID" do
-      expect(request_body["Application"]["ApplicationID"]).to be
+    it "include the application id" do
+      expect(request_body.application_id).to be
     end
 
     context "Transaction object" do
       it "is included" do
-        expect(request_body["Transaction"]).not_to eq nil
+        expect(request_body.transaction).to be
       end
 
-      it "includes the ReferenceNumber" do
-        expect(request_body["Transaction"]["ReferenceNumber"]).to eq "SomeOrder123"
+      it "includes the order id" do
+        expect(request_body.transaction.order_id).to eq "SomeOrder123"
       end
 
-      it "includes the TransactionAmount" do
-        expect(request_body["Transaction"]["TransactionAmount"]).to eq "42.24"
+      it "includes the amount" do
+        expect(request_body.transaction.amount).to eq "42.24"
       end
 
-      it "includes the OrderSource" do
-        expect(request_body["Transaction"]["OrderSource"]).to eq "ecommerce"
+      it "includes the order source" do
+        expect(request_body.transaction.order_source).to eq "ecommerce"
       end
 
-      it "includes the CustomerID" do
-        expect(request_body["Transaction"]["CustomerID"]).to eq "extid123"
+      it "includes the customer id" do
+        expect(request_body.transaction.customer_id).to eq "extid123"
       end
 
-      it "does not include the PartialApprovedFlag" do
-        expect(request_body["Transaction"]["PartialApprovedFlag"]).to be_nil
+      it "does not include the partial approved flag" do
+        expect(request_body.transaction.partial_approved_flag).to be_nil
       end
     end
 
     context "Card object" do
       it "is included" do
-        expect(request_body["Card"]).not_to eq nil
+        expect(request_body.card).to be
       end
 
-      it "includes ExpirationMonth" do
-        expect(request_body["Card"]["ExpirationMonth"]).to eq "08"
+      it "includes expiry month" do
+        expect(request_body.card.expiry_month).to eq "08"
       end
 
-      it "includes ExpirationYear" do
-        expect(request_body["Card"]["ExpirationYear"]).to eq "18"
+      it "includes expiry year" do
+        expect(request_body.card.expiry_year).to eq "18"
       end
     end
 
     it "includes the PaymentAccountID" do
-      expect(request_body["PaymentAccount"]["PaymentAccountID"]).to eq "paymentacct123"
+      expect(request_body.payment_account.id).to eq "paymentacct123"
     end
   end
 
@@ -459,26 +459,26 @@ describe Vantiv::Api::RequestBody do
       )
     end
 
-    it "returns the expected body" do
+    it "returns the expected json" do
       allow(SecureRandom).to receive(:hex).and_return "the-application-id"
       expected = {"Credentials"=>{"AcceptorID"=>"1166386"}, "Reports"=>{"ReportGroup"=>"1"}, "Application"=>{"ApplicationID"=>"the-application-id"}, "Transaction"=>{"TransactionID"=>"transactionid123"}}
-      expect(request_body).to eq(expected)
+      expect(request_body.to_json).to eq expected.to_json
     end
 
-    it "includes the AcceptorID" do
-      expect(request_body["Credentials"]["AcceptorID"]).to eq("1166386")
+    it "includes the acceptor id" do
+      expect(request_body.acceptor_id).to eq "1166386"
     end
 
-    it "includes the default ReportGroup" do
-      expect(request_body["Reports"]["ReportGroup"]).to eq("1")
+    it "includes the default report group" do
+      expect(request_body.report_group).to eq "1"
     end
 
-    it "include the ApplicationID" do
-      expect(request_body["Application"]["ApplicationID"]).to be
+    it "include the application id" do
+      expect(request_body.application_id).to be
     end
 
     it "includes the transaction id" do
-      expect(request_body["Transaction"]["TransactionID"]).to eq("transactionid123")
+      expect(request_body.transaction.id).to eq "transactionid123"
     end
   end
 
