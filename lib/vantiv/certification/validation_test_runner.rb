@@ -38,7 +38,7 @@ module Vantiv
       def create_body(base_body)
         compiled_base = request_body_compiler.compile(base_body)
         request_body = Vantiv::Api::RequestBody.new
-        RequestBodyRepresenter.new(request_body).from_json(compiled_base.to_json).to_hash
+        RequestBodyRepresenter.new(request_body).from_json(compiled_base.to_json)
       end
 
       def fixtures
