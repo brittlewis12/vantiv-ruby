@@ -21,10 +21,10 @@ class RequestBodyRepresenter < Representable::Decorator
 
   property :transaction, as: :Transaction, class: Vantiv::Api::Transaction do
     property :id, as: :TransactionID
-    property :amount, as: :TransactionAmount
     property :order_id, as: :ReferenceNumber
-    property :customer_id, as: :CustomerID
+    property :amount, as: :TransactionAmount
     property :order_source, as: :OrderSource
+    property :customer_id, as: :CustomerID
     property :partial_approved_flag, as: :PartialApprovedFlag
   end
 

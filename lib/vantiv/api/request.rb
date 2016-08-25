@@ -4,7 +4,7 @@ module Vantiv
 
     def initialize(endpoint:, body:, response_object:)
       @endpoint = endpoint
-      @body = body.to_json
+      @body = body
       @response_object = response_object
       @retry_count = 0
     end
@@ -14,18 +14,40 @@ module Vantiv
     end
 
     def run_request
-      http = Net::HTTP.new(uri.host, uri.port)
-      http.use_ssl = true
-
-      request = Net::HTTP::Post.new(uri.request_uri, header)
-      request.body = body
-
-      http_response = http.request(request)
+      http_response = make_json_request
 
       populated_response(@response_object, http_response)
     end
 
     private
+
+    def make_json_request
+      http = Net::HTTP.new(json_uri.host, json_uri.port)
+      http.use_ssl = true
+      json_request = Net::HTTP::Post.new(json_uri.request_uri, json_header)
+      json_request.body = body.to_json
+
+      http.request(json_request)
+    end
+
+    def json_header
+      {
+        "Content-Type" =>"application/json",
+        "Authorization" => "VANTIV license=\"#{Vantiv.license_id}\""
+      }
+    end
+
+    def json_uri
+      @uri ||= URI.parse("#{json_root_uri}/#{@endpoint}")
+    end
+
+    def json_root_uri
+      if Vantiv::Environment.production?
+        "https://apis.vantiv.com"
+      elsif Vantiv::Environment.certification?
+        "https://apis.cert.vantiv.com"
+      end
+    end
 
     def populated_response(response, http_response)
       new_response = response.dup
@@ -40,25 +62,6 @@ module Vantiv
       new_response.body = response_body
 
       new_response
-    end
-
-    def header
-      {
-        "Content-Type" =>"application/json",
-        "Authorization" => "VANTIV license=\"#{Vantiv.license_id}\""
-      }
-    end
-
-    def uri
-      @uri ||= URI.parse("#{root_uri}/#{@endpoint}")
-    end
-
-    def root_uri
-      if Vantiv::Environment.production?
-        "https://apis.vantiv.com"
-      elsif Vantiv::Environment.certification?
-        "https://apis.cert.vantiv.com"
-      end
     end
 
     def increment_retry_count

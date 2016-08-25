@@ -14,7 +14,7 @@ module Vantiv
 
       def initialize(endpoint, request_body, response_object)
         self.endpoint = endpoint
-        self.request_body = JSON.parse(request_body)
+        self.request_body = request_body
         self.response_object = response_object
       end
 
@@ -49,20 +49,20 @@ module Vantiv
       attr_accessor :endpoint, :request_body, :fixture, :response_object
 
       def direct_post?
-        request_body["Card"] && request_body["Card"]["AccountNumber"] != nil
+        !card_number.nil?
       end
 
       def temporary_token
-        request_body["Card"]["PaypageRegistrationID"]
+        request_body.card.paypage_registration_id
       end
 
       def card_number
-        request_body["Card"]["AccountNumber"]
+        request_body.card.account_number
       end
 
       def card_number_from_payment_account_id
         TestCard.find_by_payment_account_id(
-          request_body["PaymentAccount"]["PaymentAccountID"]
+          request_body.payment_account.id
         ).card_number
       end
 
