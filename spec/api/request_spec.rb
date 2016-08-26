@@ -83,4 +83,50 @@ describe Vantiv::Api::Request do
 
     expect(run_api_request.raw_body).to eq("some body")
   end
+
+  context "when use_xml is set to true" do
+    subject(:run_api_request) do
+      Vantiv::Api::Request.new(
+        endpoint: Vantiv::Api::Endpoints::TOKENIZATION,
+        body: Vantiv::Api::RequestBody.for_tokenization(
+          paypage_registration_id: "1234"
+        ),
+        response_object: general_response_class.new,
+        use_xml: true
+      ).run
+    end
+
+    context "when Vantiv (conveniently) doesn't send back json" do
+      it "retries the original request" do
+        vantiv_responses = [
+          double(
+            code_type: Net::HTTPOK,
+            code: "200",
+            body: ""
+          ),
+          double(
+            code_type: Net::HTTPOK,
+            code: "200",
+            body: '<litleOnlineRequest version="blabla" merchantId="1234567"><authentication><user>apigee</user><password>apigee</password></authentication></litleOnlineRequest>'
+          )
+        ]
+        allow_any_instance_of(Net::HTTP).to receive(:request) { vantiv_responses.shift }
+        expect{
+          @response = run_api_request
+        }.not_to raise_error
+        expect(@response.body.version).to eq "blabla"
+      end
+    end
+
+    it "sets the raw response on the response object" do
+      allow_any_instance_of(Net::HTTP)
+        .to receive(:request)
+              .and_return(double('http response', body: "some body").as_null_object)
+
+      allow_any_instance_of(ResponseBodyRepresenterXml)
+        .to receive(:from_xml)
+
+      expect(run_api_request.raw_body).to eq("some body")
+    end
+  end
 end
