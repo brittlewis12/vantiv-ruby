@@ -1,3 +1,6 @@
+# IMPORTANT!
+THIS GEM IS ACTIVELY BEING TRANSITIONED AWAY FROM DEVHUB AND TO VANTIV'S XML ENDPOINT
+
 # Vantiv Ruby Client
 [![Build Status](https://travis-ci.org/plated/vantiv-ruby.svg)](https://travis-ci.org/plated/vantiv-ruby)
 
