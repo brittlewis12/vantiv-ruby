@@ -140,7 +140,10 @@ module Vantiv
   end
 
   class << self
-    [:environment, :license_id, :acceptor_id, :default_report_group, :order_source, :paypage_id].each do |config_var|
+    [
+      :environment, :license_id, :acceptor_id, :default_report_group,
+      :order_source, :paypage_id, :user, :password
+    ].each do |config_var|
       define_method :"#{config_var}" do
         value = instance_variable_get(:"@#{config_var}")
         raise "Missing Vantiv configuration: #{config_var}" unless value
