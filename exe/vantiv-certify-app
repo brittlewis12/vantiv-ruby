@@ -20,6 +20,14 @@ parser = OptionParser.new do |opts|
     options[:paypage_id] = paypage_id
   end
 
+  opts.on("-u", "--user VANTIV_USER", "Vantiv XML User") do |paypage_id|
+    options[:user] = paypage_id
+  end
+
+  opts.on("-w", "--password VANTIV_PASSWORD", "Vantiv XML Password") do |paypage_id|
+    options[:user] = paypage_id
+  end
+
   opts.on("--filter_by [TEST_NAME]", "Filter which certifications to run") do |filter|
     options[:filter_by] = filter
   end
@@ -27,7 +35,7 @@ end
 
 parser.parse!
 
-required_arguments = %i[acceptor_id license_id paypage_id]
+required_arguments = %i[acceptor_id license_id paypage_id user password]
 missing_arguments = required_arguments.select{ |required_argument| options[required_argument].nil? }
 
 if missing_arguments.any?
@@ -41,6 +49,9 @@ Vantiv.configure do |config|
   config.acceptor_id = options.fetch(:acceptor_id)
   config.paypage_id = options.fetch(:paypage_id)
   config.environment = Vantiv::Environment::CERTIFICATION
+
+  config.user = options.fetch(:user)
+  config.password = options.fetch(:password)
 
   config.default_report_group = '1'
 end

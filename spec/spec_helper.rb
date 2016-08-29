@@ -11,6 +11,9 @@ Vantiv.configure do |config|
   config.order_source = "ecommerce"
   config.paypage_id = ENV["PAYPAGE_ID"]
 
+  config.user = ENV["VANTIV_USER"]
+  config.password = ENV["VANTIV_PASSWORD"]
+
   config.default_report_group = '1'
 end
 

@@ -5,7 +5,9 @@ describe "Vantiv configuration" do
    :acceptor_id,
    :default_report_group,
    :order_source,
-   :paypage_id
+   :paypage_id,
+   :user,
+   :password
   ].each do |config_var|
     describe "- accessing #{config_var}" do
 

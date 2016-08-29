@@ -30,6 +30,9 @@ Vantiv.configure do |config|
   config.acceptor_id = ENV["VANTIV_ACCEPTOR_ID"]
   config.order_source = "desired-order-source"
   config.paypage_id = ENV["VANTIV_PAYPAGE_ID"]
+  
+  config.user = ENV["VANTIV_USER"]
+  config.password = ENV["VANTIV_PASSWORD"]
 
   config.default_report_group = 'default-report-group'
 end
@@ -42,7 +45,7 @@ Vantiv's DevHub requires merchants to certify their applications for usage with 
 To certify your application, run the following script:
 
 ```
-$ bundle exec vantiv-certify-app -l sub-your-license-id-in-here -a sub-your-acceptor-id-in-here -p your-paypage-id 
+$ bundle exec vantiv-certify-app -l sub-your-license-id-in-here -a sub-your-acceptor-id-in-here -p your-paypage-id -u your-user -w your-password
 ```
 
 A certs.txt file will be generated in the directory that the script is run, and then opened. It contains a list of DevHub Certification Test IDs and associated Request IDs, like follows:
@@ -59,7 +62,7 @@ Navigate to your application's page in DevHub's developer portal (apideveloper.v
 If you want to just run a subset of the certifications you can pass in the Test ID that you want to which match against using the `--filter_by` option. For example, if you only want to run the Account Updater certification, which have Test IDs that are prefixed with `L_AU`, you would filter by `AU` like follows:
 
 ```
-$ bundle exec vantiv-certify-app -l foo -a bar -p bla --filter_by=AU
+$ bundle exec vantiv-certify-app -l foo -a bar -p bla -u uzr -w pwd --filter_by=AU
 ```
 
 
