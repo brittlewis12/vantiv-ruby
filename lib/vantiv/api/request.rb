@@ -20,8 +20,17 @@ module Vantiv
       @retry_count = 0
       @use_xml = use_xml
 
-      if body.transaction
+      if @use_xml
+        body.card.payment_account_id = body.payment_account.id if body.card && body.payment_account
+
+        body.transaction ||= Vantiv::Api::Transaction.new
         body.transaction.type = ENDPOINT_XML_TRANSACTION_TYPE.fetch(endpoint.to_sym)
+        body.transaction.card = body.card if body.card
+        body.transaction.report_group = body.report_group
+        body.transaction.application_id = body.application_id
+
+        body.xmlns = "http://www.litle.com/schema"
+        body.version = "10.2"
       end
     end
 

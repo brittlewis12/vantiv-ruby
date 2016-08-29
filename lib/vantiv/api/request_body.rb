@@ -16,34 +16,18 @@ module Vantiv
       attr_reader :acceptor_id, :application_id, :report_group
       attr_accessor :card, :transaction, :payment_account, :address
 
-      attr_accessor :version, :authentication
-      attr_reader :xmlns
+      attr_accessor :version, :authentication, :xmlns
 
       def initialize(card: nil, transaction: nil, payment_account: nil)
         @card = card
         @transaction = transaction
-        if card && payment_account
-          @card.payment_account_id = payment_account.id
-        end
-
-        if card && transaction
-          @transaction.card = card
-        end
-
         @payment_account = payment_account
 
         @acceptor_id = Vantiv.acceptor_id
         @application_id = SecureRandom.hex(12)
         @report_group = Vantiv.default_report_group
 
-        if transaction
-          @transaction.report_group = @report_group
-          @transaction.application_id = @application_id
-        end
-
         @authentication = Authentication.new
-        @xmlns = "http://www.litle.com/schema"
-        @version = "10.2"
       end
 
       def to_json
