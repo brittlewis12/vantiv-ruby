@@ -83,7 +83,7 @@ module Vantiv
     end
 
     def xml_uri
-      @uri ||= URI.parse(ENV['XML_URL'])
+      @uri ||= URI.parse("https://transact-prelive.litle.com/vap/communicator/online")
     end
 
     def populated_response(response, http_response)
