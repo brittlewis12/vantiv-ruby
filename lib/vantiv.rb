@@ -8,7 +8,7 @@ require 'vantiv/mocked_sandbox'
 require 'vantiv/paypage'
 
 module Vantiv
-  def self.tokenize(temporary_token:)
+  def self.tokenize(temporary_token:, use_xml: false)
     if temporary_token == "" or temporary_token == nil
       raise ArgumentError.new("Blank temporary token (PaypageRegistrationID): \n
                                Check that paypage error handling is implemented correctly.")
@@ -20,7 +20,8 @@ module Vantiv
     Api::Request.new(
       endpoint: Api::Endpoints::TOKENIZATION,
       body: body,
-      response_object: Api::TokenizationResponse.new
+      response_object: Api::TokenizationResponse.new,
+      use_xml: use_xml
     ).run
   end
 
