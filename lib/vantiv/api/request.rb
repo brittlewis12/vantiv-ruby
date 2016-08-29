@@ -92,7 +92,15 @@ module Vantiv
     end
 
     def xml_uri
-      @uri ||= URI.parse("https://transact-prelive.litle.com/vap/communicator/online")
+      @uri ||= URI.parse("#{xml_root_uri}/vap/communicator/online")
+    end
+
+    def xml_root_uri
+      if Vantiv::Environment.production?
+        "https://transact.litle.com"
+      elsif Vantiv::Environment.certification?
+        "https://transact-prelive.litle.com"
+      end
     end
 
     def populated_response(response, http_response)
