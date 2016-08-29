@@ -27,7 +27,7 @@ module Vantiv
     ).run
   end
 
-  def self.tokenize_by_direct_post(card_number:, expiry_month:, expiry_year:, cvv:)
+  def self.tokenize_by_direct_post(card_number:, expiry_month:, expiry_year:, cvv:, use_xml: false)
     body = Api::RequestBody.for_direct_post_tokenization(
       card_number: card_number,
       expiry_month: expiry_month,
@@ -37,7 +37,8 @@ module Vantiv
     Api::Request.new(
       endpoint: Api::Endpoints::TOKENIZATION,
       body: body,
-      response_object: Api::TokenizationResponse.new
+      response_object: Api::TokenizationResponse.new,
+      use_xml: use_xml
     ).run
   end
 
