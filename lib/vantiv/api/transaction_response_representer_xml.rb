@@ -16,16 +16,7 @@ class TransactionResponseRepresenterXml < Representable::Decorator
   property :response_time, as: :responseTime
   property :message
   property :auth_code, as: :authCode
-
-  # property :post_date, as: :postDate
-
-
-
-  # property :token_response_code, as: :tokenResponseCode
-  # property :token_message, as: :tokenMessage
   property :type, as: :type
-  # property :bin
-
 
   property :account_updater, as: :accountUpdater, class: Vantiv::Api::AccountUpdaterResponse do
     property :original_card_token_info, as: :originalCardTokenInfo, class: Vantiv::Api::CardTokenInfo do
@@ -50,14 +41,6 @@ class TransactionResponseRepresenterXml < Representable::Decorator
 
   property :fraud_result, as: :fraudResult, class: OpenStruct do
     property :avs_result, as: :avsResult
-    # property :card_validation_result, as: :cardValidationResult
   end
-
-  #
-  # property :token_response, as: :tokenResponse, class: Vantiv::Api::CardTokenInfo do
-  #   property :bin
-  #   property :card_type, as: :Type
-  #   property :payment_account_id, as: :PaymentAccountID
-  # end
 
 end
