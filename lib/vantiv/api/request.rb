@@ -15,22 +15,14 @@ module Vantiv
 
     def initialize(endpoint:, body:, response_object:, use_xml: false)
       @endpoint = endpoint
-      @body = body
       @response_object = response_object
       @retry_count = 0
       @use_xml = use_xml
 
       if @use_xml
-        body.card.payment_account_id = body.payment_account.id if body.card && body.payment_account
-
-        body.transaction ||= Vantiv::Api::Transaction.new
-        body.transaction.type = ENDPOINT_XML_TRANSACTION_TYPE.fetch(endpoint.to_sym)
-        body.transaction.card = body.card if body.card
-        body.transaction.report_group = body.report_group
-        body.transaction.application_id = body.application_id
-
-        body.xmlns = "http://www.litle.com/schema"
-        body.version = "10.2"
+        @body = populated_xml_request_body(body)
+      else
+        @body = body
       end
     end
 
@@ -48,6 +40,25 @@ module Vantiv
     end
 
     private
+
+    def populated_xml_request_body(body)
+      populated_body = body.dup
+
+      if populated_body.card && populated_body.payment_account
+        populated_body.card.payment_account_id = populated_body.payment_account.id
+      end
+
+      populated_body.transaction ||= Vantiv::Api::Transaction.new
+      populated_body.transaction.type = ENDPOINT_XML_TRANSACTION_TYPE.fetch(@endpoint.to_sym)
+      populated_body.transaction.card = populated_body.card if populated_body.card
+      populated_body.transaction.report_group = populated_body.report_group
+      populated_body.transaction.application_id = populated_body.application_id
+
+      populated_body.xmlns = "http://www.litle.com/schema"
+      populated_body.version = "10.2"
+
+      populated_body
+    end
 
     def make_json_request
       http = Net::HTTP.new(json_uri.host, json_uri.port)
