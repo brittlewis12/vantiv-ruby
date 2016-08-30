@@ -3,7 +3,7 @@ require 'representable/xml'
 class TransactionRequestRepresenterXml < Representable::Decorator
   include Representable::XML
 
-  self.representation_wrap= lambda {|attrs| type }
+  self.representation_wrap = ->(_) { type }
 
   property :application_id, as: :id, attribute: true
   property :id, as: :litleTxnId
@@ -13,10 +13,8 @@ class TransactionRequestRepresenterXml < Representable::Decorator
   property :amount_in_cents, as: :amount
   property :order_source, as: :orderSource
 
-  property :card, class: Vantiv::Api::Card, if: -> (attrs) { type != :registerTokenRequest && !card&.paypage_registration_id } do
-    self.representation_wrap = lambda do |attrs|
-      !!payment_account_id ? :token : :card
-    end
+  property :card, class: Vantiv::Api::Card, if: ->(_) { type != :registerTokenRequest && !card&.paypage_registration_id } do
+    self.representation_wrap = ->(_) { !!payment_account_id ? :token : :card }
 
     property :type
     property :card_number, as: :number
@@ -24,13 +22,13 @@ class TransactionRequestRepresenterXml < Representable::Decorator
     property :payment_account_id, as: :litleToken
     property :expDate,
              getter: ->(represented:, **) { represented.expiry_month.to_s + represented.expiry_year.to_s },
-             if: -> (represented) { expiry_month && expiry_year }
+             if: ->(_) { expiry_month && expiry_year }
     property :cvv, as: :cardValidationNum
   end
 
   property :accountNumber,
-           if: -> (attrs) { type == :registerTokenRequest },
-           getter: ->(represented:, **) { represented.card.account_number }
+           if: ->(_) { type == :registerTokenRequest },
+           getter: ->(represented:, **) { represented.card&.account_number }
 
   property :paypageRegistrationId,
            getter: ->(represented:, **) { represented.card&.paypage_registration_id }
