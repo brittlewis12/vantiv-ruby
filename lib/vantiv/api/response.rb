@@ -20,6 +20,7 @@ module Vantiv
       private
 
       def litle_response_has_error?
+        body.response == "3" ||
         # NOTE: this kind of sucks, but at the commit point, the DevHub
         #   Api sometimes gives 200OK when litle had a parse issue and returns
         #   'Error validating xml data...' instead of an actual error

@@ -2,9 +2,21 @@ require 'securerandom'
 
 module Vantiv
   module Api
+    class Authentication
+      attr_accessor :user, :password
+      def user
+        Vantiv.user
+      end
+      def password
+        Vantiv.password
+      end
+    end
+
     class RequestBody
       attr_reader :acceptor_id, :application_id, :report_group
       attr_accessor :card, :transaction, :payment_account, :address
+
+      attr_accessor :version, :authentication, :xmlns
 
       def initialize(card: nil, transaction: nil, payment_account: nil)
         @card = card
@@ -14,10 +26,16 @@ module Vantiv
         @acceptor_id = Vantiv.acceptor_id
         @application_id = SecureRandom.hex(12)
         @report_group = Vantiv.default_report_group
+
+        @authentication = Authentication.new
       end
 
       def to_json
         ::RequestBodyRepresenter.new(self).to_json
+      end
+
+      def to_xml
+        ::RequestBodyRepresenterXml.new(self).to_xml
       end
 
       def self.for_auth_or_sale(amount:, customer_id:, order_id:, payment_account_id:, expiry_month:, expiry_year:)

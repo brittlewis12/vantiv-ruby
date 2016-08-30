@@ -4,6 +4,11 @@ module Vantiv
   module Api
     class CardTokenInfo
       attr_accessor :payment_account_id, :card_type, :expiry_month, :expiry_year, :bin
+
+      def expiry_date=(string)
+        @expiry_month = string[0..1]
+        @expiry_year = string[2..3]
+      end
     end
 
     class ExtendedCardResponse
