@@ -1,6 +1,4 @@
 require 'representable/xml'
-require 'ostruct'
-require 'vantiv/api/account_updater_response'
 
 class TransactionRequestRepresenterXml < Representable::Decorator
   include Representable::XML
