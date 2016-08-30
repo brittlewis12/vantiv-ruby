@@ -1,5 +1,3 @@
-require 'representable/xml'
-
 class TransactionRequestRepresenterXml < Representable::Decorator
   include Representable::XML
 

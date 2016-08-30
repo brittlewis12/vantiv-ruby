@@ -1,4 +1,3 @@
-require 'representable/xml'
 require 'vantiv/api/transaction'
 require 'vantiv/api/request_body'
 require 'vantiv/api/transaction_request_representer_xml'

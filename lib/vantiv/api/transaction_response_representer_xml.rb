@@ -1,4 +1,3 @@
-require 'representable/xml'
 require 'ostruct'
 require 'vantiv/api/account_updater_response'
 
