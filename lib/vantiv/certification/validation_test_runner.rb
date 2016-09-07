@@ -7,13 +7,14 @@ module Vantiv
   module Certification
     class ValidationTestRunner
 
-      def self.run(filter_by: '', save_to:)
-        new(filter_by: filter_by, save_to: save_to).run
+      def self.run(save_to:, filter_by: '', use_xml: false)
+        new(save_to: save_to, filter_by: filter_by, use_xml: use_xml).run
       end
 
-      def initialize(filter_by: '', save_to:)
-        @filter_by = filter_by
+      def initialize(save_to:, filter_by: '', use_xml: false)
         @certs_file = save_to
+        @filter_by = filter_by
+        @use_xml = use_xml
       end
 
       def run
@@ -25,7 +26,8 @@ module Vantiv
           run_request(
             cert_name: cert_name,
             endpoint: Vantiv::Api::Endpoints.const_get(contents["endpoint"]),
-            body: create_body(contents["body"])
+            body: create_body(contents["body"]),
+            use_xml: @use_xml
           )
         end
         shutdown
@@ -89,20 +91,38 @@ module Vantiv
         results_file.close
       end
 
-      def run_request(cert_name:, endpoint:, body:)
+      def run_request(cert_name:, endpoint:, body:, use_xml:)
         response = Vantiv::Api::Request.new(
           endpoint: endpoint,
           body: body,
-          response_object: Vantiv::Api::Response.new
+          response_object: Vantiv::Api::Response.new,
+          use_xml: use_xml
         ).run
 
         if response.api_level_failure?
-          error_message = "CERT FAILED: #{cert_name} \n WITH: #{response.body}"
+          error_message = "CERT FAILED: #{cert_name} \n WITH: #{response.raw_body}"
           raise StandardError.new(error_message)
         end
 
+        transaction_id = get_transaction_id(response, use_xml)
+
         response_cache.push(cert_name, response)
-        results_file << "#{cert_name},#{response.body.request_id}\n"
+        results_file << "#{cert_name},#{transaction_id}\n"
+      end
+
+      def get_transaction_id(response, use_xml)
+        if use_xml
+          transaction_response = response.body.register_token_response ||
+            response.body.authorization_response ||
+            response.body.sale_response ||
+            response.body.credit_response ||
+            response.body.void_response ||
+            response.body.auth_reversal_response ||
+            response.body.capture_response
+          transaction_response.transaction_id
+        else
+          response.body.request_id
+        end
       end
     end
   end

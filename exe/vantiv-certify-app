@@ -31,6 +31,10 @@ parser = OptionParser.new do |opts|
   opts.on("--filter_by [TEST_NAME]", "Filter which certifications to run") do |filter|
     options[:filter_by] = filter
   end
+
+  opts.on("--use_xml", "Use XML endpoint") do |use_xml|
+    options[:use_xml] = use_xml
+  end
 end
 
 parser.parse!
@@ -57,8 +61,9 @@ Vantiv.configure do |config|
 end
 
 Vantiv::Certification::ValidationTestRunner.run(
+  save_to: "certs.txt",
   filter_by: options[:filter_by],
-  save_to: "certs.txt"
+  use_xml: options[:use_xml]
 )
 
 %x(open certs.txt)
