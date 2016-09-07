@@ -20,12 +20,12 @@ parser = OptionParser.new do |opts|
     options[:paypage_id] = paypage_id
   end
 
-  opts.on("-u", "--user VANTIV_USER", "Vantiv XML User") do |paypage_id|
-    options[:user] = paypage_id
+  opts.on("-u", "--user VANTIV_USER", "Vantiv XML User") do |user|
+    options[:user] = user
   end
 
-  opts.on("-w", "--password VANTIV_PASSWORD", "Vantiv XML Password") do |paypage_id|
-    options[:user] = paypage_id
+  opts.on("-w", "--password VANTIV_PASSWORD", "Vantiv XML Password") do |password|
+    options[:password] = password
   end
 
   opts.on("--filter_by [TEST_NAME]", "Filter which certifications to run") do |filter|
