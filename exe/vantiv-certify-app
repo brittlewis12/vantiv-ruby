@@ -6,7 +6,7 @@ require 'optparse'
 
 options = {}
 parser = OptionParser.new do |opts|
-  opts.banner = "Usage: vantiv-certify-app -a <acceptor_id> -l <license_id> -p <paypage_id> [--filter_by <test_name>]"
+  opts.banner = "Usage: vantiv-certify-app -a <acceptor_id> -p <paypage_id> -u <user> -w <password> -l <license_id> [--filter_by <test_name>]"
 
   opts.on("-a", "--acceptor_id ACCEPTOR_ID", "Vantiv Acceptor ID") do |acceptor_id|
     options[:acceptor_id] = acceptor_id
@@ -20,12 +20,12 @@ parser = OptionParser.new do |opts|
     options[:paypage_id] = paypage_id
   end
 
-  opts.on("-u", "--user VANTIV_USER", "Vantiv XML User") do |paypage_id|
-    options[:user] = paypage_id
+  opts.on("-u", "--user VANTIV_USER", "Vantiv XML User") do |user|
+    options[:user] = user
   end
 
-  opts.on("-w", "--password VANTIV_PASSWORD", "Vantiv XML Password") do |paypage_id|
-    options[:user] = paypage_id
+  opts.on("-w", "--password VANTIV_PASSWORD", "Vantiv XML Password") do |password|
+    options[:password] = password
   end
 
   opts.on("--filter_by [TEST_NAME]", "Filter which certifications to run") do |filter|
