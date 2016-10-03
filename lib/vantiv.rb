@@ -84,7 +84,7 @@ module Vantiv
     ).run
   end
 
-  def self.auth_capture(amount:, payment_account_id:, customer_id:, order_id:, expiry_month:, expiry_year:)
+  def self.auth_capture(amount:, payment_account_id:, customer_id:, order_id:, expiry_month:, expiry_year:, use_xml: false)
     body = Api::RequestBody.for_auth_or_sale(
       amount: amount,
       order_id: order_id,
@@ -96,7 +96,8 @@ module Vantiv
     Api::Request.new(
       endpoint: Api::Endpoints::SALE,
       body: body,
-      response_object: Api::LiveTransactionResponse.new(:sale)
+      response_object: Api::LiveTransactionResponse.new(:sale),
+      use_xml: use_xml
     ).run
   end
 
