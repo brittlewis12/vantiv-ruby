@@ -74,11 +74,12 @@ module Vantiv
         new(transaction: transaction)
       end
 
-      def self.for_return(amount:, customer_id:, order_id:, payment_account_id:, expiry_month:, expiry_year:)
+      def self.for_return(amount:, customer_id:, order_id:, payment_account_id:,
+          expiry_month:, expiry_year:, order_source: Vantiv.default_order_source)
         transaction = Transaction.new(
           order_id: order_id,
           amount_in_cents: amount,
-          order_source: Vantiv.default_order_source,
+          order_source: order_source,
           customer_id: customer_id
         )
         card = Card.new(
