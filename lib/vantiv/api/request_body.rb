@@ -42,7 +42,7 @@ module Vantiv
         transaction = Transaction.new(
             order_id: order_id,
             amount_in_cents: amount,
-            order_source: Vantiv.order_source,
+            order_source: Vantiv.default_order_source,
             customer_id: customer_id,
             partial_approved_flag: false
         )
@@ -78,7 +78,7 @@ module Vantiv
         transaction = Transaction.new(
           order_id: order_id,
           amount_in_cents: amount,
-          order_source: Vantiv.order_source,
+          order_source: Vantiv.default_order_source,
           customer_id: customer_id
         )
         card = Card.new(

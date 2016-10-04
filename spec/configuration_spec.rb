@@ -4,7 +4,7 @@ describe "Vantiv configuration" do
   [:license_id,
    :acceptor_id,
    :default_report_group,
-   :order_source,
+   :default_order_source,
    :paypage_id,
    :user,
    :password

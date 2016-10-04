@@ -28,7 +28,7 @@ The gem needs the following configuration to be set on app initialization. It is
 Vantiv.configure do |config|
   config.license_id = ENV["VANTIV_LICENSE_ID"]
   config.acceptor_id = ENV["VANTIV_ACCEPTOR_ID"]
-  config.order_source = "desired-order-source"
+  config.default_order_source = "desired-order-source"
   config.paypage_id = ENV["VANTIV_PAYPAGE_ID"]
   
   config.user = ENV["VANTIV_USER"]
