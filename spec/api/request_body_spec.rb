@@ -422,13 +422,6 @@ describe Vantiv::Api::RequestBody do
       it "sets the order source on the response body" do
         expect(request_body.transaction.order_source).to eq "my-custom-order-source"
       end
-
-      it "uses the correct order source when converted to json" do
-        allow(SecureRandom).to receive(:hex).and_return "the-application-id"
-        allow(Vantiv).to receive(:acceptor_id).and_return "acceptor-id"
-        expected = {"Credentials"=>{"AcceptorID"=>"acceptor-id"}, "Reports"=>{"ReportGroup"=>"1"}, "Application"=>{"ApplicationID"=>"the-application-id"}, "Transaction"=>{"ReferenceNumber"=>"SomeOrder123", "TransactionAmount"=>"42.24", "OrderSource"=>"my-custom-order-source", "CustomerID"=>"extid123"}, "Card"=>{"ExpirationMonth"=>"08", "ExpirationYear"=>"18"}, "PaymentAccount"=>{"PaymentAccountID"=>"paymentacct123"}}
-        expect(request_body.to_json).to eq expected.to_json
-      end
     end
 
     it "returns the expected json" do
