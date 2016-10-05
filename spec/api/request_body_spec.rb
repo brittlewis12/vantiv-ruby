@@ -151,6 +151,24 @@ describe Vantiv::Api::RequestBody do
   end
 
   describe ".for_auth_or_sale" do
+    context "when order source is passed in" do
+      subject(:request_body) do
+        Vantiv::Api::RequestBody.for_auth_or_sale(
+          amount: 4224,
+          customer_id: "extid123",
+          payment_account_id: "paymentacct123",
+          order_id: "SomeOrder123",
+          expiry_month: "8",
+          expiry_year: "2018",
+          order_source: "my-custom-order-source"
+        )
+      end
+
+      it "sets the order source on the transaction" do
+        expect(request_body.transaction.order_source).to eq "my-custom-order-source"
+      end
+    end
+
     subject(:request_body) do
       Vantiv::Api::RequestBody.for_auth_or_sale(
         amount: 4224,
