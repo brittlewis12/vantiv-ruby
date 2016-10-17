@@ -172,7 +172,7 @@ describe "auth_capture (Sale)" do
     end
   end
 
-  context "when use_xml is false" do
+  context "when use_xml is true" do
     let(:use_xml) { true }
     let(:customer_external_id) { "1234" }
     let(:payment_account_id) { test_account.payment_account_id }
