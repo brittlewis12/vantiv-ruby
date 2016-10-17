@@ -96,11 +96,11 @@ describe "account updater" do
         expect(auth_response.success?).to eq true
       end
 
-      it "retruns a nil extended_card_response_code" do
+      it "returns a nil extended_card_response_code" do
         expect(account_updater_response.extended_card_response_code).to eq nil
       end
 
-      it "retruns a nil extended_card_response_message" do
+      it "returns a nil extended_card_response_message" do
         expect(account_updater_response.extended_card_response_message).to eq nil
       end
     end
@@ -275,11 +275,11 @@ describe "account updater" do
         expect(auth_response.success?).to eq true
       end
 
-      it "retruns a nil extended_card_response_code" do
+      it "returns a nil extended_card_response_code" do
         expect(account_updater_response.extended_card_response_code).to eq nil
       end
 
-      it "retruns a nil extended_card_response_message" do
+      it "returns a nil extended_card_response_message" do
         expect(account_updater_response.extended_card_response_message).to eq nil
       end
     end
