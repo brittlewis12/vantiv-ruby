@@ -140,11 +140,12 @@ module Vantiv
   end
 
   # NOTE: can void credits
-  def self.void(transaction_id:)
+  def self.void(transaction_id:, use_xml: false)
     Api::Request.new(
       endpoint: Api::Endpoints::VOID,
       body: Api::RequestBody.for_void(transaction_id: transaction_id),
-      response_object: Api::TiedTransactionResponse.new(:void)
+      response_object: Api::TiedTransactionResponse.new(:void),
+      use_xml: use_xml
     ).run
   end
 
