@@ -52,7 +52,7 @@ describe "reversing authorizations" do
     context "when nonexistent transaction is used" do
       let(:transaction_id) { "99997933698012190" }
 
-      it "still returns 001 txn received" do
+      it "has a successful response" do
         response = run_reversal(transaction_id)
         expect_successful_response(response)
       end
@@ -61,7 +61,7 @@ describe "reversing authorizations" do
     context "when reversing a specific amount of the authorization" do
       let(:amount) { 1000 }
 
-      it "just returns 001 txn received, with no indication of success" do
+      it "has a successful response" do
         response = run_reversal(transaction_id)
         expect_successful_response(response)
       end
@@ -70,7 +70,7 @@ describe "reversing authorizations" do
     context "when reversing an amount exceeding the authorization" do
       let(:amount) { 20000 }
 
-      it "still returns 001 txn received" do
+      it "has a successful response" do
         response = run_reversal(transaction_id)
         expect_successful_response(response)
       end
@@ -85,14 +85,14 @@ describe "reversing authorizations" do
       end
       let(:amount) { 5000 }
 
-      it "returns 001 txn received" do
+      it "has a successful response" do
         response = run_reversal(capture_transaction_id)
         expect_successful_response(response)
       end
 
       context "when reversing a specific amount from the capture" do
 
-        it "returns 001 txn received" do
+        it "has a successful response" do
           response = run_reversal(capture_transaction_id)
           expect_successful_response(response)
         end
@@ -101,7 +101,7 @@ describe "reversing authorizations" do
       context "when reversing an amount exceeding the capture" do
         let(:amount) { 99999 }
 
-        it "returns 001 txn received" do
+        it "has a successful response" do
           response = run_reversal(capture_transaction_id)
           expect_successful_response(response)
         end
@@ -132,7 +132,7 @@ describe "reversing authorizations" do
     context "when nonexistent transaction is used" do
       let(:transaction_id) { "99997933698012190" }
 
-      it "still returns 001 txn received" do
+      it "has a successful response" do
         response = run_reversal(transaction_id)
         expect_successful_response(response)
       end
@@ -141,7 +141,7 @@ describe "reversing authorizations" do
     context "when reversing a specific amount of the authorization" do
       let(:amount) { 1000 }
 
-      it "just returns 001 txn received, with no indication of success" do
+      it "has a successful response" do
         response = run_reversal(transaction_id)
         expect_successful_response(response)
       end
@@ -150,7 +150,7 @@ describe "reversing authorizations" do
     context "when reversing an amount exceeding the authorization" do
       let(:amount) { 20000 }
 
-      it "still returns 001 txn received" do
+      it "has a successful response" do
         response = run_reversal(transaction_id)
         expect_successful_response(response)
       end
@@ -165,14 +165,14 @@ describe "reversing authorizations" do
       end
       let(:amount) { 5000 }
 
-      it "returns 001 txn received" do
+      it "has a successful response" do
         response = run_reversal(capture_transaction_id)
         expect_successful_response(response)
       end
 
       context "when reversing a specific amount from the capture" do
 
-        it "returns 001 txn received" do
+        it "has a successful response" do
           response = run_reversal(capture_transaction_id)
           expect_successful_response(response)
         end
@@ -181,7 +181,7 @@ describe "reversing authorizations" do
       context "when reversing an amount exceeding the capture" do
         let(:amount) { 99999 }
 
-        it "returns 001 txn received" do
+        it "has a successful response" do
           response = run_reversal(capture_transaction_id)
           expect_successful_response(response)
         end
