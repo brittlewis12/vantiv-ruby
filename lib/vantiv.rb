@@ -73,7 +73,7 @@ module Vantiv
     ).run
   end
 
-  def self.capture(transaction_id:, amount: nil)
+  def self.capture(transaction_id:, amount: nil, use_xml: false)
     body = Api::RequestBody.for_capture(
       transaction_id: transaction_id,
       amount: amount
@@ -82,7 +82,8 @@ module Vantiv
     Api::Request.new(
       endpoint: Api::Endpoints::CAPTURE,
       body: body,
-      response_object: Api::TiedTransactionResponse.new(:capture)
+      response_object: Api::TiedTransactionResponse.new(:capture),
+      use_xml: use_xml
     ).run
   end
 
