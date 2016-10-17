@@ -59,7 +59,7 @@ module Vantiv
     ).run
   end
 
-  def self.auth_reversal(transaction_id:, amount: nil)
+  def self.auth_reversal(transaction_id:, amount: nil, use_xml: false)
     body = Api::RequestBody.for_auth_reversal(
       transaction_id: transaction_id,
       amount: amount
@@ -68,7 +68,8 @@ module Vantiv
     Api::Request.new(
       endpoint: Api::Endpoints::AUTH_REVERSAL,
       body: body,
-      response_object: Api::TiedTransactionResponse.new(:auth_reversal)
+      response_object: Api::TiedTransactionResponse.new(:auth_reversal),
+      use_xml: use_xml
     ).run
   end
 
