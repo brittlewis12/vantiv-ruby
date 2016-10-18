@@ -26,7 +26,8 @@ describe "mocked API requests to capture" do
       customer_id: customer_id,
       order_id: order_id,
       expiry_month: card.expiry_month,
-      expiry_year: card.expiry_year
+      expiry_year: card.expiry_year,
+      use_xml: use_xml
     ).transaction_id
   end
 
@@ -34,7 +35,8 @@ describe "mocked API requests to capture" do
     Vantiv::MockedSandbox.enable_self_mocked_requests!
     response = Vantiv.capture(
       transaction_id: mocked_auth_transaction_id,
-      amount: amount
+      amount: amount,
+      use_xml: use_xml
     )
     Vantiv::MockedSandbox.disable_self_mocked_requests!
     response
@@ -44,47 +46,95 @@ describe "mocked API requests to capture" do
   let(:live_response) do
     Vantiv.capture(
       transaction_id: live_auth_transaction_id,
-      amount: amount
+      amount: amount,
+      use_xml: use_xml
     )
   end
 
   after { Vantiv::MockedSandbox.disable_self_mocked_requests! }
 
-  Vantiv::TestCard.all.each do |test_card|
-    next unless test_card.tokenizable?
+  context "when use_xml is false" do
+    let(:use_xml) { false }
 
-    let(:card) { test_card }
+    Vantiv::TestCard.all.each do |test_card|
+      next unless test_card.tokenizable?
 
-    context "with a #{test_card.name}" do
-      it "the mocked response's public methods return the same as the live one" do
-        (
+      let(:card) { test_card }
+
+      context "with a #{test_card.name}" do
+        it "the mocked response's public methods return the same as the live one" do
+          (
           Vantiv::Api::TiedTransactionResponse.instance_methods(false) +
-          Vantiv::Api::Response.instance_methods(false) -
-          [:payment_account_id, :body, :raw_body, :load, :request_id, :transaction_id]
-        ).each do |method_name|
-          next if method_name.to_s.end_with?("=")
+            Vantiv::Api::Response.instance_methods(false) -
+            [:payment_account_id, :body, :raw_body, :load, :request_id, :transaction_id]
+          ).each do |method_name|
+            next if method_name.to_s.end_with?("=")
 
-          live_response_value = live_response.send(method_name)
-          mocked_response_value = mocked_response.send(method_name)
+            live_response_value = live_response.send(method_name)
+            mocked_response_value = mocked_response.send(method_name)
 
-          expect(mocked_response_value).to eq(live_response_value),
-            error_message_for_mocked_api_failure(
-              method_name: method_name,
-              expected_value: live_response_value,
-              got_value: mocked_response_value,
-              live_response: live_response
-            )
+            expect(mocked_response_value).to eq(live_response_value),
+                                             error_message_for_mocked_api_failure(
+                                               method_name: method_name,
+                                               expected_value: live_response_value,
+                                               got_value: mocked_response_value,
+                                               live_response: live_response
+                                             )
+          end
+        end
+
+        it "returns a raw body string" do
+          expect(mocked_response.raw_body).to be_an_instance_of String
+        end
+
+        it "returns a dynamic transaction id" do
+          response_1 = run_mocked_response
+          response_2 = run_mocked_response
+          expect(response_1.transaction_id).not_to eq response_2.transaction_id
         end
       end
+    end
+  end
 
-      it "returns a raw body string" do
-        expect(mocked_response.raw_body).to be_an_instance_of String
-      end
+  context "when use_xml is true" do
+    let(:use_xml) { true }
 
-      it "returns a dynamic transaction id" do
-        response_1 = run_mocked_response
-        response_2 = run_mocked_response
-        expect(response_1.transaction_id).not_to eq response_2.transaction_id
+    Vantiv::TestCard.all.each do |test_card|
+      next unless test_card.tokenizable?
+
+      let(:card) { test_card }
+
+      context "with a #{test_card.name}" do
+        it "the mocked response's public methods return the same as the live one" do
+          (
+          Vantiv::Api::TiedTransactionResponse.instance_methods(false) +
+            Vantiv::Api::Response.instance_methods(false) -
+            [:payment_account_id, :body, :raw_body, :load, :request_id, :transaction_id]
+          ).each do |method_name|
+            next if method_name.to_s.end_with?("=")
+
+            live_response_value = live_response.send(method_name)
+            mocked_response_value = mocked_response.send(method_name)
+
+            expect(mocked_response_value).to eq(live_response_value),
+                                             error_message_for_mocked_api_failure(
+                                               method_name: method_name,
+                                               expected_value: live_response_value,
+                                               got_value: mocked_response_value,
+                                               live_response: live_response
+                                             )
+          end
+        end
+
+        it "returns a raw body string" do
+          expect(mocked_response.raw_body).to be_an_instance_of String
+        end
+
+        it "returns a dynamic transaction id" do
+          response_1 = run_mocked_response
+          response_2 = run_mocked_response
+          expect(response_1.transaction_id).not_to eq response_2.transaction_id
+        end
       end
     end
   end

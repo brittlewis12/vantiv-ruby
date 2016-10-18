@@ -42,7 +42,7 @@ module Vantiv
     ).run
   end
 
-  def self.auth(amount:, payment_account_id:, customer_id:, order_id:, expiry_month:, expiry_year:)
+  def self.auth(amount:, payment_account_id:, customer_id:, order_id:, expiry_month:, expiry_year:, use_xml: false)
     body = Api::RequestBody.for_auth_or_sale(
       amount: amount,
       order_id: order_id,
@@ -54,11 +54,12 @@ module Vantiv
     Api::Request.new(
       endpoint: Api::Endpoints::AUTHORIZATION,
       body: body,
-      response_object: Api::LiveTransactionResponse.new(:auth)
+      response_object: Api::LiveTransactionResponse.new(:auth),
+      use_xml: use_xml
     ).run
   end
 
-  def self.auth_reversal(transaction_id:, amount: nil)
+  def self.auth_reversal(transaction_id:, amount: nil, use_xml: false)
     body = Api::RequestBody.for_auth_reversal(
       transaction_id: transaction_id,
       amount: amount
@@ -67,11 +68,12 @@ module Vantiv
     Api::Request.new(
       endpoint: Api::Endpoints::AUTH_REVERSAL,
       body: body,
-      response_object: Api::TiedTransactionResponse.new(:auth_reversal)
+      response_object: Api::TiedTransactionResponse.new(:auth_reversal),
+      use_xml: use_xml
     ).run
   end
 
-  def self.capture(transaction_id:, amount: nil)
+  def self.capture(transaction_id:, amount: nil, use_xml: false)
     body = Api::RequestBody.for_capture(
       transaction_id: transaction_id,
       amount: amount
@@ -80,7 +82,8 @@ module Vantiv
     Api::Request.new(
       endpoint: Api::Endpoints::CAPTURE,
       body: body,
-      response_object: Api::TiedTransactionResponse.new(:capture)
+      response_object: Api::TiedTransactionResponse.new(:capture),
+      use_xml: use_xml
     ).run
   end
 
@@ -105,7 +108,7 @@ module Vantiv
 
   # NOTE: ActiveMerchant's #refund... only for use on a capture or sale it seems
   #       -> 'returns' are refunds too, credits are tied to a sale/capture, returns can be willy nilly
-  def self.credit(transaction_id:, amount: nil)
+  def self.credit(transaction_id:, amount: nil, use_xml: false)
     body = Api::RequestBody.for_credit(
       amount: amount,
       transaction_id: transaction_id
@@ -113,7 +116,8 @@ module Vantiv
     Api::Request.new(
       endpoint: Api::Endpoints::CREDIT,
       body: body,
-      response_object: Api::TiedTransactionResponse.new(:credit)
+      response_object: Api::TiedTransactionResponse.new(:credit),
+      use_xml: use_xml
     ).run
   end
 
@@ -136,11 +140,12 @@ module Vantiv
   end
 
   # NOTE: can void credits
-  def self.void(transaction_id:)
+  def self.void(transaction_id:, use_xml: false)
     Api::Request.new(
       endpoint: Api::Endpoints::VOID,
       body: Api::RequestBody.for_void(transaction_id: transaction_id),
-      response_object: Api::TiedTransactionResponse.new(:void)
+      response_object: Api::TiedTransactionResponse.new(:void),
+      use_xml: use_xml
     ).run
   end
 
