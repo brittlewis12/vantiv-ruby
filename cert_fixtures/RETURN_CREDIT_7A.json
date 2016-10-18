@@ -1,0 +1,8 @@
+{
+  "endpoint": "CREDIT",
+  "body": {
+    "Transaction": {
+      "TransactionID": "#{RETURN_CREDIT_7.body.sale_response.transaction_id}"
+    }
+  }
+}

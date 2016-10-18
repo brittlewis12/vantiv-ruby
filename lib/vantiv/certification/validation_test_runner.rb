@@ -30,7 +30,7 @@ module Vantiv
       def run
         fixtures.each do |file_name|
           cert_name = get_cert_name(file_name)
-          next if filter_by && !/L_#{filter_by}_\d*/.match(cert_name)
+          next if filter_by && !/#{filter_by}_\d*/.match(cert_name)
 
           contents = JSON.parse(File.read(file_name))
           run_request(

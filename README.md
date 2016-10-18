@@ -51,8 +51,8 @@ $ bundle exec vantiv-certify-app -l sub-your-license-id-in-here -a sub-your-acce
 A certs.txt file will be generated in the directory that the script is run, and then opened. It contains a list of DevHub Certification Test IDs and associated Request IDs, like follows:
 
 ```
-L_AC_1, request-id-for-L_AC_1-here
-L_AC_2, request-id-for-L_AC_2-here
+AUTH_CAPTURE_1, request-id-for-AUTH_CAPTURE_1-here
+AUTH_CAPTURE_2, request-id-for-AUTH_CAPTURE_2-here
 ```
 
 Navigate to your application's page in DevHub's developer portal (apideveloper.vantiv.com). Paste the contents of this file into the validation form input field, and then click "Validate".

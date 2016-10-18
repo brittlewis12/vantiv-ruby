@@ -1,0 +1,8 @@
+{
+  "endpoint": "CREDIT",
+  "body": {
+    "Transaction": {
+      "TransactionID": "#{RETURN_CREDIT_4A.body.capture_response.transaction_id}"
+    }
+  }
+}
