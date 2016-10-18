@@ -16,6 +16,7 @@ class TransactionRequestRepresenterXml < Representable::Decorator
 
     property :billing_name, as: :name
     property :billing_address_1, as: :addressLine1
+    property :billing_address_2, as: :addressLine2
     property :billing_city, as: :city
     property :billing_state, as: :state
     property :billing_zipcode, as: :zip
