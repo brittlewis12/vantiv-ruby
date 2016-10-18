@@ -6,6 +6,16 @@ require 'vantiv/certification/cert_request_body_compiler'
 module Vantiv
   module Certification
     class ValidationTestRunner
+      ENDPOINT_RESPONSE_OBJECT = {
+        Api::Endpoints::TOKENIZATION => Api::TokenizationResponse.new,
+        Api::Endpoints::AUTHORIZATION => Api::LiveTransactionResponse.new(:auth),
+        Api::Endpoints::AUTH_REVERSAL => Api::TiedTransactionResponse.new(:auth_reversal),
+        Api::Endpoints::CAPTURE => Api::TiedTransactionResponse.new(:capture),
+        Api::Endpoints::SALE => Api::LiveTransactionResponse.new(:sale),
+        Api::Endpoints::CREDIT => Api::TiedTransactionResponse.new(:credit),
+        Api::Endpoints::RETURN => Api::TiedTransactionResponse.new(:return),
+        Api::Endpoints::VOID => Api::TiedTransactionResponse.new(:void)
+      }
 
       def self.run(save_to:, filter_by: '', use_xml: false)
         new(save_to: save_to, filter_by: filter_by, use_xml: use_xml).run
@@ -95,7 +105,7 @@ module Vantiv
         response = Vantiv::Api::Request.new(
           endpoint: endpoint,
           body: body,
-          response_object: Vantiv::Api::Response.new,
+          response_object: ENDPOINT_RESPONSE_OBJECT.fetch(endpoint),
           use_xml: use_xml
         ).run
 
@@ -112,13 +122,8 @@ module Vantiv
 
       def get_transaction_id(response, use_xml)
         if use_xml
-          transaction_response = response.body.register_token_response ||
-            response.body.authorization_response ||
-            response.body.sale_response ||
-            response.body.credit_response ||
-            response.body.void_response ||
-            response.body.auth_reversal_response ||
-            response.body.capture_response
+          transaction_response_name = response.send(:transaction_response_name)
+          transaction_response = response.body.send(transaction_response_name)
           transaction_response.transaction_id
         else
           response.body.request_id
