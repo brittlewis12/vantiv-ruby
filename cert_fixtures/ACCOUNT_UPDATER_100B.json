@@ -9,7 +9,7 @@
       "PartialApprovedFlag": "false"
     },
     "PaymentAccount": {
-      "PaymentAccountID": "#{ACCOUNT_UPDATER_3.body.sale_response.token_response.payment_account_id}"
+      "PaymentAccountID": "#{ACCOUNT_UPDATER_100A.body.sale_response.token_response.payment_account_id}"
     },
     "Card": {
       "ExpirationMonth": "01",
