@@ -1,8 +1,0 @@
-{
-  "endpoint": "AUTH_REVERSAL",
-  "body": {
-    "Transaction": {
-      "TransactionID": "#{AUTH_REVERSAL_1.body.authorization_response.transaction_id}"
-    }
-  }
-}

@@ -2,7 +2,7 @@
   "endpoint": "CAPTURE",
   "body": {
     "Transaction": {
-      "TransactionID": "#{AUTH_REVERSAL_4.body.authorization_response.transaction_id}",
+      "TransactionID": "#{AUTH_REVERSAL_32.body.authorization_response.transaction_id}",
       "TransactionAmount": "50.50"
     }
   }
