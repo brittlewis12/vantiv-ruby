@@ -1,8 +1,0 @@
-{
-  "endpoint": "CREDIT",
-  "body": {
-    "Transaction": {
-      "TransactionID": "#{RETURN_CREDIT_6.body.sale_response.transaction_id}"
-    }
-  }
-}
