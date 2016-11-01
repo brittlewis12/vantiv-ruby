@@ -126,18 +126,14 @@ module Vantiv
       @test_accounts_directory ||= ensure_directory_exists
     end
 
-    def tokenization_request_body
-      transaction = Api::Transaction.new(customer_id: "123")
-      card = Api::Card.new(expiry_month: expiry_month, expiry_year: expiry_year, account_number: card_number)
-      Api::RequestBody.new(card: card, transaction: transaction)
-    end
-
     def request_payment_account_id
-      response = Api::Request.new(
-        endpoint: "payment/sp2/services/v1/paymentAccountCreate",
-        body: tokenization_request_body,
-        response_object: Api::Response.new
-      ).run
+      response = Vantiv.tokenize_by_direct_post(
+        card_number: card_number,
+        expiry_month: expiry_month,
+        expiry_year: expiry_year,
+        cvv: cvv,
+        use_xml: true
+      )
       raise "Tokenization Request not 200 OK, it's #{response.http_response_code}\n Response: #{response.body}" unless response.httpok
       response.body.register_token_response.payment_account_id
     end

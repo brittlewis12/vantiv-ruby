@@ -28,6 +28,10 @@ class TransactionRequestRepresenterXml < Representable::Decorator
            if: ->(_) { type == :registerTokenRequest },
            getter: ->(represented:, **) { represented.card&.account_number }
 
+  property :cardValidationNum,
+           if: ->(_) { type == :registerTokenRequest },
+           getter: ->(represented:, **) { represented.card&.cvv }
+
   property :paypageRegistrationId,
            getter: ->(represented:, **) { represented.card&.paypage_registration_id }
 
