@@ -39,7 +39,7 @@ module Vantiv
       end
 
       def self.for_auth_or_sale(amount:, customer_id:, order_id:, payment_account_id:,
-          expiry_month:, expiry_year:, order_source: Vantiv.default_order_source)
+          expiry_month:, expiry_year:, order_source: Vantiv.default_order_source, cvv: nil)
         transaction = Transaction.new(
             order_id: order_id,
             amount_in_cents: amount,
@@ -49,7 +49,8 @@ module Vantiv
         )
         card = Card.new(
           expiry_month: expiry_month,
-          expiry_year: expiry_year
+          expiry_year: expiry_year,
+          cvv: cvv
         )
         payment_account = PaymentAccount.new(id: payment_account_id)
 

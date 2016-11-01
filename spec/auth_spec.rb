@@ -133,6 +133,47 @@ describe "auth" do
   context "when use_xml is true" do
     let(:use_xml) { true }
 
+    context "when there is a security code mismatch" do
+      let(:test_account) { Vantiv::TestAccount.security_code_mismatch }
+
+      context "when use_temporarily_stored_security_code is true" do
+        subject(:response) do
+          Vantiv.auth(
+            amount: 9100,
+            payment_account_id: payment_account_id,
+            customer_id: customer_external_id,
+            order_id: "SomeOrder123",
+            expiry_month: test_account.expiry_month,
+            expiry_year: test_account.expiry_year,
+            use_temporarily_stored_security_code: true,
+            use_xml: use_xml
+          )
+        end
+
+        it "does not return a success response" do
+          expect(response.success?).to eq false
+        end
+
+        it "fails beacsue of security code mismatch" do
+          expect(response.message).to match(/Restricted by Litle due to security code mismatch/i)
+        end
+
+        it "returns a '358' response code" do
+          expect(response.response_code).to eq('358')
+        end
+      end
+
+      context "when use_temporarily_stored_security_code is not set" do
+        it "returns success response" do
+          expect(response.success?).to eq true
+        end
+
+        it "returns a '000' response code" do
+          expect(response.response_code).to eq('000')
+        end
+      end
+    end
+
     context "on a valid account" do
       let(:test_account) { Vantiv::TestAccount.valid_account }
 

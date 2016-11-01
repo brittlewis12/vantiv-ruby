@@ -52,6 +52,14 @@ module Vantiv
       )
     end
 
+    def self.security_code_mismatch
+      # don't cache this because accessing security code is
+      # time sensitive from time of tokenization
+      account = new("5112002200000008", "11", "16", "123")
+      account.get_data
+      account
+    end
+
     def self.pick_up_card
       fetch_account(
         card_number: "375001010000003",
@@ -107,11 +115,15 @@ module Vantiv
       File.open("#{test_accounts_directory}/#{card_number}", "a+") do |file|
         @payment_account_id = file.read
         if payment_account_id == "" || payment_account_id == nil
-          @payment_account_id = request_payment_account_id
+          get_data
           file << payment_account_id
         end
       end
       raise "PaymentAccountID not found" unless payment_account_id
+    end
+
+    def get_data
+      @payment_account_id = request_payment_account_id
     end
 
     private

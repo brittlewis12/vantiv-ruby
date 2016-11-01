@@ -42,14 +42,25 @@ module Vantiv
     ).run
   end
 
-  def self.auth(amount:, payment_account_id:, customer_id:, order_id:, expiry_month:, expiry_year:, use_xml: false)
+  def self.auth(amount:, payment_account_id:, customer_id:, order_id:, expiry_month:, expiry_year:,
+      use_temporarily_stored_security_code: false, use_xml: false)
+
+    # From XML Docs:
+    # When you submit the CVV2/CVC2/CID in a registerTokenRequest, the platform encrypts
+    # and stores the value on a temporary basis for later use in a tokenized Auth/Sale
+    # transaction submitted without the value. To use the store value when
+    # submitting an Auth/Sale transaction, set the cardValidationNum value to 000.
+
+    cvv = use_temporarily_stored_security_code ? '000' : nil
+
     body = Api::RequestBody.for_auth_or_sale(
       amount: amount,
       order_id: order_id,
       customer_id: customer_id,
       payment_account_id: payment_account_id,
       expiry_month: expiry_month,
-      expiry_year: expiry_year
+      expiry_year: expiry_year,
+      cvv: cvv
     )
     Api::Request.new(
       endpoint: Api::Endpoints::AUTHORIZATION,
