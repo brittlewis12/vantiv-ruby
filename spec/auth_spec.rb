@@ -283,6 +283,54 @@ describe "auth" do
         expect(response.api_level_failure?).to eq true
       end
     end
+
+    context "when no order source is passed in" do
+      let(:test_account) { Vantiv::TestAccount.valid_account }
+
+      before do
+        request_double = double('request')
+        allow(Vantiv::Api::Request).to receive(:new) { request_double }
+        allow(request_double).to receive :run
+      end
+
+      it "uses the default order_source" do
+        expect(Vantiv::Api::RequestBody).to receive(:for_auth_or_sale).with(
+          hash_including(order_source: Vantiv.default_order_source)
+        )
+        response
+      end
+    end
+
+    context "when an order source is passed in" do
+      let(:test_account) { Vantiv::TestAccount.valid_account }
+
+      subject(:response) do
+        Vantiv.auth_capture(
+          amount: 10000,
+          payment_account_id: payment_account_id,
+          customer_id: customer_external_id,
+          order_id: "SomeOrder123",
+          expiry_month: test_account.expiry_month,
+          expiry_year: test_account.expiry_year,
+          use_xml: use_xml,
+          order_source: "custom-order-source"
+        )
+      end
+
+      before do
+        request_double = double('request')
+        allow(Vantiv::Api::Request).to receive(:new) { request_double }
+        allow(request_double).to receive :run
+      end
+
+      it "uses the default order_source" do
+        expect(Vantiv::Api::RequestBody).to receive(:for_auth_or_sale).with(
+          hash_including(order_source: "custom-order-source")
+        )
+        response
+      end
+    end
+
   end
 
 end

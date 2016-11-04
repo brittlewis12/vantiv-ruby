@@ -43,7 +43,7 @@ module Vantiv
   end
 
   def self.auth(amount:, payment_account_id:, customer_id:, order_id:, expiry_month:, expiry_year:,
-      use_temporarily_stored_security_code: false, use_xml: false)
+    order_source: Vantiv.default_order_source, use_temporarily_stored_security_code: false, use_xml: false)
 
     # From XML Docs:
     # When you submit the CVV2/CVC2/CID in a registerTokenRequest, the platform encrypts
@@ -60,7 +60,8 @@ module Vantiv
       payment_account_id: payment_account_id,
       expiry_month: expiry_month,
       expiry_year: expiry_year,
-      cvv: cvv
+      cvv: cvv,
+      order_source: order_source
     )
     Api::Request.new(
       endpoint: Api::Endpoints::AUTHORIZATION,
