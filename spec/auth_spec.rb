@@ -323,7 +323,7 @@ describe "auth" do
         allow(request_double).to receive :run
       end
 
-      it "uses the default order_source" do
+      it "uses the passed in order_source" do
         expect(Vantiv::Api::RequestBody).to receive(:for_auth_or_sale).with(
           hash_including(order_source: "custom-order-source")
         )
