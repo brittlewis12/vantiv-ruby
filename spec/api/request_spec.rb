@@ -23,15 +23,15 @@ describe Vantiv::Api::Request do
 
     context "running an API request when authentication fails" do
       before do
-        @cached_license_id = Vantiv.license_id
+        @cached_password = Vantiv.password
         Vantiv.configure do |config|
-          config.license_id = "asdfasdf"
+          config.password = "asdfasdf"
         end
       end
 
       after do
         Vantiv.configure do |config|
-          config.license_id = @cached_license_id
+          config.password = @cached_password
         end
       end
 
@@ -52,8 +52,7 @@ describe Vantiv::Api::Request do
       end
     end
 
-    context "when Vantiv (conveniently) doesn't send back json" do
-
+    context "when Vantiv (conveniently) doesn't send back xml" do
       it "retries the original request" do
         vantiv_responses = [
           double(
@@ -64,7 +63,7 @@ describe Vantiv::Api::Request do
           double(
             code_type: Net::HTTPOK,
             code: "200",
-            body: {"litleOnlineResponse":{"@version": "blabla"}}.to_json
+            body: '<litleOnlineRequest version="blabla" merchantId="1234567"><authentication><user>apigee</user><password>apigee</password></authentication></litleOnlineRequest>'
           )
         ]
         allow_any_instance_of(Net::HTTP).to receive(:request) { vantiv_responses.shift }
@@ -80,8 +79,8 @@ describe Vantiv::Api::Request do
         .to receive(:request)
               .and_return(double('http response', body: "some body").as_null_object)
 
-      allow_any_instance_of(ResponseBodyRepresenter)
-        .to receive(:from_json)
+      allow_any_instance_of(ResponseBodyRepresenterXml)
+        .to receive(:from_xml)
 
       expect(run_api_request.raw_body).to eq("some body")
     end
@@ -130,7 +129,7 @@ describe Vantiv::Api::Request do
       end
     end
 
-    context "when Vantiv (conveniently) doesn't send back json" do
+    context "when Vantiv (conveniently) doesn't send back xml" do
       it "retries the original request" do
         vantiv_responses = [
           double(
