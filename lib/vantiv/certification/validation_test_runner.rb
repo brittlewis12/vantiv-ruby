@@ -17,14 +17,13 @@ module Vantiv
         Api::Endpoints::VOID => Api::TiedTransactionResponse.new(:void)
       }
 
-      def self.run(save_to:, filter_by: '', use_xml: false)
-        new(save_to: save_to, filter_by: filter_by, use_xml: use_xml).run
+      def self.run(save_to:, filter_by: '')
+        new(save_to: save_to, filter_by: filter_by).run
       end
 
-      def initialize(save_to:, filter_by: '', use_xml: false)
+      def initialize(save_to:, filter_by: '')
         @certs_file = save_to
         @filter_by = filter_by
-        @use_xml = use_xml
       end
 
       def run
@@ -36,8 +35,7 @@ module Vantiv
           run_request(
             cert_name: cert_name,
             endpoint: Vantiv::Api::Endpoints.const_get(contents["endpoint"]),
-            body: create_body(contents["body"]),
-            use_xml: @use_xml
+            body: create_body(contents["body"])
           )
         end
         shutdown
@@ -101,12 +99,12 @@ module Vantiv
         results_file.close
       end
 
-      def run_request(cert_name:, endpoint:, body:, use_xml:)
+      def run_request(cert_name:, endpoint:, body:)
         response = Vantiv::Api::Request.new(
           endpoint: endpoint,
           body: body,
           response_object: ENDPOINT_RESPONSE_OBJECT.fetch(endpoint),
-          use_xml: use_xml
+          use_xml: true
         ).run
 
         if response.api_level_failure?
@@ -114,20 +112,16 @@ module Vantiv
           raise StandardError.new(error_message)
         end
 
-        transaction_id = get_transaction_id(response, use_xml)
+        transaction_id = get_transaction_id(response)
 
         response_cache.push(cert_name, response)
         results_file << "#{cert_name},#{transaction_id}\n"
       end
 
-      def get_transaction_id(response, use_xml)
-        if use_xml
-          transaction_response_name = response.send(:transaction_response_name)
-          transaction_response = response.body.send(transaction_response_name)
-          transaction_response.transaction_id
-        else
-          response.body.request_id
-        end
+      def get_transaction_id(response)
+        transaction_response_name = response.send(:transaction_response_name)
+        transaction_response = response.body.send(transaction_response_name)
+        transaction_response.transaction_id
       end
     end
   end

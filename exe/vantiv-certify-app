@@ -6,14 +6,10 @@ require 'optparse'
 
 options = {}
 parser = OptionParser.new do |opts|
-  opts.banner = "Usage: vantiv-certify-app -a <acceptor_id> -p <paypage_id> -u <user> -w <password> -l <license_id> [--filter_by <test_name>]"
+  opts.banner = "Usage: vantiv-certify-app -a <acceptor_id> -p <paypage_id> -u <user> -w <password> [--filter_by <test_name>]"
 
-  opts.on("-a", "--acceptor_id ACCEPTOR_ID", "Vantiv Acceptor ID") do |acceptor_id|
+  opts.on("-a", "--\ ACCEPTOR_ID", "Vantiv Acceptor ID") do |acceptor_id|
     options[:acceptor_id] = acceptor_id
-  end
-
-  opts.on("-l", "--license_id LICENSE_ID", "Vantiv License ID") do |license_id|
-    options[:license_id] = license_id
   end
 
   opts.on("-p", "--paypage_id PAYPAGE_ID", "Vantiv Paypage ID") do |paypage_id|
@@ -31,15 +27,11 @@ parser = OptionParser.new do |opts|
   opts.on("--filter_by [TEST_NAME]", "Filter which certifications to run") do |filter|
     options[:filter_by] = filter
   end
-
-  opts.on("--use_xml", "Use XML endpoint") do |use_xml|
-    options[:use_xml] = use_xml
-  end
 end
 
 parser.parse!
 
-required_arguments = %i[acceptor_id license_id paypage_id user password]
+required_arguments = %i[acceptor_id paypage_id user password]
 missing_arguments = required_arguments.select{ |required_argument| options[required_argument].nil? }
 
 if missing_arguments.any?
@@ -49,7 +41,7 @@ if missing_arguments.any?
 end
 
 Vantiv.configure do |config|
-  config.license_id = options.fetch(:license_id)
+  config.license_id = "this-shouldnt-be-used-anymore-because-we-are-using-xml"
   config.acceptor_id = options.fetch(:acceptor_id)
   config.paypage_id = options.fetch(:paypage_id)
   config.environment = Vantiv::Environment::CERTIFICATION
@@ -62,8 +54,7 @@ end
 
 Vantiv::Certification::ValidationTestRunner.run(
   save_to: "certs.txt",
-  filter_by: options[:filter_by],
-  use_xml: options[:use_xml]
+  filter_by: options[:filter_by]
 )
 
 %x(open certs.txt)

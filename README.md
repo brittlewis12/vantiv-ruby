@@ -40,29 +40,28 @@ end
 
 ## Certification
 
-Vantiv's DevHub requires merchants to certify their applications for usage with their API. To make this integration process easy, the gem provides a script to run through these tests.
+Vantiv requires merchants to certify their applications for usage with their API. To make this integration process easy, the gem provides a script to run through these tests.
 
 To certify your application, run the following script:
 
 ```
-$ bundle exec vantiv-certify-app -l sub-your-license-id-in-here -a sub-your-acceptor-id-in-here -p your-paypage-id -u your-user -w your-password
+$ bundle exec vantiv-certify-app -a sub-your-acceptor-id-in-here -p your-paypage-id -u your-user -w your-password
 ```
 
-A certs.txt file will be generated in the directory that the script is run, and then opened. It contains a list of DevHub Certification Test IDs and associated Request IDs, like follows:
+A certs.txt file will be generated in the directory that the script is run, and then opened. It contains a list of XML Certification Order IDs and associated Transaction IDs, like follows:
 
 ```
-AUTH_CAPTURE_1, request-id-for-AUTH_CAPTURE_1-here
-AUTH_CAPTURE_2, request-id-for-AUTH_CAPTURE_2-here
+AUTH_CAPTURE_1, transaction-id-for-AUTH_CAPTURE_1-here
+AUTH_CAPTURE_2, transaction-id-for-AUTH_CAPTURE_2-here
 ```
 
-Navigate to your application's page in DevHub's developer portal (apideveloper.vantiv.com). Paste the contents of this file into the validation form input field, and then click "Validate".
 
 ### Running a subset of the certifications
 
-If you want to just run a subset of the certifications you can pass in the Test ID that you want to which match against using the `--filter_by` option. For example, if you only want to run the Account Updater certification, which have Test IDs that are prefixed with `L_AU`, you would filter by `AU` like follows:
+If you want to just run a subset of the certifications you can pass in the Test ID that you want to which match against using the `--filter_by` option. For example, if you only want to run the Account Updater certification, which have Test IDs that are prefixed with `ACCOUNT_UPDATER`, you would filter by `ACCOUNT_UPDATER` like follows:
 
 ```
-$ bundle exec vantiv-certify-app -l foo -a bar -p bla -u uzr -w pwd --filter_by=AU
+$ bundle exec vantiv-certify-app -a bar -p bla -u uzr -w pwd --filter_by=ACCOUNT_UPDATER
 ```
 
 
