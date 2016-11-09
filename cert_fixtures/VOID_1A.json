@@ -1,0 +1,8 @@
+{
+  "endpoint": "CAPTURE",
+  "body": {
+    "Transaction": {
+      "TransactionID": "#{VOID_1.body.authorization_response.transaction_id}"
+    }
+  }
+}

@@ -50,6 +50,7 @@ module Vantiv
 
       populated_body.transaction ||= Vantiv::Api::Transaction.new
       populated_body.transaction.type = ENDPOINT_XML_TRANSACTION_TYPE.fetch(@endpoint.to_sym)
+      populated_body.transaction.address = populated_body.address
       populated_body.transaction.card = populated_body.card if populated_body.card
       populated_body.transaction.report_group = populated_body.report_group
       populated_body.transaction.application_id = populated_body.application_id

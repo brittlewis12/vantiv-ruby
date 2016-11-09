@@ -1,0 +1,19 @@
+{
+  "endpoint": "AUTHORIZATION",
+  "body": {
+    "Transaction": {
+      "ReferenceNumber": "1",
+      "TransactionAmount": "100.00",
+      "OrderSource": "ecommerce",
+      "CustomerID": "345",
+      "PartialApprovedFlag": "false"
+    },
+    "PaymentAccount": {
+      "PaymentAccountID": "#{ACCOUNT_UPDATER_100A.body.sale_response.token_response.payment_account_id}"
+    },
+    "Card": {
+      "ExpirationMonth": "01",
+      "ExpirationYear": "15"
+    }
+  }
+}

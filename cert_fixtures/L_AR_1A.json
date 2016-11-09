@@ -1,9 +1,0 @@
-{
-  "endpoint": "CAPTURE",
-  "body": {
-    "Transaction": {
-      "TransactionID": "#{L_AR_1.body.authorization_response.transaction_id}",
-      "TransactionAmount": "50.50"
-    }
-  }
-}

@@ -45,6 +45,7 @@ class RequestBodyRepresenter < Representable::Decorator
   property :address, as: :Address, class: Vantiv::Api::Address do
     property :billing_name, as: :BillingName
     property :billing_address_1, as: :BillingAddress1
+    property :billing_address_2, as: :BillingAddress2
     property :billing_city, as: :BillingCity
     property :billing_state, as: :BillingState
     property :billing_zipcode, as: :BillingZipcode

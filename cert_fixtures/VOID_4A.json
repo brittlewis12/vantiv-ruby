@@ -1,0 +1,8 @@
+{
+  "endpoint": "VOID",
+  "body": {
+    "Transaction": {
+      "TransactionID": "#{VOID_4.body.sale_response.transaction_id}"
+    }
+  }
+}

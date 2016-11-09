@@ -1,0 +1,9 @@
+{
+  "endpoint": "AUTH_REVERSAL",
+  "body": {
+    "Transaction": {
+      "TransactionID": "#{AUTH_REVERSAL_35.body.authorization_response.transaction_id}",
+      "TransactionAmount": "50.50"
+    }
+  }
+}

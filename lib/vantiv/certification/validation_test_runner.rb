@@ -6,20 +6,30 @@ require 'vantiv/certification/cert_request_body_compiler'
 module Vantiv
   module Certification
     class ValidationTestRunner
+      ENDPOINT_RESPONSE_OBJECT = {
+        Api::Endpoints::TOKENIZATION => Api::TokenizationResponse.new,
+        Api::Endpoints::AUTHORIZATION => Api::LiveTransactionResponse.new(:auth),
+        Api::Endpoints::AUTH_REVERSAL => Api::TiedTransactionResponse.new(:auth_reversal),
+        Api::Endpoints::CAPTURE => Api::TiedTransactionResponse.new(:capture),
+        Api::Endpoints::SALE => Api::LiveTransactionResponse.new(:sale),
+        Api::Endpoints::CREDIT => Api::TiedTransactionResponse.new(:credit),
+        Api::Endpoints::RETURN => Api::TiedTransactionResponse.new(:return),
+        Api::Endpoints::VOID => Api::TiedTransactionResponse.new(:void)
+      }
 
-      def self.run(filter_by: '', save_to:)
-        new(filter_by: filter_by, save_to: save_to).run
+      def self.run(save_to:, filter_by: '')
+        new(save_to: save_to, filter_by: filter_by).run
       end
 
-      def initialize(filter_by: '', save_to:)
-        @filter_by = filter_by
+      def initialize(save_to:, filter_by: '')
         @certs_file = save_to
+        @filter_by = filter_by
       end
 
       def run
         fixtures.each do |file_name|
           cert_name = get_cert_name(file_name)
-          next if filter_by && !/L_#{filter_by}_\d*/.match(cert_name)
+          next if filter_by && !/#{filter_by}_\d*/.match(cert_name)
 
           contents = JSON.parse(File.read(file_name))
           run_request(
@@ -93,16 +103,25 @@ module Vantiv
         response = Vantiv::Api::Request.new(
           endpoint: endpoint,
           body: body,
-          response_object: Vantiv::Api::Response.new
+          response_object: ENDPOINT_RESPONSE_OBJECT.fetch(endpoint),
+          use_xml: true
         ).run
 
         if response.api_level_failure?
-          error_message = "CERT FAILED: #{cert_name} \n WITH: #{response.body}"
+          error_message = "CERT FAILED: #{cert_name} \n WITH: #{response.raw_body}"
           raise StandardError.new(error_message)
         end
 
+        transaction_id = get_transaction_id(response)
+
         response_cache.push(cert_name, response)
-        results_file << "#{cert_name},#{response.body.request_id}\n"
+        results_file << "#{cert_name},#{transaction_id}\n"
+      end
+
+      def get_transaction_id(response)
+        transaction_response_name = response.send(:transaction_response_name)
+        transaction_response = response.body.send(transaction_response_name)
+        transaction_response.transaction_id
       end
     end
   end

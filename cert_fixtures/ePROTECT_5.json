@@ -1,0 +1,19 @@
+{
+  "endpoint": "SALE",
+  "body": {
+    "Transaction": {
+      "ReferenceNumber": "1",
+      "TransactionAmount": "20.90",
+      "OrderSource": "ecommerce",
+      "CustomerID": "345",
+      "PartialApprovedFlag": "false"
+    },
+    "PaymentAccount": {
+      "PaymentAccountID": "#{ePROTECT_2.body.sale_response.token_response.payment_account_id}"
+    },
+    "Card": {
+      "ExpirationMonth": "01",
+      "ExpirationYear": "16"
+    }
+  }
+}

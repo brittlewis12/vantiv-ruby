@@ -11,6 +11,18 @@ class TransactionRequestRepresenterXml < Representable::Decorator
   property :amount_in_cents, as: :amount
   property :order_source, as: :orderSource
 
+  property :address, class: Vantiv::Api::Address do
+    self.representation_wrap = :billToAddress
+
+    property :billing_name, as: :name
+    property :billing_address_1, as: :addressLine1
+    property :billing_address_2, as: :addressLine2
+    property :billing_city, as: :city
+    property :billing_state, as: :state
+    property :billing_zipcode, as: :zip
+    property :billing_country, as: :country
+  end
+
   property :card, class: Vantiv::Api::Card, if: ->(_) { type != :registerTokenRequest && !card&.paypage_registration_id } do
     self.representation_wrap = ->(_) { !!payment_account_id ? :token : :card }
 

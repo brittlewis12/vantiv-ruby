@@ -1,8 +1,0 @@
-{
-  "endpoint": "CREDIT",
-  "body": {
-    "Transaction": {
-      "TransactionID": "#{L_V_1A.body.capture_response.transaction_id}"
-    }
-  }
-}

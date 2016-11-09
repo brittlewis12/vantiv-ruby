@@ -1,0 +1,27 @@
+{
+  "endpoint": "SALE",
+  "body": {
+    "Transaction": {
+      "ReferenceNumber": "1",
+      "TransactionAmount": "91.00",
+      "OrderSource": "ecommerce",
+      "CustomerID": "345",
+      "PartialApprovedFlag": "false"
+    },
+    "Card": {
+      "Type": "MC",
+      "CardNumber": "5112000200000002",
+      "ExpirationMonth": "01",
+      "ExpirationYear": "16",
+      "CVV": "123"
+    },
+    "Address": {
+      "BillingName": "John Doe",
+      "BillingAddress1": "10 Main St.",
+      "BillingCity": "San Jose",
+      "BillingState": "CA",
+      "BillingZipcode": "95032",
+      "BillingCountry": "US"
+    }
+  }
+}
