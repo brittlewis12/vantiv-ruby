@@ -8,7 +8,7 @@ options = {}
 parser = OptionParser.new do |opts|
   opts.banner = "Usage: vantiv-certify-app -a <acceptor_id> -p <paypage_id> -u <user> -w <password> [--filter_by <test_name>]"
 
-  opts.on("-a", "--\ ACCEPTOR_ID", "Vantiv Acceptor ID") do |acceptor_id|
+  opts.on("-a", "--acceptor_id ACCEPTOR_ID", "Vantiv Acceptor ID") do |acceptor_id|
     options[:acceptor_id] = acceptor_id
   end
 
