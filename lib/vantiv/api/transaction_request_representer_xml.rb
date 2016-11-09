@@ -12,7 +12,7 @@ class TransactionRequestRepresenterXml < Representable::Decorator
   property :order_source, as: :orderSource
 
   property :address, class: Vantiv::Api::Address do
-    self.representation_wrap= :billToAddress
+    self.representation_wrap = :billToAddress
 
     property :billing_name, as: :name
     property :billing_address_1, as: :addressLine1

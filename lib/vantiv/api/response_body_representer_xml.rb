@@ -4,7 +4,7 @@ require 'vantiv/api/response'
 class ResponseBodyRepresenterXml < Representable::Decorator
   include Representable::XML
 
-  self.representation_wrap= :litleOnlineResponse
+  self.representation_wrap = :litleOnlineResponse
   remove_namespaces!
 
   property :body_message, as: :@message
