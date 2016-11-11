@@ -16,13 +16,6 @@ describe Vantiv::Api::RequestBody do
       )
     end
 
-    it "returns the expected json" do
-      allow(SecureRandom).to receive(:hex).and_return "the-application-id"
-      allow(Vantiv).to receive(:acceptor_id).and_return "acceptor-id"
-      expected = {"Credentials"=>{"AcceptorID"=>"acceptor-id"}, "Reports"=>{"ReportGroup"=>"1"}, "Application"=>{"ApplicationID"=>"the-application-id"}, "Card"=>{"AccountNumber"=>"1234", "ExpirationMonth"=>"10", "ExpirationYear"=>"18", "CVV"=>"222"}}
-      expect(request_body.to_json).to eq expected.to_json
-    end
-
     it "includes the acceptor id" do
       allow(Vantiv).to receive(:acceptor_id).and_return "acceptor-id"
       expect(request_body.acceptor_id).to eq "acceptor-id"
@@ -55,13 +48,6 @@ describe Vantiv::Api::RequestBody do
       @paypage_registration_id = "some-temp-token"
     end
 
-    it "returns the expected json" do
-      allow(SecureRandom).to receive(:hex).and_return "the-application-id"
-      allow(Vantiv).to receive(:acceptor_id).and_return "acceptor-id"
-      expected = {"Credentials"=>{"AcceptorID"=>"acceptor-id"}, "Reports"=>{"ReportGroup"=>"1"}, "Application"=>{"ApplicationID"=>"the-application-id"}, "Card"=>{"PaypageRegistrationID"=>"some-temp-token"}}
-      expect(request_body.to_json).to eq expected.to_json
-    end
-
     it "includes the acceptor id" do
       allow(Vantiv).to receive(:acceptor_id).and_return "acceptor-id"
       expect(request_body.acceptor_id).to eq "acceptor-id"
@@ -86,13 +72,6 @@ describe Vantiv::Api::RequestBody do
         amount: @amount,
         transaction_id: "transactionid123"
       )
-    end
-
-    it "returns the expected json" do
-      allow(SecureRandom).to receive(:hex).and_return "the-application-id"
-      allow(Vantiv).to receive(:acceptor_id).and_return "acceptor-id"
-      expected = {"Credentials"=>{"AcceptorID"=>"acceptor-id"}, "Reports"=>{"ReportGroup"=>"1"}, "Application"=>{"ApplicationID"=>"the-application-id"}, "Transaction"=>{"TransactionID"=>"transactionid123"}}
-      expect(request_body.to_json).to eq expected.to_json
     end
 
     context "when amount is nil" do
@@ -180,13 +159,6 @@ describe Vantiv::Api::RequestBody do
       )
     end
 
-    it "returns the expected json" do
-      allow(SecureRandom).to receive(:hex).and_return "the-application-id"
-      allow(Vantiv).to receive(:acceptor_id).and_return "acceptor-id"
-      expected = {"Credentials"=>{"AcceptorID"=>"acceptor-id"}, "Reports"=>{"ReportGroup"=>"1"}, "Application"=>{"ApplicationID"=>"the-application-id"}, "Transaction"=>{"ReferenceNumber"=>"SomeOrder123", "TransactionAmount"=>"42.24", "OrderSource"=>"ecommerce", "CustomerID"=>"extid123", "PartialApprovedFlag"=>false}, "Card"=>{"ExpirationMonth"=>"08", "ExpirationYear"=>"18"}, "PaymentAccount"=>{"PaymentAccountID"=>"paymentacct123"}}
-      expect(request_body.to_json).to eq expected.to_json
-    end
-
     it "includes the acceptor id" do
       allow(Vantiv).to receive(:acceptor_id).and_return "acceptor-id"
       expect(request_body.acceptor_id).to eq "acceptor-id"
@@ -271,13 +243,6 @@ describe Vantiv::Api::RequestBody do
         @amount = nil
       end
 
-      it "returns the expected json" do
-        allow(SecureRandom).to receive(:hex).and_return "the-application-id"
-        allow(Vantiv).to receive(:acceptor_id).and_return "acceptor-id"
-        expected = {"Credentials"=>{"AcceptorID"=>"acceptor-id"}, "Reports"=>{"ReportGroup"=>"1"}, "Application"=>{"ApplicationID"=>"the-application-id"}, "Transaction"=>{"TransactionID"=>"transactionid123"}}
-        expect(request_body.to_json).to eq expected.to_json
-      end
-
       it "includes the acceptor id" do
         allow(Vantiv).to receive(:acceptor_id).and_return "acceptor-id"
         expect(request_body.acceptor_id).to eq "acceptor-id"
@@ -303,13 +268,6 @@ describe Vantiv::Api::RequestBody do
     context "when amount is not nil" do
       before do
         @amount = 58888
-      end
-
-      it "returns the expected json" do
-        allow(SecureRandom).to receive(:hex).and_return "the-application-id"
-        allow(Vantiv).to receive(:acceptor_id).and_return "acceptor-id"
-        expected = {"Credentials"=>{"AcceptorID"=>"acceptor-id"}, "Reports"=>{"ReportGroup"=>"1"}, "Application"=>{"ApplicationID"=>"the-application-id"}, "Transaction"=>{"TransactionID"=>"transactionid123", "TransactionAmount"=>"588.88"}}
-        expect(request_body.to_json).to eq expected.to_json
       end
 
       it "includes the acceptor id" do
@@ -348,13 +306,6 @@ describe Vantiv::Api::RequestBody do
         @amount = nil
       end
 
-      it "returns the expected json" do
-        allow(SecureRandom).to receive(:hex).and_return "the-application-id"
-        allow(Vantiv).to receive(:acceptor_id).and_return "acceptor-id"
-        expected = {"Credentials"=>{"AcceptorID"=>"acceptor-id"}, "Reports"=>{"ReportGroup"=>"1"}, "Application"=>{"ApplicationID"=>"the-application-id"}, "Transaction"=>{"TransactionID"=>"transactionid123"}}
-        expect(request_body.to_json).to eq expected.to_json
-      end
-
       it "includes the acceptor id" do
         allow(Vantiv).to receive(:acceptor_id).and_return "acceptor-id"
         expect(request_body.acceptor_id).to eq "acceptor-id"
@@ -380,13 +331,6 @@ describe Vantiv::Api::RequestBody do
     context "when amount is not nil" do
       before do
         @amount = 58888
-      end
-
-      it "returns the expected json" do
-        allow(SecureRandom).to receive(:hex).and_return "the-application-id"
-        allow(Vantiv).to receive(:acceptor_id).and_return "acceptor-id"
-        expected = {"Credentials"=>{"AcceptorID"=>"acceptor-id"}, "Reports"=>{"ReportGroup"=>"1"}, "Application"=>{"ApplicationID"=>"the-application-id"}, "Transaction"=>{"TransactionID"=>"transactionid123", "TransactionAmount"=>"588.88"}}
-        expect(request_body.to_json).to eq expected.to_json
       end
 
       it "includes the acceptor id" do
@@ -440,13 +384,6 @@ describe Vantiv::Api::RequestBody do
       it "sets the order source on the response body" do
         expect(request_body.transaction.order_source).to eq "my-custom-order-source"
       end
-    end
-
-    it "returns the expected json" do
-      allow(SecureRandom).to receive(:hex).and_return "the-application-id"
-      allow(Vantiv).to receive(:acceptor_id).and_return "acceptor-id"
-      expected = {"Credentials"=>{"AcceptorID"=>"acceptor-id"}, "Reports"=>{"ReportGroup"=>"1"}, "Application"=>{"ApplicationID"=>"the-application-id"}, "Transaction"=>{"ReferenceNumber"=>"SomeOrder123", "TransactionAmount"=>"42.24", "OrderSource"=>"ecommerce", "CustomerID"=>"extid123"}, "Card"=>{"ExpirationMonth"=>"08", "ExpirationYear"=>"18"}, "PaymentAccount"=>{"PaymentAccountID"=>"paymentacct123"}}
-      expect(request_body.to_json).to eq expected.to_json
     end
 
     it "includes the acceptor id" do
@@ -512,13 +449,6 @@ describe Vantiv::Api::RequestBody do
       Vantiv::Api::RequestBody.for_void(
         transaction_id: "transactionid123"
       )
-    end
-
-    it "returns the expected json" do
-      allow(SecureRandom).to receive(:hex).and_return "the-application-id"
-      allow(Vantiv).to receive(:acceptor_id).and_return "acceptor-id"
-      expected = {"Credentials"=>{"AcceptorID"=>"acceptor-id"}, "Reports"=>{"ReportGroup"=>"1"}, "Application"=>{"ApplicationID"=>"the-application-id"}, "Transaction"=>{"TransactionID"=>"transactionid123"}}
-      expect(request_body.to_json).to eq expected.to_json
     end
 
     it "includes the acceptor id" do
