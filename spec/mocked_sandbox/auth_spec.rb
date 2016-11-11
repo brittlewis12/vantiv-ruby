@@ -62,12 +62,12 @@ describe "mocked API requests to auth" do
           mocked_response_value = mocked_response.send(method_name)
 
           expect(mocked_response_value).to eq(live_response_value),
-                                           error_message_for_mocked_api_failure(
-                                             method_name: method_name,
-                                             expected_value: live_response_value,
-                                             got_value: mocked_response_value,
-                                             live_response: live_response
-                                           )
+            error_message_for_mocked_api_failure(
+              method_name: method_name,
+              expected_value: live_response_value,
+              got_value: mocked_response_value,
+              live_response: live_response
+            )
         end
       end
 
