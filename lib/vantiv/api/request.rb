@@ -13,7 +13,7 @@ module Vantiv
       :"payment/sp2/credit/v1/void" => :void
     }.freeze
 
-    def initialize(endpoint:, body:, response_object:, use_xml: false)
+    def initialize(endpoint:, body:, response_object:)
       @endpoint = endpoint
       @response_object = response_object
       @retry_count = 0

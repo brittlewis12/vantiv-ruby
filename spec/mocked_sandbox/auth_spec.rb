@@ -24,8 +24,7 @@ describe "mocked API requests to auth" do
       customer_id: customer_id,
       order_id: order_id,
       expiry_month: card.expiry_month,
-      expiry_year: card.expiry_year,
-      use_xml: use_xml
+      expiry_year: card.expiry_year
     )
     Vantiv::MockedSandbox.disable_self_mocked_requests!
     response
@@ -39,8 +38,7 @@ describe "mocked API requests to auth" do
       customer_id: customer_id,
       order_id: order_id,
       expiry_month: card.expiry_month,
-      expiry_year: card.expiry_year,
-      use_xml: use_xml
+      expiry_year: card.expiry_year
     )
   end
 

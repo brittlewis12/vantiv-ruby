@@ -22,13 +22,13 @@ describe "processing standalone refunds" do
 
   context "when no order source is passed in" do
     before do
-      allow_any_instance_of(Vantiv::Api::Request).to receive :run
+      allow_any_instance_of(Vantiv::Api::Request).to receive(:run)
     end
 
     it "uses the default order_source" do
       expect(Vantiv::Api::RequestBody).to receive(:for_return).with(
         hash_including(order_source: Vantiv.default_order_source)
-      )
+      ).and_call_original
       response
     end
   end
@@ -53,7 +53,7 @@ describe "processing standalone refunds" do
     it "uses the default order_source" do
       expect(Vantiv::Api::RequestBody).to receive(:for_return).with(
         hash_including(order_source: "custom-order-source")
-      )
+      ).and_call_original
       response
     end
   end

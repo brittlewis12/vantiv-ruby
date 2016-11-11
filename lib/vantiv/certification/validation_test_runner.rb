@@ -103,8 +103,7 @@ module Vantiv
         response = Vantiv::Api::Request.new(
           endpoint: endpoint,
           body: body,
-          response_object: ENDPOINT_RESPONSE_OBJECT.fetch(endpoint),
-          use_xml: true
+          response_object: ENDPOINT_RESPONSE_OBJECT.fetch(endpoint)
         ).run
 
         if response.api_level_failure?
