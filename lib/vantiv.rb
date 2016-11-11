@@ -159,7 +159,7 @@ module Vantiv
 
   class << self
     [
-      :environment, :license_id, :acceptor_id, :default_report_group,
+      :environment, :acceptor_id, :default_report_group,
       :default_order_source, :paypage_id, :user, :password
     ].each do |config_var|
       define_method :"#{config_var}" do

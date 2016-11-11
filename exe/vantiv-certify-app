@@ -41,7 +41,6 @@ if missing_arguments.any?
 end
 
 Vantiv.configure do |config|
-  config.license_id = "this-shouldnt-be-used-anymore-because-we-are-using-xml"
   config.acceptor_id = options.fetch(:acceptor_id)
   config.paypage_id = options.fetch(:paypage_id)
   config.environment = Vantiv::Environment::CERTIFICATION
