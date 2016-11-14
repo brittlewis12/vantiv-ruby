@@ -18,7 +18,7 @@ module Vantiv
       @response_object = response_object
       @retry_count = 0
 
-      @body = populated_xml_request_body(body)
+      @body = populated_request_body(body)
     end
 
     def run
@@ -26,13 +26,13 @@ module Vantiv
     end
 
     def run_request
-      http_response = make_xml_request
+      http_response = make_request
       populated_response(@response_object, http_response)
     end
 
     private
 
-    def populated_xml_request_body(body)
+    def populated_request_body(body)
       populated_body = body.dup
 
       if populated_body.card && populated_body.payment_account
@@ -52,25 +52,25 @@ module Vantiv
       populated_body
     end
 
-    def make_xml_request
-      http = Net::HTTP.new(xml_uri.host, xml_uri.port)
+    def make_request
+      http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
-      xml_request = Net::HTTP::Post.new(xml_uri.request_uri, xml_header)
-      xml_request.body = body.to_xml
-      http.request(xml_request)
+      request = Net::HTTP::Post.new(uri.request_uri, header)
+      request.body = body.to_xml
+      http.request(request)
     end
 
-    def xml_header
+    def header
       {
         "Content-Type" =>"text/xml"
       }
     end
 
-    def xml_uri
-      @uri ||= URI.parse("#{xml_root_uri}/vap/communicator/online")
+    def uri
+      @uri ||= URI.parse("#{root_uri}/vap/communicator/online")
     end
 
-    def xml_root_uri
+    def root_uri
       if Vantiv::Environment.production?
         "https://transact.litle.com"
       elsif Vantiv::Environment.certification?
