@@ -163,19 +163,16 @@ module Vantiv
   end
 
   class << self
-    [
-      :environment, :acceptor_id, :default_report_group,
-      :default_order_source, :paypage_id, :user, :password
-    ].each do |config_var|
-      define_method :"#{config_var}" do
-        value = instance_variable_get(:"@#{config_var}")
-        raise "Missing Vantiv configuration: #{config_var}" unless value
-        value
+    %i[ environment acceptor_id default_report_group
+        default_order_source paypage_id user password ].freeze.each do |config_var|
+
+      define_method(config_var) do
+        instance_variable_get("@#{config_var}").tap do |value|
+          raise "Missing Vantiv configuration: #{config_var}" unless value
+        end
       end
 
-      define_method :"#{config_var}=" do |value|
-        instance_variable_set(:"@#{config_var}", value)
-      end
+      attr_writer config_var
     end
   end
 
