@@ -5,12 +5,14 @@ include TestHelpers
 describe "mocked API requests to .tokenize" do
   def run_mocked_response
     Vantiv::MockedSandbox.enable_self_mocked_requests!
-    response = Vantiv.tokenize(temporary_token: mocked_temporary_token)
-    Vantiv::MockedSandbox.disable_self_mocked_requests!
-    response
+
+    Vantiv.tokenize(temporary_token: mocked_temporary_token).tap do
+      Vantiv::MockedSandbox.disable_self_mocked_requests!
+    end
   end
 
   let(:mocked_response) { run_mocked_response }
+
   let(:live_response) do
     Vantiv.tokenize(temporary_token: live_temporary_token)
   end
@@ -28,39 +30,30 @@ describe "mocked API requests to .tokenize" do
 
   context "with a valid temporary token" do
     let(:card) { Vantiv::TestCard.valid_account }
+
     let(:live_temporary_token) do
       @test_paypage_driver.get_paypage_registration_id(
         card.card_number,
         card.cvv
       )
     end
+
     let(:mocked_temporary_token) do
       Vantiv::TestTemporaryToken.valid_temporary_token
     end
 
-    it "the mocked response's public methods return the same as the live one" do
-      (
-      Vantiv::Api::TokenizationResponse.instance_methods(false) +
-        Vantiv::Api::Response.instance_methods(false) -
-        [:payment_account_id, :body, :raw_body, :load, :request_id, :transaction_id, :apple_pay]
-      ).each do |method_name|
-        next if method_name.to_s.end_with?("=")
-
-        live_response_value = live_response.send(method_name)
-        mocked_response_value = mocked_response.send(method_name)
-
-        expect(mocked_response_value).to eq(live_response_value),
-          error_message_for_mocked_api_failure(
-           method_name: method_name,
-           expected_value: live_response_value,
-           got_value: mocked_response_value,
-           live_response: live_response
-          )
-      end
+    it "returns the same attributes in the live and mocked responses" do
+      expect(live_response.success?).to eq mocked_response.success?
+      expect(live_response.failure?).to eq mocked_response.failure?
+      expect(live_response.message).to eq mocked_response.message
+      expect(live_response.error_message).to eq mocked_response.error_message
+      expect(live_response.httpok).to eq mocked_response.httpok
+      expect(live_response.http_response_code).to eq mocked_response.http_response_code
+      expect(live_response.api_level_failure?).to eq mocked_response.api_level_failure?
+      expect(mocked_response.raw_body).to be_an_instance_of String
     end
 
     it "returns the whitelisted payment account id" do
-      expect(mocked_response.success?).to eq true
       expect(mocked_response.payment_account_id).to eq card.mocked_sandbox_payment_account_id
     end
 
@@ -76,37 +69,19 @@ describe "mocked API requests to .tokenize" do
       # test token that always returns an expired response
       "RGFQNCt6U1d1M21SeVByVTM4dHlHb1FsVkUrSmpnWXhNY0o5UkMzRlZFanZiUHVnYjN1enJXbG1WSDF4aXlNcA=="
     end
+
     let(:mocked_temporary_token) do
       Vantiv::TestTemporaryToken.expired_temporary_token
     end
 
-    it "the mocked response's public methods return the same as the live one" do
-      (
-      Vantiv::Api::TokenizationResponse.instance_methods(false) +
-        Vantiv::Api::Response.instance_methods(false) -
-        [:payment_account_id, :body, :raw_body, :load, :request_id, :transaction_id, :apple_pay]
-      ).each do |method_name|
-        next if method_name.to_s.end_with?("=")
-
-        live_response_value = live_response.send(method_name)
-        mocked_response_value = mocked_response.send(method_name)
-
-        expect(mocked_response_value).to eq(live_response_value),
-          error_message_for_mocked_api_failure(
-           method_name: method_name,
-           expected_value: live_response_value,
-           got_value: mocked_response_value,
-           live_response: live_response
-          )
-      end
-    end
-
-    it "returns the same error message" do
-      expect(mocked_response.success?).to eq false
-      expect(mocked_response.error_message).to eq live_response.error_message
-    end
-
-    it "returns a raw body string" do
+    it "returns the same attributes in the live and mocked responses" do
+      expect(live_response.success?).to eq mocked_response.success?
+      expect(live_response.failure?).to eq mocked_response.failure?
+      expect(live_response.message).to eq mocked_response.message
+      expect(live_response.error_message).to eq mocked_response.error_message
+      expect(live_response.httpok).to eq mocked_response.httpok
+      expect(live_response.http_response_code).to eq mocked_response.http_response_code
+      expect(live_response.api_level_failure?).to eq mocked_response.api_level_failure?
       expect(mocked_response.raw_body).to be_an_instance_of String
     end
 
@@ -122,34 +97,20 @@ describe "mocked API requests to .tokenize" do
       # test token that always returns an invalid response
       "pDZJcmd1VjNlYXNaSlRMTGpocVZQY1NWVXE4Z W5UTko4NU9KK3p1L1p1Vzg4YzVPQVlSUHNITG1 JN2I0NzlyTg=="
     end
+
     let(:mocked_temporary_token) do
       Vantiv::TestTemporaryToken.invalid_temporary_token
     end
 
-    it "the mocked response's public methods return the same as the live one" do
-      (
-      Vantiv::Api::TokenizationResponse.instance_methods(false) +
-        Vantiv::Api::Response.instance_methods(false) -
-        [:payment_account_id, :body, :raw_body, :load, :request_id, :transaction_id, :apple_pay]
-      ).each do |method_name|
-        next if method_name.to_s.end_with?("=")
-
-        live_response_value = live_response.send(method_name)
-        mocked_response_value = mocked_response.send(method_name)
-
-        expect(mocked_response_value).to eq(live_response_value),
-          error_message_for_mocked_api_failure(
-           method_name: method_name,
-           expected_value: live_response_value,
-           got_value: mocked_response_value,
-           live_response: live_response
-          )
-      end
-    end
-
-    it "returns the same error message" do
-      expect(mocked_response.success?).to eq false
-      expect(mocked_response.error_message).to eq live_response.error_message
+    it "returns the same attributes in the live and mocked responses" do
+      expect(live_response.success?).to eq mocked_response.success?
+      expect(live_response.failure?).to eq mocked_response.failure?
+      expect(live_response.message).to eq mocked_response.message
+      expect(live_response.error_message).to eq mocked_response.error_message
+      expect(live_response.httpok).to eq mocked_response.httpok
+      expect(live_response.http_response_code).to eq mocked_response.http_response_code
+      expect(live_response.api_level_failure?).to eq mocked_response.api_level_failure?
+      expect(mocked_response.raw_body).to be_an_instance_of String
     end
 
     it "returns a dynamic transaction id" do
