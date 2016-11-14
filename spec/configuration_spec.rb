@@ -1,8 +1,7 @@
 require 'spec_helper'
 
 describe "Vantiv configuration" do
-  [:license_id,
-   :acceptor_id,
+  [:acceptor_id,
    :default_report_group,
    :default_order_source,
    :paypage_id,

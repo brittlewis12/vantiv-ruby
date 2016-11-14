@@ -6,7 +6,6 @@ Dir["#{Vantiv.root}/spec/support/**/*.rb"].each {|f| require f}
 
 Vantiv.configure do |config|
   config.environment = Vantiv::Environment::CERTIFICATION
-  config.license_id = ENV["LICENSE_ID"]
   config.acceptor_id = ENV["ACCEPTOR_ID"]
   config.default_order_source = "ecommerce"
   config.paypage_id = ENV["PAYPAGE_ID"]

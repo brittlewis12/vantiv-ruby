@@ -3,7 +3,7 @@ require 'vantiv/certification/paypage_driver'
 
 describe "promoting a temporary token to a permanent token" do
   let(:response) do
-    Vantiv.tokenize(temporary_token: paypage_registration_id, use_xml: use_xml)
+    Vantiv.tokenize(temporary_token: paypage_registration_id)
   end
 
   before :all do

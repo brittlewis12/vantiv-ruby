@@ -35,19 +35,4 @@ describe Vantiv::MockedSandbox::ApiRequest do
       run_mocked_request
     }.to raise_error(/Fixture not found/)
   end
-
-  context "when to_json is overridden (rails...)" do
-    let(:card) { Vantiv::TestCard.valid_account }
-
-    before do
-      body
-      allow_any_instance_of(Hash).to receive(:to_json)
-        .and_return({ something: "bad" })
-    end
-
-    it "returns a response body" do
-      response_body = run_mocked_request.body
-      expect(response_body).to be
-    end
-  end
 end
