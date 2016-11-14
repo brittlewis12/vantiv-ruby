@@ -1,6 +1,5 @@
 require 'spec_helper'
 require 'vantiv/certification/paypage_driver'
-include TestHelpers
 
 describe "mocked API requests to .tokenize" do
   def run_mocked_response
