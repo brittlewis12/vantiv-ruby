@@ -18,5 +18,6 @@ require 'vantiv/api/card'
 require 'vantiv/api/transaction'
 require 'vantiv/api/payment_account'
 require 'vantiv/api/address'
+require 'vantiv/api/fraud_result'
 
 require 'vantiv/api/endpoints'
