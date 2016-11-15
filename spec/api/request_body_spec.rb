@@ -148,6 +148,42 @@ describe Vantiv::Api::RequestBody do
       end
     end
 
+    context "when online payment cryptogram is passed in" do
+      subject(:request_body) do
+        Vantiv::Api::RequestBody.for_auth_or_sale(
+          amount: 4224,
+          customer_id: "extid123",
+          payment_account_id: "paymentacct123",
+          order_id: "SomeOrder123",
+          expiry_month: "8",
+          expiry_year: "2018",
+          online_payment_cryptogram: "my-online-payment-cryptogram"
+        )
+      end
+
+      it "sets the cardholder authentication value" do
+        cardholder_authentication = request_body.transaction.cardholder_authentication
+        expect(cardholder_authentication.authentication_value).to eq "my-online-payment-cryptogram"
+      end
+    end
+
+    context "when online payment cryptogram is not passed in" do
+      subject(:request_body) do
+        Vantiv::Api::RequestBody.for_auth_or_sale(
+          amount: 4224,
+          customer_id: "extid123",
+          payment_account_id: "paymentacct123",
+          order_id: "SomeOrder123",
+          expiry_month: "8",
+          expiry_year: "2018"
+        )
+      end
+
+      it "sets cardholder authentication to nil" do
+        expect(request_body.transaction.cardholder_authentication).to eq nil
+      end
+    end
+
     subject(:request_body) do
       Vantiv::Api::RequestBody.for_auth_or_sale(
         amount: 4224,

@@ -36,6 +36,10 @@ module Vantiv
         response_code == RESPONSE_CODES[:credit_card_number_invalid]
       end
 
+      def apple_pay
+        @apple_pay ||=
+          litle_transaction_response.apple_pay_response || ApplePayResponse.new
+      end
       private
 
       def tokenization_successful?

@@ -82,4 +82,95 @@ describe Vantiv::Api::Request do
 
     expect(run_api_request.raw_body).to eq("some body")
   end
+
+  context "when doing an auth with an online payment cryptogram present" do
+    before do
+      allow(SecureRandom).to receive(:hex).with(12).once.and_return "123456789"
+    end
+
+    let(:request) do
+      body = Vantiv::Api::RequestBody.for_auth_or_sale(
+        amount: 4224,
+        customer_id: "extid123",
+        payment_account_id: "paymentacct123",
+        order_id: "SomeOrder123",
+        expiry_month: "8",
+        expiry_year: "2018",
+        online_payment_cryptogram: "my-online-payment-cryptogram"
+      )
+
+      Vantiv::Api::Request.new(
+        endpoint: Vantiv::Api::Endpoints::AUTHORIZATION,
+        body: body,
+        response_object: Vantiv::Api::LiveTransactionResponse.new(:auth)
+      )
+    end
+
+    it "includes the online payment cryptogram in the xml" do
+      expected = '<litleOnlineRequest version="10.2" xmlns="http://www.litle.com/schema" merchantId="1166386">
+  <authentication>
+    <user>PLATED</user>
+    <password>***REMOVED***</password>
+  </authentication>
+  <authorization id="123456789" reportGroup="1" customerId="extid123">
+    <orderId>SomeOrder123</orderId>
+    <amount>4224</amount>
+    <orderSource>ecommerce</orderSource>
+    <token>
+      <litleToken>paymentacct123</litleToken>
+      <expDate>0818</expDate>
+    </token>
+    <allowPartialAuth>false</allowPartialAuth>
+    <cardholderAuthentication>
+      <authentication_value>my-online-payment-cryptogram</authentication_value>
+    </cardholderAuthentication>
+  </authorization>
+</litleOnlineRequest>'
+      expect(request.body.to_xml).to eq expected
+    end
+  end
+
+  context "when doing an auth without an online payment cryptogram" do
+    before do
+      allow(SecureRandom).to receive(:hex).with(12).once.and_return "123456789"
+    end
+
+    let(:request) do
+      body = Vantiv::Api::RequestBody.for_auth_or_sale(
+        amount: 4224,
+        customer_id: "extid123",
+        payment_account_id: "paymentacct123",
+        order_id: "SomeOrder123",
+        expiry_month: "8",
+        expiry_year: "2018"
+      )
+
+      Vantiv::Api::Request.new(
+        endpoint: Vantiv::Api::Endpoints::AUTHORIZATION,
+        body: body,
+        response_object: Vantiv::Api::LiveTransactionResponse.new(:auth)
+      )
+    end
+
+    it "does not include the online payment cryptogram in the xml" do
+      expected = '<litleOnlineRequest version="10.2" xmlns="http://www.litle.com/schema" merchantId="1166386">
+  <authentication>
+    <user>PLATED</user>
+    <password>***REMOVED***</password>
+  </authentication>
+  <authorization id="123456789" reportGroup="1" customerId="extid123">
+    <orderId>SomeOrder123</orderId>
+    <amount>4224</amount>
+    <orderSource>ecommerce</orderSource>
+    <token>
+      <litleToken>paymentacct123</litleToken>
+      <expDate>0818</expDate>
+    </token>
+    <allowPartialAuth>false</allowPartialAuth>
+  </authorization>
+</litleOnlineRequest>'
+      expect(request.body.to_xml).to eq expected
+    end
+  end
+
 end

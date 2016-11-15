@@ -42,7 +42,7 @@ describe "mocked API requests to .tokenize" do
       (
       Vantiv::Api::TokenizationResponse.instance_methods(false) +
         Vantiv::Api::Response.instance_methods(false) -
-        [:payment_account_id, :body, :raw_body, :load, :request_id, :transaction_id]
+        [:payment_account_id, :body, :raw_body, :load, :request_id, :transaction_id, :apple_pay]
       ).each do |method_name|
         next if method_name.to_s.end_with?("=")
 
@@ -84,7 +84,7 @@ describe "mocked API requests to .tokenize" do
       (
       Vantiv::Api::TokenizationResponse.instance_methods(false) +
         Vantiv::Api::Response.instance_methods(false) -
-        [:payment_account_id, :body, :raw_body, :load, :request_id, :transaction_id]
+        [:payment_account_id, :body, :raw_body, :load, :request_id, :transaction_id, :apple_pay]
       ).each do |method_name|
         next if method_name.to_s.end_with?("=")
 
@@ -130,7 +130,7 @@ describe "mocked API requests to .tokenize" do
       (
       Vantiv::Api::TokenizationResponse.instance_methods(false) +
         Vantiv::Api::Response.instance_methods(false) -
-        [:payment_account_id, :body, :raw_body, :load, :request_id, :transaction_id]
+        [:payment_account_id, :body, :raw_body, :load, :request_id, :transaction_id, :apple_pay]
       ).each do |method_name|
         next if method_name.to_s.end_with?("=")
 
@@ -156,6 +156,21 @@ describe "mocked API requests to .tokenize" do
       response_1 = run_mocked_response
       response_2 = run_mocked_response
       expect(response_1.transaction_id).not_to eq response_2.transaction_id
+    end
+  end
+
+  context "with Apple Pay temporary token" do
+    let(:live_temporary_token) do
+      Vantiv::TestTemporaryToken.apple_pay_temporary_token
+    end
+
+    let(:mocked_temporary_token) do
+      Vantiv::TestTemporaryToken.apple_pay_temporary_token
+    end
+
+    it "returns the online_payment_cryptogram" do
+      expect(live_response.apple_pay.online_payment_cryptogram).to eq "IGS3sfoDvEF3uQ33SgAIoDEBhgA="
+      expect(mocked_response.apple_pay.online_payment_cryptogram).to eq "IGS3sfoDvEF3uQ33SgAIoDEBhgA="
     end
   end
 end

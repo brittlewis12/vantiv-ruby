@@ -55,6 +55,35 @@ describe "auth" do
     end
   end
 
+  context "when an online payment cryptogram is passed in" do
+    let(:test_account) { Vantiv::TestAccount.valid_account }
+
+    subject(:response) do
+      Vantiv.auth(
+        amount: 10000,
+        payment_account_id: payment_account_id,
+        customer_id: customer_external_id,
+        order_id: "SomeOrder123",
+        expiry_month: test_account.expiry_month,
+        expiry_year: test_account.expiry_year,
+        online_payment_cryptogram: "my-online-payment-cryptogram"
+      )
+    end
+
+    before do
+      request_double = double('request')
+      allow(Vantiv::Api::Request).to receive(:new) { request_double }
+      allow(request_double).to receive :run
+    end
+
+    it "uses the passed in online payment cryptogram" do
+      expect(Vantiv::Api::RequestBody).to receive(:for_auth_or_sale).with(
+        hash_including(online_payment_cryptogram: "my-online-payment-cryptogram")
+      )
+      response
+    end
+  end
+
   context "on a valid account" do
     let(:test_account) { Vantiv::TestAccount.valid_account }
 
