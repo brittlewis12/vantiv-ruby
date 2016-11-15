@@ -162,7 +162,8 @@ describe Vantiv::Api::RequestBody do
       end
 
       it "sets the cardholder authentication value" do
-        expect(request_body.transaction.cardholder_authentication.authentication_value).to eq "my-online-payment-cryptogram"
+        cardholder_authentication = request_body.transaction.cardholder_authentication
+        expect(cardholder_authentication.authentication_value).to eq "my-online-payment-cryptogram"
       end
     end
 
@@ -178,7 +179,7 @@ describe Vantiv::Api::RequestBody do
         )
       end
 
-      it "sets the cardholder authentication value" do
+      it "sets cardholder authentication to nil" do
         expect(request_body.transaction.cardholder_authentication).to eq nil
       end
     end
