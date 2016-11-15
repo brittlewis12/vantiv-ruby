@@ -9,6 +9,8 @@ require 'vantiv/api/request'
 require 'vantiv/api/request_body_representer'
 require 'vantiv/api/request_body'
 
+require 'vantiv/api/cardholder_authentication'
+
 require 'vantiv/api/request_body_representer_xml'
 require 'vantiv/api/response_body_representer_xml'
 
