@@ -2,15 +2,18 @@ module Vantiv
   module Api
     class Transaction
       attr_accessor :id, :order_id, :customer_id, :order_source, :partial_approved_flag,
-                    :amount_in_cents, :report_group, :card, :type, :application_id, :address
+                    :amount_in_cents, :report_group, :card, :type, :application_id, :address,
+                    :cardholder_authentication
 
-      def initialize(id: nil, amount_in_cents: nil, order_id: nil, order_source: nil, customer_id: nil, partial_approved_flag: nil)
+      def initialize(id: nil, amount_in_cents: nil, order_id: nil, customer_id: nil,
+        partial_approved_flag: nil, order_source: nil,  cardholder_authentication: nil)
         @id = id
         @amount_in_cents = amount_in_cents
         @order_id = order_id
-        @order_source = order_source
         @customer_id = customer_id
         @partial_approved_flag = partial_approved_flag
+        @order_source = order_source
+        @cardholder_authentication = cardholder_authentication
       end
 
       def amount
