@@ -47,11 +47,11 @@ class TransactionRequestRepresenterXml < Representable::Decorator
   property :paypageRegistrationId,
            getter: ->(represented:, **) { represented.card&.paypage_registration_id }
 
-  property :partial_approved_flag, as: :allowPartialAuth
-
   property :cardholder_authentication, class: Vantiv::Api::CardholderAuthentication do
     self.representation_wrap = :cardholderAuthentication
 
-    property :authentication_value
+    property :authentication_value, as: :authenticationValue
   end
+
+  property :partial_approved_flag, as: :allowPartialAuth
 end
