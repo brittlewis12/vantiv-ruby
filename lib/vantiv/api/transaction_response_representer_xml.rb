@@ -1,5 +1,6 @@
 require 'ostruct'
 require 'vantiv/api/account_updater_response'
+require 'vantiv/api/apple_pay_response'
 
 class TransactionResponseRepresenterXml < Representable::Decorator
   include Representable::XML
@@ -48,4 +49,7 @@ class TransactionResponseRepresenterXml < Representable::Decorator
     property :bin
   end
 
+  property :apple_pay_response, as: :applepayResponse, class: Vantiv::Api::ApplePayResponse do
+    property :online_payment_cryptogram, as: :onlinePaymentCryptogram
+  end
 end

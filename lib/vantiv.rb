@@ -41,8 +41,10 @@ module Vantiv
   end
 
   def self.auth(amount:, payment_account_id:, customer_id:, order_id:, expiry_month:, expiry_year:,
-    order_source: Vantiv.default_order_source, use_temporarily_stored_security_code: false)
+    order_source: Vantiv.default_order_source, use_temporarily_stored_security_code: false,
+    online_payment_cryptogram: nil)
 
+    # RE use_temporarily_stored_security_code
     # From XML Docs:
     # When you submit the CVV2/CVC2/CID in a registerTokenRequest, the platform encrypts
     # and stores the value on a temporary basis for later use in a tokenized Auth/Sale
@@ -59,7 +61,8 @@ module Vantiv
       expiry_month: expiry_month,
       expiry_year: expiry_year,
       cvv: cvv,
-      order_source: order_source
+      order_source: order_source,
+      online_payment_cryptogram: online_payment_cryptogram
     )
     Api::Request.new(
       endpoint: Api::Endpoints::AUTHORIZATION,
@@ -95,7 +98,8 @@ module Vantiv
   end
 
   def self.auth_capture(amount:, payment_account_id:, customer_id:, order_id:,
-      expiry_month:, expiry_year:, order_source: Vantiv.default_order_source)
+      expiry_month:, expiry_year:, order_source: Vantiv.default_order_source,
+      online_payment_cryptogram: nil)
     body = Api::RequestBody.for_auth_or_sale(
       amount: amount,
       order_id: order_id,
@@ -103,7 +107,8 @@ module Vantiv
       payment_account_id: payment_account_id,
       expiry_month: expiry_month,
       expiry_year: expiry_year,
-      order_source: order_source
+      order_source: order_source,
+      online_payment_cryptogram: online_payment_cryptogram
     )
     Api::Request.new(
       endpoint: Api::Endpoints::SALE,
