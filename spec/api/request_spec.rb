@@ -85,18 +85,33 @@ describe Vantiv::Api::Request do
 
   context "when doing an auth with an online payment cryptogram present" do
     before do
-      allow(SecureRandom).to receive(:hex).with(12).once.and_return "123456789"
+      allow(SecureRandom).to receive(:hex).with(12).twice.and_return "123456789"
+    end
+
+    let(:tokenize_response) do
+      live_temporary_token = Vantiv::TestTemporaryToken.apple_pay_temporary_token
+      Vantiv.tokenize(temporary_token: live_temporary_token)
+    end
+
+    let(:online_payment_cryptogram) do
+      tokenize_response.apple_pay.online_payment_cryptogram
+    end
+
+    let(:payment_account_id) do
+      tokenize_response.payment_account_id
     end
 
     let(:request) do
+
       body = Vantiv::Api::RequestBody.for_auth_or_sale(
         amount: 4224,
         customer_id: "extid123",
-        payment_account_id: "paymentacct123",
+        payment_account_id: payment_account_id,
         order_id: "SomeOrder123",
         expiry_month: "8",
         expiry_year: "2018",
-        online_payment_cryptogram: "my-online-payment-cryptogram"
+        order_source: "applepay",
+        online_payment_cryptogram: online_payment_cryptogram
       )
 
       Vantiv::Api::Request.new(
@@ -107,7 +122,8 @@ describe Vantiv::Api::Request do
     end
 
     it "includes the online payment cryptogram in the xml" do
-      expected = '<litleOnlineRequest version="10.2" xmlns="http://www.litle.com/schema" merchantId="1166386">
+      expected = <<-END
+<litleOnlineRequest version="10.2" xmlns="http://www.litle.com/schema" merchantId="1166386">
   <authentication>
     <user>PLATED</user>
     <password>***REMOVED***</password>
@@ -115,18 +131,23 @@ describe Vantiv::Api::Request do
   <authorization id="123456789" reportGroup="1" customerId="extid123">
     <orderId>SomeOrder123</orderId>
     <amount>4224</amount>
-    <orderSource>ecommerce</orderSource>
+    <orderSource>applepay</orderSource>
     <token>
-      <litleToken>paymentacct123</litleToken>
+      <litleToken>#{payment_account_id}</litleToken>
       <expDate>0818</expDate>
     </token>
-    <allowPartialAuth>false</allowPartialAuth>
     <cardholderAuthentication>
-      <authentication_value>my-online-payment-cryptogram</authentication_value>
+      <authenticationValue>#{online_payment_cryptogram}</authenticationValue>
     </cardholderAuthentication>
+    <allowPartialAuth>false</allowPartialAuth>
   </authorization>
-</litleOnlineRequest>'
-      expect(request.body.to_xml).to eq expected
+</litleOnlineRequest>
+END
+      expect(request.body.to_xml).to eq expected.strip
+    end
+
+    it "successfully makes the request" do
+      expect(request.run.success?).to eq true
     end
   end
 
