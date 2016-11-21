@@ -12,14 +12,14 @@ describe "mocked API requests to tokenize_by_direct_post" do
 
   def run_mocked_response
     Vantiv::MockedSandbox.enable_self_mocked_requests!
-    response = Vantiv.tokenize_by_direct_post(
+    Vantiv.tokenize_by_direct_post(
       card_number: card.card_number,
       expiry_month: card.expiry_month,
       expiry_year: card.expiry_year,
       cvv: card.cvv
-    )
-    Vantiv::MockedSandbox.disable_self_mocked_requests!
-    response
+    ).tap do
+      Vantiv::MockedSandbox.disable_self_mocked_requests!
+    end
   end
 
   let(:mocked_response) { run_mocked_response }
