@@ -182,8 +182,6 @@ window.onFormSubmit = function(){
 
 The above example shows the basic mechanics of rendering and interacting with the payframe.
 
-TODO: add more infor on payframe error codes here
-
 Once the temporary token has been retrieved, it should be posted to the merchant server, where the gem can be used to retrieved the permanent token (PaymentAccountID).
 
 #### Retrieving a Payment Account ID
@@ -236,11 +234,24 @@ To place an authorization on a client's card, simply do:
 Vantiv.auth(
   payment_account_id: '12345', # retrieved earlier
   amount: 10000, # amount in cents, as an integer
-  customer_id: '123',
-  external_id: 'order123'
+  customer_id: '123', # unique id for the customer
+  order_id: 'order123', # unique id for the order
+  expiry_month: '11', # expiration month for payment account id
+  expiry_year: '2016', # expiration year for payment account id
+  order_source: 'applepay', # optional order source, defaults to Vantiv.default_order_source,
+  online_payment_cryptogram: 'online-payment-cryptogram', # optional, defaults to nil; used for Apple Pay
+  use_temporarily_stored_security_code: true # optional, defaults to false; used for security code matching
 )
-
 ```
+
+#### Security Code (CVV) Matching
+Security Code Matching is a feature from Vantiv that allows you to have transactions fail or "filtered" out when there is a Security Code (CVV) mismatch.
+
+To use this feature you must first certify for it with Vantiv. Once the feature has been turned on, you can use it by setting  `use_temporarily_stored_security_code` to `true` in auth or auth_capture requests that happen immediately after tokenization.
+
+When `use_temporarily_stored_security_code` is set to `true`, `000` will be sent as the security code (CVV) in the request to Vantiv. This will tell Vantiv to look up the security code (CVV) for the payment account id that you passed it.
+
+For PCI Compliance reasons, Vantiv is only able to temporarily store the security code (CVV) for up to ~24 hours after the card was tokenized. This means that this feature should be used immediately following the tokenziation of the card.
 
 Notes:
 
@@ -275,7 +286,7 @@ It is possible for a merchant to capture an amount differing from the amount pla
 ```ruby
 Vantiv.capture(
   transaction_id: 'transaction-id-from-auth',
-  amount: 10000 #amount in cents
+  amount: 10000 # amount in cents
 )
 ```
 
@@ -283,7 +294,18 @@ It is possible to capture an amount exceeding the amount authorized, there are s
 
 ### Auth capture (sales)
 
-TODO: Add usage info
+Authorizes and Captures a 
+```ruby
+Vantiv.auth_capture(
+  payment_account_id: 'payment-account-id-to-capture-from',
+  amount: 10000, # amount in cents,
+  customer_id: '123', # unique id for the customer
+  expiry_month: '11', # expiration month for payment account id
+  expiry_year: '2016', # expiration year for payment account id
+  order_source: 'applepay', # optional order source, defaults to Vantiv.default_order_source,
+  online_payment_cryptogram: 'online-payment-cryptogram' # optional online payment cryptogram; used for Apple Pay
+)
+```
 
 ### Credits
 
@@ -303,16 +325,6 @@ Vantiv.credit(
 
 NOTE: Vantiv does NOT provide any transaction checking when a request is received to credit a customer. This includes even not checking that the prior transaction _even exists_. See 'Tied Transaction Error Handling' for more info.
 
-### Voids
-
-> The Void transaction enables you to cancel any settlement transaction as long as the transaction has not yet settled and the original transaction occurred within the system.
-> Do not use Void transactions to void an Authorization. To remove an Authorization use an Authorization reversal transaction.
-
-TODO: Add usage info
-
-### Refunds
-
-TODO: Add usage info
 
 ## Usage in non-production environments
 
