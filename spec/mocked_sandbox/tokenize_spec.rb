@@ -158,19 +158,4 @@ describe "mocked API requests to .tokenize" do
       expect(response_1.transaction_id).not_to eq response_2.transaction_id
     end
   end
-
-  context "with Apple Pay temporary token" do
-    let(:live_temporary_token) do
-      Vantiv::TestTemporaryToken.apple_pay_temporary_token
-    end
-
-    let(:mocked_temporary_token) do
-      Vantiv::TestTemporaryToken.apple_pay_temporary_token
-    end
-
-    it "returns the online_payment_cryptogram" do
-      expect(live_response.apple_pay.online_payment_cryptogram).to eq "IGS3sfoDvEF3uQ33SgAIoDEBhgA="
-      expect(mocked_response.apple_pay.online_payment_cryptogram).to eq "IGS3sfoDvEF3uQ33SgAIoDEBhgA="
-    end
-  end
 end

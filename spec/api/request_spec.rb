@@ -88,18 +88,9 @@ describe Vantiv::Api::Request do
       allow(SecureRandom).to receive(:hex).with(12).twice.and_return "123456789"
     end
 
-    let(:tokenize_response) do
-      live_temporary_token = Vantiv::TestTemporaryToken.apple_pay_temporary_token
-      Vantiv.tokenize(temporary_token: live_temporary_token)
-    end
+    let(:online_payment_cryptogram) { "the-online-payment-cryptogram" }
 
-    let(:online_payment_cryptogram) do
-      tokenize_response.apple_pay.online_payment_cryptogram
-    end
-
-    let(:payment_account_id) do
-      tokenize_response.payment_account_id
-    end
+    let(:payment_account_id) { 123456789 }
 
     let(:request) do
 
@@ -144,10 +135,6 @@ describe Vantiv::Api::Request do
 </litleOnlineRequest>
 END
       expect(request.body.to_xml).to eq expected.strip
-    end
-
-    it "successfully makes the request" do
-      expect(request.run.success?).to eq true
     end
   end
 
