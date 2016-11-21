@@ -1,4 +1,3 @@
-require 'ostruct'
 require 'vantiv/api/account_updater_response'
 require 'vantiv/api/apple_pay_response'
 
@@ -39,7 +38,7 @@ class TransactionResponseRepresenterXml < Representable::Decorator
     end
   end
 
-  property :fraud_result, as: :fraudResult, class: OpenStruct do
+  property :fraud_result, as: :fraudResult, class: Vantiv::Api::FraudResult do
     property :avs_result, as: :avsResult
   end
 

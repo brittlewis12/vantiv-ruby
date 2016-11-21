@@ -1,20 +1,6 @@
 require 'spec_helper'
-include TestHelpers
 
 describe "mocked API requests to tokenize_by_direct_post" do
-  def run_mocked_response
-    Vantiv::MockedSandbox.enable_self_mocked_requests!
-    response = Vantiv.tokenize_by_direct_post(
-      card_number: card.card_number,
-      expiry_month: card.expiry_month,
-      expiry_year: card.expiry_year,
-      cvv: card.cvv
-    )
-    Vantiv::MockedSandbox.disable_self_mocked_requests!
-    response
-  end
-
-  let(:mocked_response) { run_mocked_response }
   let(:live_response) do
     Vantiv.tokenize_by_direct_post(
       card_number: card.card_number,
@@ -24,40 +10,37 @@ describe "mocked API requests to tokenize_by_direct_post" do
     )
   end
 
-  after { Vantiv::MockedSandbox.disable_self_mocked_requests! }
+  def run_mocked_response
+    Vantiv::MockedSandbox.enable_self_mocked_requests!
+    Vantiv.tokenize_by_direct_post(
+      card_number: card.card_number,
+      expiry_month: card.expiry_month,
+      expiry_year: card.expiry_year,
+      cvv: card.cvv
+    ).tap do
+      Vantiv::MockedSandbox.disable_self_mocked_requests!
+    end
+  end
+
+  let(:mocked_response) { run_mocked_response }
 
   Vantiv::TestCard.all.each do |test_card|
     let(:card) { test_card }
 
     context "with a #{test_card.name}" do
-      it "the mocked response's public methods return the same as the live one" do
-        (
-        Vantiv::Api::TokenizationResponse.instance_methods(false) +
-          Vantiv::Api::Response.instance_methods(false) -
-          [:payment_account_id, :body, :raw_body, :load, :request_id, :transaction_id, :apple_pay]
-        ).each do |method_name|
-          next if method_name.to_s.end_with?("=")
-
-          live_response_value = live_response.send(method_name)
-          mocked_response_value = mocked_response.send(method_name)
-
-          expect(mocked_response_value).to eq(live_response_value),
-            error_message_for_mocked_api_failure(
-             method_name: method_name,
-             expected_value: live_response_value,
-             got_value: mocked_response_value,
-             live_response: live_response
-            )
-        end
+      it "returns the same attributes in the live and mocked responses" do
+        expect(live_response.success?).to eq mocked_response.success?
+        expect(live_response.failure?).to eq mocked_response.failure?
+        expect(live_response.message).to eq mocked_response.message
+        expect(live_response.error_message).to eq mocked_response.error_message
+        expect(live_response.httpok).to eq mocked_response.httpok
+        expect(live_response.http_response_code).to eq mocked_response.http_response_code
+        expect(live_response.api_level_failure?).to eq mocked_response.api_level_failure?
+        expect(mocked_response.raw_body).to be_an_instance_of String
       end
 
       it "returns the whitelisted payment account id" do
-        expect(mocked_response.success?).to eq true
         expect(mocked_response.payment_account_id).to eq card.mocked_sandbox_payment_account_id
-      end
-
-      it "returns a raw body string" do
-        expect(mocked_response.raw_body).to be_an_instance_of String
       end
 
       it "returns a dynamic transaction id" do

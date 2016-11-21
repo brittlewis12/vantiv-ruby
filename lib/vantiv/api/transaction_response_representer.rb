@@ -1,5 +1,4 @@
 require 'representable/json'
-require 'ostruct'
 require 'vantiv/api/account_updater_response'
 require 'vantiv/api/apple_pay_response'
 
@@ -15,7 +14,7 @@ class TransactionResponseRepresenter < Representable::Decorator
   property :post_date, as: :postDate
   property :id, as: :@id
 
-  property :fraud_result, as: :fraudResult, class: OpenStruct do
+  property :fraud_result, as: :fraudResult, class: Vantiv::Api::FraudResult do
     property :avs_result, as: :avsResult
     property :card_validation_result, as: :cardValidationResult
   end
