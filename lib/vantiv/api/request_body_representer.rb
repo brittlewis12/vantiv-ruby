@@ -8,7 +8,7 @@ class RequestBodyRepresenter < Representable::Decorator
   include Representable::JSON
 
   nested :Credentials do
-    property :acceptor_id, as: :AcceptorID
+    property :merchant_id, as: :AcceptorID
   end
 
   nested :Reports do

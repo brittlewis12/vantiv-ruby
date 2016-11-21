@@ -26,7 +26,7 @@ The gem needs the following configuration to be set on app initialization. It is
 
 ```ruby
 Vantiv.configure do |config|
-  config.acceptor_id = ENV["VANTIV_ACCEPTOR_ID"]
+  config.merchant_id = ENV["VANTIV_MERCHANT_ID"]
   config.default_order_source = "desired-order-source"
   config.paypage_id = ENV["VANTIV_PAYPAGE_ID"]
   
@@ -44,7 +44,7 @@ Vantiv requires merchants to certify their applications for usage with their API
 To certify your application, run the following script:
 
 ```
-$ bundle exec vantiv-certify-app -a sub-your-acceptor-id-in-here -p your-paypage-id -u your-user -w your-password
+$ bundle exec vantiv-certify-app -a sub-your-merchant-id-in-here -p your-paypage-id -u your-user -w your-password
 ```
 
 A certs.txt file will be generated in the directory that the script is run, and then opened. It contains a list of XML Certification Order IDs and associated Transaction IDs, like follows:
