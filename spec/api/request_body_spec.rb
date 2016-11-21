@@ -16,9 +16,9 @@ describe Vantiv::Api::RequestBody do
       )
     end
 
-    it "includes the acceptor id" do
-      allow(Vantiv).to receive(:acceptor_id).and_return "acceptor-id"
-      expect(request_body.acceptor_id).to eq "acceptor-id"
+    it "includes the merchant id" do
+      allow(Vantiv).to receive(:merchant_id).and_return "merchant-id"
+      expect(request_body.merchant_id).to eq "merchant-id"
     end
 
     it "includes the default report group" do
@@ -48,9 +48,9 @@ describe Vantiv::Api::RequestBody do
       @paypage_registration_id = "some-temp-token"
     end
 
-    it "includes the acceptor id" do
-      allow(Vantiv).to receive(:acceptor_id).and_return "acceptor-id"
-      expect(request_body.acceptor_id).to eq "acceptor-id"
+    it "includes the merchant id" do
+      allow(Vantiv).to receive(:merchant_id).and_return "merchant-id"
+      expect(request_body.merchant_id).to eq "merchant-id"
     end
 
     it "includes the default report group" do
@@ -79,9 +79,9 @@ describe Vantiv::Api::RequestBody do
         @amount = nil
       end
 
-      it "includes the acceptor id" do
-        allow(Vantiv).to receive(:acceptor_id).and_return "acceptor-id"
-        expect(request_body.acceptor_id).to eq "acceptor-id"
+      it "includes the merchant id" do
+        allow(Vantiv).to receive(:merchant_id).and_return "merchant-id"
+        expect(request_body.merchant_id).to eq "merchant-id"
       end
 
       it "includes the default report group" do
@@ -106,9 +106,9 @@ describe Vantiv::Api::RequestBody do
         @amount = 58888
       end
 
-      it "includes the acceptor id" do
-        allow(Vantiv).to receive(:acceptor_id).and_return "acceptor-id"
-        expect(request_body.acceptor_id).to eq "acceptor-id"
+      it "includes the merchant id" do
+        allow(Vantiv).to receive(:merchant_id).and_return "merchant-id"
+        expect(request_body.merchant_id).to eq "merchant-id"
       end
 
       it "includes the default report group" do
@@ -195,9 +195,9 @@ describe Vantiv::Api::RequestBody do
       )
     end
 
-    it "includes the acceptor id" do
-      allow(Vantiv).to receive(:acceptor_id).and_return "acceptor-id"
-      expect(request_body.acceptor_id).to eq "acceptor-id"
+    it "includes the merchant id" do
+      allow(Vantiv).to receive(:merchant_id).and_return "merchant-id"
+      expect(request_body.merchant_id).to eq "merchant-id"
     end
 
     it "includes the default report group" do
@@ -279,9 +279,9 @@ describe Vantiv::Api::RequestBody do
         @amount = nil
       end
 
-      it "includes the acceptor id" do
-        allow(Vantiv).to receive(:acceptor_id).and_return "acceptor-id"
-        expect(request_body.acceptor_id).to eq "acceptor-id"
+      it "includes the merchant id" do
+        allow(Vantiv).to receive(:merchant_id).and_return "merchant-id"
+        expect(request_body.merchant_id).to eq "merchant-id"
       end
 
       it "includes the default report group" do
@@ -306,9 +306,9 @@ describe Vantiv::Api::RequestBody do
         @amount = 58888
       end
 
-      it "includes the acceptor id" do
-        allow(Vantiv).to receive(:acceptor_id).and_return "acceptor-id"
-        expect(request_body.acceptor_id).to eq "acceptor-id"
+      it "includes the merchant id" do
+        allow(Vantiv).to receive(:merchant_id).and_return "merchant-id"
+        expect(request_body.merchant_id).to eq "merchant-id"
       end
 
       it "includes the default report group" do
@@ -342,9 +342,9 @@ describe Vantiv::Api::RequestBody do
         @amount = nil
       end
 
-      it "includes the acceptor id" do
-        allow(Vantiv).to receive(:acceptor_id).and_return "acceptor-id"
-        expect(request_body.acceptor_id).to eq "acceptor-id"
+      it "includes the merchant id" do
+        allow(Vantiv).to receive(:merchant_id).and_return "merchant-id"
+        expect(request_body.merchant_id).to eq "merchant-id"
       end
 
       it "includes the default report group" do
@@ -369,9 +369,9 @@ describe Vantiv::Api::RequestBody do
         @amount = 58888
       end
 
-      it "includes the acceptor id" do
-        allow(Vantiv).to receive(:acceptor_id).and_return "acceptor-id"
-        expect(request_body.acceptor_id).to eq "acceptor-id"
+      it "includes the merchant id" do
+        allow(Vantiv).to receive(:merchant_id).and_return "merchant-id"
+        expect(request_body.merchant_id).to eq "merchant-id"
       end
 
       it "includes the default report group" do
@@ -422,9 +422,9 @@ describe Vantiv::Api::RequestBody do
       end
     end
 
-    it "includes the acceptor id" do
-      allow(Vantiv).to receive(:acceptor_id).and_return "acceptor-id"
-      expect(request_body.acceptor_id).to eq "acceptor-id"
+    it "includes the merchant id" do
+      allow(Vantiv).to receive(:merchant_id).and_return "merchant-id"
+      expect(request_body.merchant_id).to eq "merchant-id"
     end
 
     it "includes the default report group" do
@@ -487,9 +487,9 @@ describe Vantiv::Api::RequestBody do
       )
     end
 
-    it "includes the acceptor id" do
-      allow(Vantiv).to receive(:acceptor_id).and_return "acceptor-id"
-      expect(request_body.acceptor_id).to eq "acceptor-id"
+    it "includes the merchant id" do
+      allow(Vantiv).to receive(:merchant_id).and_return "merchant-id"
+      expect(request_body.merchant_id).to eq "merchant-id"
     end
 
     it "includes the default report group" do

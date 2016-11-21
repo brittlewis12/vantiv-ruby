@@ -163,7 +163,7 @@ module Vantiv
   end
 
   class << self
-    %i[ environment acceptor_id default_report_group
+    %i[ environment merchant_id default_report_group
         default_order_source paypage_id user password ].freeze.each do |config_var|
 
       define_method(config_var) do

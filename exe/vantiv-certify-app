@@ -6,10 +6,10 @@ require 'optparse'
 
 options = {}
 parser = OptionParser.new do |opts|
-  opts.banner = "Usage: vantiv-certify-app -a <acceptor_id> -p <paypage_id> -u <user> -w <password> [--filter_by <test_name>]"
+  opts.banner = "Usage: vantiv-certify-app -a <merchant_id> -p <paypage_id> -u <user> -w <password> [--filter_by <test_name>]"
 
-  opts.on("-a", "--acceptor_id ACCEPTOR_ID", "Vantiv Acceptor ID") do |acceptor_id|
-    options[:acceptor_id] = acceptor_id
+  opts.on("-a", "--merchant_id MERCHANT_ID", "Vantiv Merchant ID") do |merchant_id|
+    options[:merchant_id] = merchant_id
   end
 
   opts.on("-p", "--paypage_id PAYPAGE_ID", "Vantiv Paypage ID") do |paypage_id|
@@ -31,7 +31,7 @@ end
 
 parser.parse!
 
-required_arguments = %i[acceptor_id paypage_id user password]
+required_arguments = %i[merchant_id paypage_id user password]
 missing_arguments = required_arguments.select{ |required_argument| options[required_argument].nil? }
 
 if missing_arguments.any?
@@ -41,7 +41,7 @@ if missing_arguments.any?
 end
 
 Vantiv.configure do |config|
-  config.acceptor_id = options.fetch(:acceptor_id)
+  config.merchant_id = options.fetch(:merchant_id)
   config.paypage_id = options.fetch(:paypage_id)
   config.environment = Vantiv::Environment::CERTIFICATION
 
