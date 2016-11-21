@@ -25,8 +25,6 @@ describe "mocked API requests to .tokenize" do
     @test_paypage_driver.stop
   end
 
-  after { Vantiv::MockedSandbox.disable_self_mocked_requests! }
-
   context "with a valid temporary token" do
     let(:card) { Vantiv::TestCard.valid_account }
 

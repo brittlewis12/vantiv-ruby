@@ -24,8 +24,6 @@ describe "mocked API requests to tokenize_by_direct_post" do
 
   let(:mocked_response) { run_mocked_response }
 
-  after { Vantiv::MockedSandbox.disable_self_mocked_requests! }
-
   Vantiv::TestCard.all.each do |test_card|
     let(:card) { test_card }
 
