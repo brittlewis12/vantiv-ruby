@@ -1,4 +1,14 @@
 Vantiv Ruby Changes
+1.0.0
+-----------
+- Breaking changes: replace deprecated DevHub API with XML API
+  - rename `Vantiv.acceptor_id` to `Vantiv.merchant_id`
+  - require `Vantiv.user` and `Vantiv.password` to be set
+  - remove `Vantiv.licence_id` (was DevHub specific)
+- Implement Apple Pay
+- Implement Security Code (CVV) mismatch filtering
+
+
 0.3.0
 -----------
 - Bug/fix: adds expiry arguments to the relevant methods when running the fixture generator
