@@ -8,7 +8,7 @@ class RequestBodyRepresenterXml < Representable::Decorator
 
   property :version, attribute: true
   property :xmlns, attribute: true
-  property :acceptor_id, as: :merchantId, attribute: true
+  property :merchant_id, as: :merchantId, attribute: true
 
   property :authentication, class: Vantiv::Api::Authentication, as: :authentication do
     property :user

@@ -1,6 +1,21 @@
 require 'spec_helper'
 
 describe Vantiv::Api::RequestBody do
+  shared_examples "a request body" do
+    it "includes the merchant id" do
+      allow(Vantiv).to receive(:merchant_id).and_return "merchant-id"
+      expect(request_body.merchant_id).to eq "merchant-id"
+    end
+
+    it "includes the default report group" do
+      expect(request_body.report_group).to eq Vantiv.default_report_group
+    end
+
+    it "include the application id" do
+      expect(request_body.application_id).to be
+    end
+  end
+
   describe ".for_direct_post_tokenization" do
     let(:card_number) { 1234 }
     let(:expiry_month) { 10 }
@@ -16,18 +31,7 @@ describe Vantiv::Api::RequestBody do
       )
     end
 
-    it "includes the acceptor id" do
-      allow(Vantiv).to receive(:acceptor_id).and_return "acceptor-id"
-      expect(request_body.acceptor_id).to eq "acceptor-id"
-    end
-
-    it "includes the default report group" do
-      expect(request_body.report_group).to eq "1"
-    end
-
-    it "include the application id" do
-      expect(request_body.application_id).to be
-    end
+    it_behaves_like "a request body"
 
     it "includes stringified versions of card params" do
       expect(request_body.card.account_number).to eq card_number.to_s
@@ -48,18 +52,7 @@ describe Vantiv::Api::RequestBody do
       @paypage_registration_id = "some-temp-token"
     end
 
-    it "includes the acceptor id" do
-      allow(Vantiv).to receive(:acceptor_id).and_return "acceptor-id"
-      expect(request_body.acceptor_id).to eq "acceptor-id"
-    end
-
-    it "includes the default report group" do
-      expect(request_body.report_group).to eq "1"
-    end
-
-    it "include the application id" do
-      expect(request_body.application_id).to be
-    end
+    it_behaves_like "a request body"
 
     it "includes the paypage registration id" do
       expect(request_body.card.paypage_registration_id).to eq "some-temp-token"
@@ -74,22 +67,11 @@ describe Vantiv::Api::RequestBody do
       )
     end
 
+    it_behaves_like "a request body"
+
     context "when amount is nil" do
       before do
         @amount = nil
-      end
-
-      it "includes the acceptor id" do
-        allow(Vantiv).to receive(:acceptor_id).and_return "acceptor-id"
-        expect(request_body.acceptor_id).to eq "acceptor-id"
-      end
-
-      it "includes the default report group" do
-        expect(request_body.report_group).to eq "1"
-      end
-
-      it "include the application id" do
-        expect(request_body.application_id).to be
       end
 
       it "includes the transaction id" do
@@ -106,19 +88,6 @@ describe Vantiv::Api::RequestBody do
         @amount = 58888
       end
 
-      it "includes the acceptor id" do
-        allow(Vantiv).to receive(:acceptor_id).and_return "acceptor-id"
-        expect(request_body.acceptor_id).to eq "acceptor-id"
-      end
-
-      it "includes the default report group" do
-        expect(request_body.report_group).to eq "1"
-      end
-
-      it "include the application id" do
-        expect(request_body.application_id).to be
-      end
-
       it "includes the transaction id" do
         expect(request_body.transaction.id).to eq "transactionid123"
       end
@@ -130,6 +99,19 @@ describe Vantiv::Api::RequestBody do
   end
 
   describe ".for_auth_or_sale" do
+    subject(:request_body) do
+      Vantiv::Api::RequestBody.for_auth_or_sale(
+        amount: 4224,
+        customer_id: "extid123",
+        payment_account_id: "paymentacct123",
+        order_id: "SomeOrder123",
+        expiry_month: "8",
+        expiry_year: "2018"
+      )
+    end
+
+    it_behaves_like "a request body"
+
     context "when order source is passed in" do
       subject(:request_body) do
         Vantiv::Api::RequestBody.for_auth_or_sale(
@@ -182,30 +164,6 @@ describe Vantiv::Api::RequestBody do
       it "sets cardholder authentication to nil" do
         expect(request_body.transaction.cardholder_authentication).to eq nil
       end
-    end
-
-    subject(:request_body) do
-      Vantiv::Api::RequestBody.for_auth_or_sale(
-        amount: 4224,
-        customer_id: "extid123",
-        payment_account_id: "paymentacct123",
-        order_id: "SomeOrder123",
-        expiry_month: "8",
-        expiry_year: "2018"
-      )
-    end
-
-    it "includes the acceptor id" do
-      allow(Vantiv).to receive(:acceptor_id).and_return "acceptor-id"
-      expect(request_body.acceptor_id).to eq "acceptor-id"
-    end
-
-    it "includes the default report group" do
-      expect(request_body.report_group).to eq "1"
-    end
-
-    it "include the application id" do
-      expect(request_body.application_id).to be
     end
 
     context "Transaction object" do
@@ -274,22 +232,11 @@ describe Vantiv::Api::RequestBody do
       )
     end
 
+    it_behaves_like "a request body"
+
     context "when amount is nil" do
       before do
         @amount = nil
-      end
-
-      it "includes the acceptor id" do
-        allow(Vantiv).to receive(:acceptor_id).and_return "acceptor-id"
-        expect(request_body.acceptor_id).to eq "acceptor-id"
-      end
-
-      it "includes the default report group" do
-        expect(request_body.report_group).to eq "1"
-      end
-
-      it "include the application id" do
-        expect(request_body.application_id).to be
       end
 
       it "includes the transaction id" do
@@ -304,19 +251,6 @@ describe Vantiv::Api::RequestBody do
     context "when amount is not nil" do
       before do
         @amount = 58888
-      end
-
-      it "includes the acceptor id" do
-        allow(Vantiv).to receive(:acceptor_id).and_return "acceptor-id"
-        expect(request_body.acceptor_id).to eq "acceptor-id"
-      end
-
-      it "includes the default report group" do
-        expect(request_body.report_group).to eq "1"
-      end
-
-      it "include the application id" do
-        expect(request_body.application_id).to be
       end
 
       it "includes the transaction id" do
@@ -337,22 +271,11 @@ describe Vantiv::Api::RequestBody do
       )
     end
 
+    it_behaves_like "a request body"
+
     context "when amount is nil" do
       before do
         @amount = nil
-      end
-
-      it "includes the acceptor id" do
-        allow(Vantiv).to receive(:acceptor_id).and_return "acceptor-id"
-        expect(request_body.acceptor_id).to eq "acceptor-id"
-      end
-
-      it "includes the default report group" do
-        expect(request_body.report_group).to eq "1"
-      end
-
-      it "include the application id" do
-        expect(request_body.application_id).to be
       end
 
       it "includes the transaction id" do
@@ -367,19 +290,6 @@ describe Vantiv::Api::RequestBody do
     context "when amount is not nil" do
       before do
         @amount = 58888
-      end
-
-      it "includes the acceptor id" do
-        allow(Vantiv).to receive(:acceptor_id).and_return "acceptor-id"
-        expect(request_body.acceptor_id).to eq "acceptor-id"
-      end
-
-      it "includes the default report group" do
-        expect(request_body.report_group).to eq "1"
-      end
-
-      it "include the application id" do
-        expect(request_body.application_id).to be
       end
 
       it "includes the transaction id" do
@@ -404,6 +314,12 @@ describe Vantiv::Api::RequestBody do
       )
     end
 
+    it_behaves_like "a request body"
+
+    it "includes the PaymentAccountID" do
+      expect(request_body.payment_account.id).to eq "paymentacct123"
+    end
+
     context "when order source is passed in" do
       subject(:request_body) do
         Vantiv::Api::RequestBody.for_return(
@@ -420,19 +336,6 @@ describe Vantiv::Api::RequestBody do
       it "sets the order source on the response body" do
         expect(request_body.transaction.order_source).to eq "my-custom-order-source"
       end
-    end
-
-    it "includes the acceptor id" do
-      allow(Vantiv).to receive(:acceptor_id).and_return "acceptor-id"
-      expect(request_body.acceptor_id).to eq "acceptor-id"
-    end
-
-    it "includes the default report group" do
-      expect(request_body.report_group).to eq "1"
-    end
-
-    it "include the application id" do
-      expect(request_body.application_id).to be
     end
 
     context "Transaction object" do
@@ -474,10 +377,6 @@ describe Vantiv::Api::RequestBody do
         expect(request_body.card.expiry_year).to eq "18"
       end
     end
-
-    it "includes the PaymentAccountID" do
-      expect(request_body.payment_account.id).to eq "paymentacct123"
-    end
   end
 
   describe ".for_void" do
@@ -487,22 +386,10 @@ describe Vantiv::Api::RequestBody do
       )
     end
 
-    it "includes the acceptor id" do
-      allow(Vantiv).to receive(:acceptor_id).and_return "acceptor-id"
-      expect(request_body.acceptor_id).to eq "acceptor-id"
-    end
-
-    it "includes the default report group" do
-      expect(request_body.report_group).to eq "1"
-    end
-
-    it "include the application id" do
-      expect(request_body.application_id).to be
-    end
+    it_behaves_like "a request body"
 
     it "includes the transaction id" do
       expect(request_body.transaction.id).to eq "transactionid123"
     end
   end
-
 end

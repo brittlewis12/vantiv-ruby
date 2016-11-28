@@ -5,7 +5,7 @@
 #          not card data, on most transactions like auths and others.
 #       3. They do NOT provide a list of PaymentAccountIDs with each of these test accounts. They
 #          do not have a static list of them - they will be different in each merchant account
-#          (with each different Acceptor ID).
+#          (with each different Merchant ID).
 #       4. Once the PaymentAccountID is requested, it does not change - so we get it, store it,
 #          and read it in subsequent spec runs.
 #

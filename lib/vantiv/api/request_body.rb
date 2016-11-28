@@ -13,7 +13,7 @@ module Vantiv
     end
 
     class RequestBody
-      attr_reader :acceptor_id, :application_id, :report_group
+      attr_reader :merchant_id, :application_id, :report_group
       attr_accessor :card, :transaction, :payment_account, :address
 
       attr_accessor :version, :authentication, :xmlns
@@ -23,7 +23,7 @@ module Vantiv
         @transaction = transaction
         @payment_account = payment_account
 
-        @acceptor_id = Vantiv.acceptor_id
+        @merchant_id = Vantiv.merchant_id
         @application_id = SecureRandom.hex(12)
         @report_group = Vantiv.default_report_group
 
