@@ -1,3 +1,4 @@
+require 'pathname'
 require 'vantiv/api/response'
 require 'vantiv/api/live_transaction_response'
 require 'vantiv/mocked_sandbox/mocked_response_representer'
@@ -68,18 +69,26 @@ module Vantiv
 
       def load_fixture(api_method, card_number_or_temporary_token = nil)
         fixture_file_name = card_number_or_temporary_token ? "#{api_method}--#{card_number_or_temporary_token}" : api_method
-        begin
-          self.fixture = File.open("#{MockedSandbox.fixtures_directory}#{fixture_file_name}.json", 'r') do |f|
-            raw_fixture = f.read
-            response = MockedResponseRepresenter.new(response_object).from_json(raw_fixture)
 
-            populated_response = populate_dynamic_response(response)
+        fixtures_path = Pathname.new Vantiv::MockedSandbox.fixtures_directory
 
-            populated_response.raw_body = response.body.to_s
-            populated_response
-          end
-        rescue Errno::ENOENT
+        path = fixtures_path.children.detect do |child_path|
+          filename = child_path.basename.to_s.split(child_path.extname).first
+          fixture_file_name.start_with? filename
+        end
+
+        if path.nil?
           raise FixtureNotFound.new("Fixture not found for api method: #{api_method}, card number or temporary token: #{card_number_or_temporary_token}")
+        end
+
+        self.fixture = path.open do |f|
+          raw_fixture = f.read
+          response = MockedResponseRepresenter.new(response_object).from_json(raw_fixture)
+
+          populated_response = populate_dynamic_response(response)
+
+          populated_response.raw_body = response.body.to_s
+          populated_response
         end
       end
 
