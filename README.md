@@ -1,6 +1,3 @@
-# IMPORTANT!
-THIS GEM IS ACTIVELY BEING TRANSITIONED AWAY FROM DEVHUB AND TO VANTIV'S XML ENDPOINT
-
 # Vantiv Ruby Client
 [![Build Status](https://travis-ci.org/plated/vantiv-ruby.svg)](https://travis-ci.org/plated/vantiv-ruby)
 
@@ -66,7 +63,7 @@ $ bundle exec vantiv-certify-app -a bar -p bla -u uzr -w pwd --filter_by=ACCOUNT
 
 ## Usage
 
-The vantiv gem provides a simple ruby client for interacting with Vantiv's DevHub API. This API wraps their Litle/XML API and provides an API that uses json. This gem provides a way for a merchant to:
+The vantiv gem provides a simple ruby client for interacting with Vantiv's XML API. This API wraps their Litle/XML API and provides an API that uses json. This gem provides a way for a merchant to:
 
 1. Use Vantiv's eProtect feature to tokenize sensitive card information directly to Vantiv's servers.
 2. Run the following transactions on customers' accounts:
