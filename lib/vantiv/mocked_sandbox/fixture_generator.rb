@@ -59,8 +59,9 @@ module Vantiv
       def record_tokenize_for_test_token(test_temporary_token:, live_temporary_token:, mocked_payment_account_id:)
         cert_response = Vantiv.tokenize(temporary_token: live_temporary_token)
         cert_response.body.register_token_response.payment_account_id = mocked_payment_account_id
+        file_name = "tokenize--#{test_temporary_token}"[0..94]
         write_fixture_to_file(
-          "tokenize--#{test_temporary_token}",
+          file_name,
           cert_response
         )
       end
