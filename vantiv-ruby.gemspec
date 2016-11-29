@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["joshuaballoch@gmail.com", "chrisvoxland@gmail.com", "me@scottbartell.com"]
   spec.required_ruby_version = '>= 2.3.1'
 
-  spec.summary       = %q{A simple ruby client to use Vantiv's DevHub API}
+  spec.summary       = %q{A simple ruby client to use Vantiv's XML API}
   spec.homepage      = "https://github.com/plated/vantiv-ruby"
   spec.license       = "MIT"
 
