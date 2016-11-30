@@ -41,7 +41,7 @@ Vantiv requires merchants to certify their applications for usage with their API
 To certify your application, run the following script:
 
 ```
-$ bundle exec vantiv-certify-app -a sub-your-merchant-id-in-here -p your-paypage-id -u your-user -w your-password
+$ bundle exec vantiv-certify-app
 ```
 
 A certs.txt file will be generated in the directory that the script is run, and then opened. It contains a list of XML Certification Order IDs and associated Transaction IDs, like follows:
@@ -57,7 +57,7 @@ AUTH_CAPTURE_2, transaction-id-for-AUTH_CAPTURE_2-here
 If you want to just run a subset of the certifications you can pass in the Test ID that you want to which match against using the `--filter_by` option. For example, if you only want to run the Account Updater certification, which have Test IDs that are prefixed with `ACCOUNT_UPDATER`, you would filter by `ACCOUNT_UPDATER` like follows:
 
 ```
-$ bundle exec vantiv-certify-app -a bar -p bla -u uzr -w pwd --filter_by=ACCOUNT_UPDATER
+$ bundle exec vantiv-certify-app --filter_by=ACCOUNT_UPDATER
 ```
 
 

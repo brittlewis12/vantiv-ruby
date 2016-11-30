@@ -6,23 +6,7 @@ require 'optparse'
 
 options = {}
 parser = OptionParser.new do |opts|
-  opts.banner = "Usage: vantiv-certify-app -a <merchant_id> -p <paypage_id> -u <user> -w <password> [--filter_by <test_name>]"
-
-  opts.on("-a", "--merchant_id MERCHANT_ID", "Vantiv Merchant ID") do |merchant_id|
-    options[:merchant_id] = merchant_id
-  end
-
-  opts.on("-p", "--paypage_id PAYPAGE_ID", "Vantiv Paypage ID") do |paypage_id|
-    options[:paypage_id] = paypage_id
-  end
-
-  opts.on("-u", "--user VANTIV_USER", "Vantiv XML User") do |user|
-    options[:user] = user
-  end
-
-  opts.on("-w", "--password VANTIV_PASSWORD", "Vantiv XML Password") do |password|
-    options[:password] = password
-  end
+  opts.banner = "Usage: vantiv-certify-app [--filter_by <test_name>]"
 
   opts.on("--filter_by [TEST_NAME]", "Filter which certifications to run") do |filter|
     options[:filter_by] = filter
@@ -31,25 +15,20 @@ end
 
 parser.parse!
 
-required_arguments = %i[merchant_id paypage_id user password]
-missing_arguments = required_arguments.select{ |required_argument| options[required_argument].nil? }
-
-if missing_arguments.any?
-  puts "Missing options: #{missing_arguments.join(", ")}"
-  puts parser.banner
-  exit
-end
-
+require "dotenv"
+Dotenv.load
 Vantiv.configure do |config|
-  config.merchant_id = options.fetch(:merchant_id)
-  config.paypage_id = options.fetch(:paypage_id)
   config.environment = Vantiv::Environment::CERTIFICATION
+  config.merchant_id = ENV["MERCHANT_ID"]
+  config.default_order_source = "ecommerce"
+  config.paypage_id = ENV["PAYPAGE_ID"]
 
-  config.user = options.fetch(:user)
-  config.password = options.fetch(:password)
+  config.user = ENV["VANTIV_USER"]
+  config.password = ENV["VANTIV_PASSWORD"]
 
   config.default_report_group = '1'
 end
+
 
 Vantiv::Certification::ValidationTestRunner.run(
   save_to: "certs.txt",
