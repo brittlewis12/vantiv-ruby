@@ -8,14 +8,10 @@
       "@version": "10.2",
       "authReversalResponse": {
         "response": "001",
-        "responseTime": "2016-08-16T14:31:37",
-        "postDate": "2016-08-16",
-        "@id": "50c26aa443e5187c71360cc9",
+        "responseTime": "2016-11-30T15:25:42",
         "message": "Transaction Received",
-        "@reportGroup": "1",
-        "TransactionID": "82918655929057701"
+        "TransactionID": "82919406449624268"
       }
-    },
-    "RequestID": "1599a0d7-7d2d-470f-c9b7-d658556c48b1"
+    }
   }
 }

@@ -8,14 +8,10 @@
       "@version": "10.2",
       "voidResponse": {
         "response": "001",
-        "responseTime": "2016-08-16T14:31:37",
-        "postDate": "2016-08-16",
-        "@id": "824604cfdb181d7902e1a31c",
+        "responseTime": "2016-11-30T15:25:43",
         "message": "Transaction Received",
-        "@reportGroup": "1",
-        "TransactionID": "82918655929057750"
+        "TransactionID": "82919406449624284"
       }
-    },
-    "RequestID": "84ce6688-8d4d-42fa-8900-6c7c2ed3f4d0"
+    }
   }
 }

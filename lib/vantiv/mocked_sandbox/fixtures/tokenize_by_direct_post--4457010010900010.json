@@ -8,13 +8,10 @@
       "@version": "10.2",
       "registerTokenResponse": {
         "response": "820",
-        "responseTime": "2016-08-16T14:31:29",
-        "@id": "557e2677ea2a999c55fd3eee",
+        "responseTime": "2016-11-30T15:25:30",
         "message": "Credit card number was invalid",
-        "@reportGroup": "1",
-        "TransactionID": "82918655926355686"
+        "TransactionID": "82919406449623443"
       }
-    },
-    "RequestID": "3067f396-03ee-4b03-c016-e52bcf2d9176"
+    }
   }
 }

@@ -7,20 +7,15 @@
       "@response": "0",
       "@version": "10.2",
       "saleResponse": {
-        "@customerId": "not-dynamic-cust-id",
         "orderId": "not-dynamic-order-id",
         "response": "301",
-        "responseTime": "2016-08-16T14:31:29",
-        "postDate": "2016-08-16",
-        "@id": "81913fbd60b4be8a412b6422",
+        "responseTime": "2016-11-30T15:25:32",
         "fraudResult": {
           "avsResult": "00"
         },
         "message": "Invalid Account Number",
-        "@reportGroup": "1",
-        "TransactionID": "82918655926355710"
+        "TransactionID": "82919406449623500"
       }
-    },
-    "RequestID": "b219f6c4-5adc-48ea-8854-482a0977f9a8"
+    }
   }
 }

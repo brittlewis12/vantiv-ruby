@@ -8,14 +8,10 @@
       "@version": "10.2",
       "creditResponse": {
         "response": "001",
-        "responseTime": "2016-08-16T14:31:37",
-        "postDate": "2016-08-16",
-        "@id": "13056ddb36e2b7a54f480541",
+        "responseTime": "2016-11-30T15:25:42",
         "message": "Transaction Received",
-        "@reportGroup": "1",
-        "TransactionID": "82918655929057743"
+        "TransactionID": "82919406449624276"
       }
-    },
-    "RequestID": "b0421423-b100-4ffc-a2c1-5ae5cee1a02e"
+    }
   }
 }
