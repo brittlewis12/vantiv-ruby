@@ -200,4 +200,33 @@ describe "auth_capture (Sale)" do
       response
     end
   end
+
+  context "when an original network transaction id is passed in" do
+    let(:test_account) { Vantiv::TestAccount.valid_account }
+
+    subject(:response) do
+      Vantiv.auth_capture(
+        amount: 10000,
+        payment_account_id: payment_account_id,
+        customer_id: customer_external_id,
+        order_id: "SomeOrder123",
+        expiry_month: test_account.expiry_month,
+        expiry_year: test_account.expiry_year,
+        original_network_transaction_id: "my-original-network-transaction-id"
+      )
+    end
+
+    before do
+      request_double = double("request")
+      allow(Vantiv::Api::Request).to receive(:new) { request_double }
+      allow(request_double).to receive :run
+    end
+
+    it "uses the passed in online payment cryptogram" do
+      expect(Vantiv::Api::RequestBody).to receive(:for_auth_or_sale).with(
+        hash_including(original_network_transaction_id: "my-original-network-transaction-id")
+      )
+      response
+    end
+  end
 end

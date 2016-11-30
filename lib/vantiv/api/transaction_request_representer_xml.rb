@@ -54,4 +54,6 @@ class TransactionRequestRepresenterXml < Representable::Decorator
   end
 
   property :partial_approved_flag, as: :allowPartialAuth
+
+  property :original_network_transaction_id, as: :originalNetworkTransactionId
 end
