@@ -5,7 +5,7 @@
     "litleOnlineResponse": {
       "@message": "Valid Format",
       "@response": "0",
-      "@version": "10.2",
+      "@version": "10.5",
       "authReversalResponse": {
         "response": "001",
         "responseTime": "2016-11-30T15:25:42",

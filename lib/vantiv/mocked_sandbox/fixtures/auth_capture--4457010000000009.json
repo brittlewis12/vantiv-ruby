@@ -5,7 +5,7 @@
     "litleOnlineResponse": {
       "@message": "Valid Format",
       "@response": "0",
-      "@version": "10.2",
+      "@version": "10.5",
       "saleResponse": {
         "authCode": "11111 ",
         "orderId": "not-dynamic-order-id",

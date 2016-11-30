@@ -47,7 +47,7 @@ module Vantiv
       populated_body.transaction.application_id = populated_body.application_id
 
       populated_body.xmlns = "http://www.litle.com/schema"
-      populated_body.version = "10.2"
+      populated_body.version = "10.5"
 
       populated_body
     end
