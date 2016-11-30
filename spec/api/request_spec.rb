@@ -114,7 +114,7 @@ describe Vantiv::Api::Request do
 
     it "includes the online payment cryptogram in the xml" do
       expected = <<-END
-<litleOnlineRequest version="10.2" xmlns="http://www.litle.com/schema" merchantId="1166386">
+<litleOnlineRequest version="10.5" xmlns="http://www.litle.com/schema" merchantId="1166386">
   <authentication>
     <user>PLATED</user>
     <password>***REMOVED***</password>
@@ -161,7 +161,7 @@ END
     end
 
     it "does not include the online payment cryptogram in the xml" do
-      expected = '<litleOnlineRequest version="10.2" xmlns="http://www.litle.com/schema" merchantId="1166386">
+      expected = '<litleOnlineRequest version="10.5" xmlns="http://www.litle.com/schema" merchantId="1166386">
   <authentication>
     <user>PLATED</user>
     <password>***REMOVED***</password>

@@ -1,4 +1,9 @@
 Vantiv Ruby Changes
+1.1.0
+-----------
+- Update Vantiv XML version to 10.5
+
+
 1.0.0
 -----------
 - Breaking changes: replace deprecated DevHub API with XML API
