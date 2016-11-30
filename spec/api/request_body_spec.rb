@@ -166,6 +166,41 @@ describe Vantiv::Api::RequestBody do
       end
     end
 
+    context "when an original network transaction id is passed in" do
+      subject(:request_body) do
+        Vantiv::Api::RequestBody.for_auth_or_sale(
+          amount: 4224,
+          customer_id: "extid123",
+          payment_account_id: "paymentacct123",
+          order_id: "SomeOrder123",
+          expiry_month: "8",
+          expiry_year: "2018",
+          original_network_transaction_id: "my-original-network-transaction-id"
+        )
+      end
+
+      it "sets the original network transaction id" do
+        expect(request_body.transaction.original_network_transaction_id).to eq "my-original-network-transaction-id"
+      end
+    end
+
+    context "when an original network transaction id is not passed in" do
+      subject(:request_body) do
+        Vantiv::Api::RequestBody.for_auth_or_sale(
+          amount: 4224,
+          customer_id: "extid123",
+          payment_account_id: "paymentacct123",
+          order_id: "SomeOrder123",
+          expiry_month: "8",
+          expiry_year: "2018"
+        )
+      end
+
+      it "sets the original network transaction id to nil" do
+        expect(request_body.transaction.original_network_transaction_id).to be_nil
+      end
+    end
+
     context "Transaction object" do
       it "is included" do
         expect(request_body.transaction).to be

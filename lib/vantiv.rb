@@ -42,7 +42,7 @@ module Vantiv
 
   def self.auth(amount:, payment_account_id:, customer_id:, order_id:, expiry_month:, expiry_year:,
     order_source: Vantiv.default_order_source, use_temporarily_stored_security_code: false,
-    online_payment_cryptogram: nil)
+    online_payment_cryptogram: nil, original_network_transaction_id: nil)
 
     # RE use_temporarily_stored_security_code
     # From XML Docs:
@@ -62,7 +62,8 @@ module Vantiv
       expiry_year: expiry_year,
       cvv: cvv,
       order_source: order_source,
-      online_payment_cryptogram: online_payment_cryptogram
+      online_payment_cryptogram: online_payment_cryptogram,
+      original_network_transaction_id: original_network_transaction_id
     )
     Api::Request.new(
       endpoint: Api::Endpoints::AUTHORIZATION,
@@ -99,7 +100,7 @@ module Vantiv
 
   def self.auth_capture(amount:, payment_account_id:, customer_id:, order_id:,
       expiry_month:, expiry_year:, order_source: Vantiv.default_order_source,
-      online_payment_cryptogram: nil)
+      online_payment_cryptogram: nil, original_network_transaction_id: nil)
     body = Api::RequestBody.for_auth_or_sale(
       amount: amount,
       order_id: order_id,
@@ -108,7 +109,8 @@ module Vantiv
       expiry_month: expiry_month,
       expiry_year: expiry_year,
       order_source: order_source,
-      online_payment_cryptogram: online_payment_cryptogram
+      online_payment_cryptogram: online_payment_cryptogram,
+      original_network_transaction_id: original_network_transaction_id
     )
     Api::Request.new(
       endpoint: Api::Endpoints::SALE,
