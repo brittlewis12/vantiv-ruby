@@ -10,12 +10,12 @@
         "authCode": "123457",
         "orderId": "not-dynamic-order-id",
         "response": "000",
-        "responseTime": "2016-11-30T15:25:39",
+        "responseTime": "2016-11-30T17:49:54",
         "fraudResult": {
           "avsResult": "00"
         },
         "message": "Approved",
-        "TransactionID": "82919406449623971",
+        "TransactionID": "82919407148402139",
         "accountUpdater": {
           "originalCardTokenInfo": {
             "bin": "511200",
@@ -35,7 +35,8 @@
             "code": "501",
             "message": "The account was closed"
           }
-        }
+        },
+        "networkTransactionId": "000000000000000"
       }
     }
   }

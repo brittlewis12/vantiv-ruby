@@ -47,6 +47,7 @@ describe "mocked API requests to auth" do
         expect(live_response.httpok).to eq mocked_response.httpok
         expect(live_response.http_response_code).to eq mocked_response.http_response_code
         expect(live_response.api_level_failure?).to eq mocked_response.api_level_failure?
+        expect(live_response.network_transaction_id).to eq mocked_response.network_transaction_id
         expect(mocked_response.raw_body).to be_an_instance_of String
       end
 

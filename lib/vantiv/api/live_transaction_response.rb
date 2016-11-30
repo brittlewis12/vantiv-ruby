@@ -47,6 +47,10 @@ module Vantiv
           litle_transaction_response.account_updater || AccountUpdaterResponse.new
       end
 
+      def network_transaction_id
+        litle_transaction_response.network_transaction_id
+      end
+
       private
       def transaction_approved?
         response_code == RESPONSE_CODES[:approved]
