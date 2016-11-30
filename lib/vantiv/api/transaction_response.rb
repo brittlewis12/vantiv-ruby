@@ -1,9 +1,27 @@
 module Vantiv
   module Api
     class TransactionResponse
-      attr_accessor :message, :response_code, :transaction_id, :response_time, :id, :report_group, :payment_account_id,
-                    :post_date, :type, :bin, :auth_code, :customer_id, :order_id, :token_response_code, :token_message,
-                    :fraud_result, :account_updater, :token_response, :apple_pay_response
+      attr_accessor *%i(
+        account_updater
+        apple_pay_response
+        auth_code
+        bin
+        customer_id
+        fraud_result
+        id
+        message
+        order_id
+        payment_account_id
+        post_date
+        report_group
+        response_code
+        response_time
+        token_message
+        token_response
+        token_response_code
+        transaction_id
+        type
+      )
     end
   end
 end

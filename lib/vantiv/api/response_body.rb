@@ -3,10 +3,19 @@ module Vantiv
     class ResponseBody
       attr_writer :message, :response_code
 
-      attr_accessor :body_message, :response, :version, :request_id
-
-      attr_accessor :authorization_response, :sale_response, :credit_response, :void_response,
-                    :auth_reversal_response, :capture_response, :register_token_response
+      attr_accessor *%i(
+        body_message
+        request_id
+        response
+        version
+        auth_reversal_response
+        authorization_response
+        capture_response
+        credit_response
+        register_token_response
+        sale_response
+        void_response
+      )
     end
   end
 end
