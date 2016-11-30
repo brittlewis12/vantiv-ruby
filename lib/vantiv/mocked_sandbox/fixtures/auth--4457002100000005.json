@@ -9,12 +9,13 @@
       "authorizationResponse": {
         "orderId": "not-dynamic-order-id",
         "response": "110",
-        "responseTime": "2016-11-30T15:25:35",
+        "responseTime": "2016-11-30T17:49:50",
         "fraudResult": {
           "avsResult": "00"
         },
         "message": "Insufficient Funds",
-        "TransactionID": "82919406449623633"
+        "TransactionID": "82919407148401990",
+        "networkTransactionId": "000000000000000"
       }
     }
   }

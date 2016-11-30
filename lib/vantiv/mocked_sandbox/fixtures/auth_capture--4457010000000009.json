@@ -10,12 +10,13 @@
         "authCode": "11111 ",
         "orderId": "not-dynamic-order-id",
         "response": "000",
-        "responseTime": "2016-11-30T15:25:29",
+        "responseTime": "2016-11-30T17:49:46",
         "fraudResult": {
           "avsResult": "34"
         },
         "message": "Approved",
-        "TransactionID": "82919406449623377"
+        "TransactionID": "82919407148401875",
+        "networkTransactionId": "000000000000000"
       }
     }
   }

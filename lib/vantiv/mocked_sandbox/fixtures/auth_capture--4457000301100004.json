@@ -10,12 +10,12 @@
         "authCode": "123457",
         "orderId": "not-dynamic-order-id",
         "response": "000",
-        "responseTime": "2016-11-30T15:25:41",
+        "responseTime": "2016-11-30T17:49:56",
         "fraudResult": {
           "avsResult": "00"
         },
         "message": "Approved",
-        "TransactionID": "82919406449624128",
+        "TransactionID": "82919407148402196",
         "accountUpdater": {
           "newCardTokenInfo": {
           },
@@ -23,7 +23,8 @@
             "code": "504",
             "message": "Contact the cardholder for updated information"
           }
-        }
+        },
+        "networkTransactionId": "000000000000000"
       }
     }
   }

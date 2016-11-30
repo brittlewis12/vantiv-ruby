@@ -51,4 +51,6 @@ class TransactionResponseRepresenterXml < Representable::Decorator
   property :apple_pay_response, as: :applepayResponse, class: Vantiv::Api::ApplePayResponse do
     property :online_payment_cryptogram, as: :onlinePaymentCryptogram
   end
+
+  property :network_transaction_id, as: :networkTransactionId
 end

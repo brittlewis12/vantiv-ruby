@@ -10,6 +10,7 @@ module Vantiv
         fraud_result
         id
         message
+        network_transaction_id
         order_id
         payment_account_id
         post_date
