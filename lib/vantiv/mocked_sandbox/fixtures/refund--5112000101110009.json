@@ -7,16 +7,11 @@
       "@response": "0",
       "@version": "10.2",
       "creditResponse": {
-        "@customerId": "not-dynamic-cust-id",
         "response": "001",
-        "responseTime": "2016-08-16T14:31:35",
-        "postDate": "2016-08-16",
-        "@id": "534d222846bba1a22c3b617f",
+        "responseTime": "2016-11-30T15:25:40",
         "message": "Transaction Received",
-        "@reportGroup": "1",
-        "TransactionID": "82918655929057511"
+        "TransactionID": "82919406449624052"
       }
-    },
-    "RequestID": "907a2449-660b-4d7a-fb05-d53ba7012ecd"
+    }
   }
 }

@@ -8,18 +8,14 @@
       "@version": "10.2",
       "authorizationResponse": {
         "authCode": "654321",
-        "@customerId": "not-dynamic-cust-id",
         "orderId": "not-dynamic-order-id",
         "response": "000",
-        "responseTime": "2016-08-16T14:31:33",
-        "postDate": "2016-08-16",
-        "@id": "8fca7505566619592972cb43",
+        "responseTime": "2016-11-30T15:25:37",
         "fraudResult": {
           "avsResult": "12"
         },
         "message": "Approved",
-        "@reportGroup": "1",
-        "TransactionID": "82918655929057362",
+        "TransactionID": "82919406449623872",
         "accountUpdater": {
           "originalCardTokenInfo": {
             "bin": "445700",
@@ -39,7 +35,6 @@
           }
         }
       }
-    },
-    "RequestID": "1c9eaa3c-07ff-40fe-eccb-ff94c9c5ca07"
+    }
   }
 }
