@@ -47,7 +47,7 @@ describe "mocked API requests to .tokenize" do
       expect(live_response.httpok).to eq mocked_response.httpok
       expect(live_response.http_response_code).to eq mocked_response.http_response_code
       expect(live_response.api_level_failure?).to eq mocked_response.api_level_failure?
-      expect(mocked_response.raw_body).to be_an_instance_of String
+      expect(live_response.raw_body.length).to eq mocked_response.raw_body.length
     end
 
     it "returns the whitelisted payment account id" do

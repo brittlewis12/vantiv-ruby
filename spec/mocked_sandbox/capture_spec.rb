@@ -12,8 +12,8 @@ describe "mocked API requests to capture" do
     transaction_id = Vantiv.auth(
       amount: 10100,
       payment_account_id: payment_account_id,
-      customer_id: "54321",
-      order_id: "12345",
+      customer_id: "not-dynamic-cust-id",
+      order_id: "not-dynamic-order-id",
       expiry_month: card.expiry_month,
       expiry_year: card.expiry_year
     ).transaction_id

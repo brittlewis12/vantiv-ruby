@@ -12,8 +12,8 @@ describe "mocked API requests to auth_capture" do
     Vantiv.auth_capture(
       amount: 10100,
       payment_account_id: payment_account_id,
-      customer_id: "54321",
-      order_id: "12345",
+      customer_id: "not-dynamic-cust-id",
+      order_id: "not-dynamic-order-id",
       expiry_month: card.expiry_month,
       expiry_year: card.expiry_year
     )
@@ -24,8 +24,8 @@ describe "mocked API requests to auth_capture" do
     Vantiv.auth_capture(
       amount: 10100,
       payment_account_id: card.mocked_sandbox_payment_account_id,
-      customer_id: "54321",
-      order_id: "12345",
+      customer_id: "not-dynamic-cust-id",
+      order_id: "not-dynamic-order-id",
       expiry_month: card.expiry_month,
       expiry_year: card.expiry_year
     ).tap do
@@ -48,7 +48,7 @@ describe "mocked API requests to auth_capture" do
         expect(live_response.http_response_code).to eq mocked_response.http_response_code
         expect(live_response.api_level_failure?).to eq mocked_response.api_level_failure?
         expect(live_response.network_transaction_id).to eq mocked_response.network_transaction_id
-        expect(mocked_response.raw_body).to be_an_instance_of String
+        expect(live_response.raw_body.length).to eq mocked_response.raw_body.length
 
         live_account_updater = live_response.account_updater
         mocked_account_updater = mocked_response.account_updater

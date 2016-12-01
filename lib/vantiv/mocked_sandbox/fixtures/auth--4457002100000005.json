@@ -9,14 +9,15 @@
       "authorizationResponse": {
         "orderId": "not-dynamic-order-id",
         "response": "110",
-        "responseTime": "2016-11-30T17:49:50",
+        "responseTime": "2016-12-01T18:32:16",
         "fraudResult": {
           "avsResult": "00"
         },
         "message": "Insufficient Funds",
-        "TransactionID": "82919407148401990",
+        "TransactionID": "82919414441086379",
         "networkTransactionId": "000000000000000"
       }
     }
-  }
+  },
+  "raw_body": "<litleOnlineResponse version=\"10.5\" xmlns=\"http://www.litle.com/schema\"\n    response=\"0\" message=\"Valid Format\">\n    <authorizationResponse id=\"6df01ca88b96e37fbc37916f\" reportGroup=\"1\" customerId=\"not-dynamic-cust-id\">\n        <litleTxnId>82919414441086379</litleTxnId>\n        <orderId>not-dynamic-order-id</orderId>\n        <response>110</response>\n        <responseTime>2016-12-01T18:32:16</responseTime>\n        <postDate>2016-12-01</postDate>\n        <message>Insufficient Funds</message>\n        <fraudResult>\n            <avsResult>00</avsResult>\n        </fraudResult>\n        <networkTransactionId>000000000000000</networkTransactionId>\n    </authorizationResponse>\n</litleOnlineResponse>\n"
 }

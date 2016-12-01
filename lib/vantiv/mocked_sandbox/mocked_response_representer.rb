@@ -8,4 +8,5 @@ class MockedResponseRepresenter < Representable::Decorator
   property :httpok
   property :http_response_code
   property :body, decorator: ResponseBodyRepresenter, class: Vantiv::Api::ResponseBody
+  property :raw_body
 end
