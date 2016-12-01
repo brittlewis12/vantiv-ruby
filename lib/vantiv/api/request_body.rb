@@ -40,7 +40,8 @@ module Vantiv
 
       def self.for_auth_or_sale(amount:, customer_id:, order_id:, payment_account_id:,
           expiry_month:, expiry_year:, cvv: nil, order_source: Vantiv.default_order_source,
-          online_payment_cryptogram: nil, original_network_transaction_id: nil)
+          online_payment_cryptogram: nil, original_network_transaction_id: nil,
+          processing_type: nil, original_transaction_amount: nil)
 
         if online_payment_cryptogram
           cardholder_authentication = CardholderAuthentication.new(
@@ -57,7 +58,9 @@ module Vantiv
           order_source: order_source,
           partial_approved_flag: false,
           cardholder_authentication: cardholder_authentication,
-          original_network_transaction_id: original_network_transaction_id
+          original_network_transaction_id: original_network_transaction_id,
+          processing_type: processing_type,
+          original_transaction_amount: original_transaction_amount
         )
         card = Card.new(
           expiry_month: expiry_month,
