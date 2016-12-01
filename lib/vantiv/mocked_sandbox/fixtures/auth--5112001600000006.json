@@ -9,13 +9,14 @@
       "authorizationResponse": {
         "orderId": "not-dynamic-order-id",
         "response": "301",
-        "responseTime": "2016-11-30T15:25:32",
+        "responseTime": "2016-12-01T18:32:08",
         "fraudResult": {
           "avsResult": "00"
         },
         "message": "Invalid Account Number",
-        "TransactionID": "82919406449623526"
+        "TransactionID": "82919414441086254"
       }
     }
-  }
+  },
+  "raw_body": "<litleOnlineResponse version=\"10.5\" xmlns=\"http://www.litle.com/schema\"\n    response=\"0\" message=\"Valid Format\">\n    <authorizationResponse id=\"16642ea5e7afc2571fa322e3\" reportGroup=\"1\" customerId=\"not-dynamic-cust-id\">\n        <litleTxnId>82919414441086254</litleTxnId>\n        <orderId>not-dynamic-order-id</orderId>\n        <response>301</response>\n        <responseTime>2016-12-01T18:32:08</responseTime>\n        <postDate>2016-12-01</postDate>\n        <message>Invalid Account Number</message>\n        <fraudResult>\n            <avsResult>00</avsResult>\n        </fraudResult>\n    </authorizationResponse>\n</litleOnlineResponse>\n"
 }

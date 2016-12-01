@@ -10,12 +10,12 @@
         "authCode": "654321",
         "orderId": "not-dynamic-order-id",
         "response": "000",
-        "responseTime": "2016-11-30T15:25:37",
+        "responseTime": "2016-12-01T18:32:30",
         "fraudResult": {
           "avsResult": "12"
         },
         "message": "Approved",
-        "TransactionID": "82919406449623872",
+        "TransactionID": "82919414441086700",
         "accountUpdater": {
           "originalCardTokenInfo": {
             "bin": "445700",
@@ -36,5 +36,6 @@
         }
       }
     }
-  }
+  },
+  "raw_body": "<litleOnlineResponse version=\"10.5\" xmlns=\"http://www.litle.com/schema\"\n    response=\"0\" message=\"Valid Format\">\n    <authorizationResponse id=\"259b361ece4223b2195c0c7a\" reportGroup=\"1\" customerId=\"not-dynamic-cust-id\">\n        <litleTxnId>82919414441086700</litleTxnId>\n        <orderId>not-dynamic-order-id</orderId>\n        <response>000</response>\n        <responseTime>2016-12-01T18:32:30</responseTime>\n        <postDate>2016-12-01</postDate>\n        <message>Approved</message>\n        <authCode>654321</authCode>\n        <accountUpdater>\n            <originalCardTokenInfo>\n                <litleToken>1111000242220007</litleToken>\n                <type>VI</type>\n                <bin>445700</bin>\n                <expDate>0115</expDate>\n            </originalCardTokenInfo>\n            <newCardTokenInfo>\n                <litleToken>1112000247040003</litleToken>\n                <type>MC</type>\n                <bin>511200</bin>\n                <expDate>0115</expDate>\n            </newCardTokenInfo>\n        </accountUpdater>\n        <fraudResult>\n            <avsResult>12</avsResult>\n        </fraudResult>\n    </authorizationResponse>\n</litleOnlineResponse>\n"
 }

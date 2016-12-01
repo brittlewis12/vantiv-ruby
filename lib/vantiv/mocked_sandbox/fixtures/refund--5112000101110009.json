@@ -8,10 +8,11 @@
       "@version": "10.5",
       "creditResponse": {
         "response": "001",
-        "responseTime": "2016-11-30T15:25:40",
+        "responseTime": "2016-12-01T18:32:38",
         "message": "Transaction Received",
-        "TransactionID": "82919406449624052"
+        "TransactionID": "82919414448128026"
       }
     }
-  }
+  },
+  "raw_body": "<litleOnlineResponse version=\"10.5\" xmlns=\"http://www.litle.com/schema\"\n    response=\"0\" message=\"Valid Format\">\n    <creditResponse id=\"66b3c6fe48e8cf45c7428325\" reportGroup=\"1\" customerId=\"not-dynamic-cust-id\">\n        <litleTxnId>82919414448128026</litleTxnId>\n        <response>001</response>\n        <responseTime>2016-12-01T18:32:38</responseTime>\n        <postDate>2016-12-01</postDate>\n        <message>Transaction Received</message>\n    </creditResponse>\n</litleOnlineResponse>\n"
 }

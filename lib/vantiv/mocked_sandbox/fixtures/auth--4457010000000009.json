@@ -10,14 +10,15 @@
         "authCode": "11111 ",
         "orderId": "not-dynamic-order-id",
         "response": "000",
-        "responseTime": "2016-11-30T17:49:46",
+        "responseTime": "2016-12-01T18:31:58",
         "fraudResult": {
           "avsResult": "34"
         },
         "message": "Approved",
-        "TransactionID": "82919407148401883",
+        "TransactionID": "82919414441086031",
         "networkTransactionId": "000000000000000"
       }
     }
-  }
+  },
+  "raw_body": "<litleOnlineResponse version=\"10.5\" xmlns=\"http://www.litle.com/schema\"\n    response=\"0\" message=\"Valid Format\">\n    <authorizationResponse id=\"b4f4024b39f8775a721c8b3c\" reportGroup=\"1\" customerId=\"not-dynamic-cust-id\">\n        <litleTxnId>82919414441086031</litleTxnId>\n        <orderId>not-dynamic-order-id</orderId>\n        <response>000</response>\n        <responseTime>2016-12-01T18:31:58</responseTime>\n        <postDate>2016-12-01</postDate>\n        <message>Approved</message>\n        <authCode>11111 </authCode>\n        <fraudResult>\n            <avsResult>34</avsResult>\n        </fraudResult>\n        <networkTransactionId>000000000000000</networkTransactionId>\n    </authorizationResponse>\n</litleOnlineResponse>\n"
 }

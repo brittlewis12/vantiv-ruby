@@ -86,8 +86,6 @@ module Vantiv
           response = MockedResponseRepresenter.new(response_object).from_json(raw_fixture)
 
           populated_response = populate_dynamic_response(response)
-
-          populated_response.raw_body = response.body.to_s
           populated_response
         end
       end

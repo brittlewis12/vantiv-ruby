@@ -12,8 +12,8 @@ describe "mocked API requests to void" do
     transaction_id = Vantiv.auth_capture(
       amount: 10100,
       payment_account_id: payment_account_id,
-      customer_id: "54321",
-      order_id: "12345",
+      customer_id: "not-dynamic-cust-id",
+      order_id: "not-dynamic-order-id",
       expiry_month: card.expiry_month,
       expiry_year: card.expiry_year
     ).transaction_id
@@ -43,7 +43,7 @@ describe "mocked API requests to void" do
         expect(live_response.httpok).to eq mocked_response.httpok
         expect(live_response.http_response_code).to eq mocked_response.http_response_code
         expect(live_response.api_level_failure?).to eq mocked_response.api_level_failure?
-        expect(mocked_response.raw_body).to be_an_instance_of String
+        expect(live_response.raw_body.length).to eq mocked_response.raw_body.length
       end
 
       it "returns a dynamic transaction id" do

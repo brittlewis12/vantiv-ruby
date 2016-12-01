@@ -10,12 +10,12 @@
         "authCode": "123457",
         "orderId": "not-dynamic-order-id",
         "response": "000",
-        "responseTime": "2016-11-30T17:49:55",
+        "responseTime": "2016-12-01T18:32:37",
         "fraudResult": {
           "avsResult": "00"
         },
         "message": "Approved",
-        "TransactionID": "82919407148402154",
+        "TransactionID": "82919414441086866",
         "accountUpdater": {
           "originalCardTokenInfo": {
             "bin": "511200",
@@ -39,5 +39,6 @@
         "networkTransactionId": "000000000000000"
       }
     }
-  }
+  },
+  "raw_body": "<litleOnlineResponse version=\"10.5\" xmlns=\"http://www.litle.com/schema\"\n    response=\"0\" message=\"Valid Format\">\n    <authorizationResponse id=\"7eceb8ff64f6d940ca500f4b\" reportGroup=\"1\" customerId=\"not-dynamic-cust-id\">\n        <litleTxnId>82919414441086866</litleTxnId>\n        <orderId>not-dynamic-order-id</orderId>\n        <response>000</response>\n        <responseTime>2016-12-01T18:32:37</responseTime>\n        <postDate>2016-12-01</postDate>\n        <message>Approved</message>\n        <authCode>123457</authCode>\n        <accountUpdater>\n            <originalCardTokenInfo>\n                <litleToken>1112000239160009</litleToken>\n                <type>MC</type>\n                <bin>511200</bin>\n                <expDate>1199</expDate>\n            </originalCardTokenInfo>\n            <newCardTokenInfo>\n                <litleToken>1111000288150001</litleToken>\n                <type>VI</type>\n                <bin>445700</bin>\n                <expDate>1199</expDate>\n            </newCardTokenInfo>\n            <extendedCardResponse>\n                <code>501</code>\n                <message>The account was closed</message>\n            </extendedCardResponse>\n        </accountUpdater>\n        <fraudResult>\n            <avsResult>00</avsResult>\n        </fraudResult>\n        <networkTransactionId>000000000000000</networkTransactionId>\n    </authorizationResponse>\n</litleOnlineResponse>\n"
 }

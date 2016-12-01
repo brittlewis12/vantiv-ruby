@@ -9,13 +9,14 @@
       "saleResponse": {
         "orderId": "not-dynamic-order-id",
         "response": "305",
-        "responseTime": "2016-11-30T15:25:36",
+        "responseTime": "2016-12-01T18:32:22",
         "fraudResult": {
           "avsResult": "00"
         },
         "message": "Expired Card",
-        "TransactionID": "82919406449623740"
+        "TransactionID": "82919414441086502"
       }
     }
-  }
+  },
+  "raw_body": "<litleOnlineResponse version=\"10.5\" xmlns=\"http://www.litle.com/schema\"\n    response=\"0\" message=\"Valid Format\">\n    <saleResponse id=\"6b97f0084a6d387f8b5a953d\" reportGroup=\"1\" customerId=\"not-dynamic-cust-id\">\n        <litleTxnId>82919414441086502</litleTxnId>\n        <orderId>not-dynamic-order-id</orderId>\n        <response>305</response>\n        <responseTime>2016-12-01T18:32:22</responseTime>\n        <postDate>2016-12-01</postDate>\n        <message>Expired Card</message>\n        <fraudResult>\n            <avsResult>00</avsResult>\n        </fraudResult>\n    </saleResponse>\n</litleOnlineResponse>\n"
 }
