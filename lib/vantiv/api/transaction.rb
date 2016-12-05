@@ -12,14 +12,16 @@ module Vantiv
         order_id
         order_source
         original_network_transaction_id
+        original_transaction_amount
         partial_approved_flag
+        processing_type
         report_group
         type
       )
 
       def initialize(id: nil, amount_in_cents: nil, order_id: nil, customer_id: nil,
         partial_approved_flag: nil, order_source: nil,  cardholder_authentication: nil,
-        original_network_transaction_id: nil)
+        original_network_transaction_id: nil, processing_type: nil, original_transaction_amount: nil)
         @id = id
         @amount_in_cents = amount_in_cents
         @order_id = order_id
@@ -28,6 +30,8 @@ module Vantiv
         @order_source = order_source
         @cardholder_authentication = cardholder_authentication
         @original_network_transaction_id = original_network_transaction_id
+        @processing_type = processing_type
+        @original_transaction_amount = original_transaction_amount
       end
 
       def amount

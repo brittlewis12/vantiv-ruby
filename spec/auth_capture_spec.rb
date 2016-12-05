@@ -229,4 +229,62 @@ describe "auth_capture (Sale)" do
       response
     end
   end
+
+  context "when an original transaction amount is passed in" do
+    let(:test_account) { Vantiv::TestAccount.valid_account }
+
+    subject(:response) do
+      Vantiv.auth_capture(
+        amount: 10000,
+        payment_account_id: payment_account_id,
+        customer_id: customer_external_id,
+        order_id: "SomeOrder123",
+        expiry_month: test_account.expiry_month,
+        expiry_year: test_account.expiry_year,
+        original_transaction_amount: 10000
+      )
+    end
+
+    before do
+      request_double = double("request")
+      allow(Vantiv::Api::Request).to receive(:new) { request_double }
+      allow(request_double).to receive :run
+    end
+
+    it "uses the passed in original transaction amount" do
+      expect(Vantiv::Api::RequestBody).to receive(:for_auth_or_sale).with(
+        hash_including(original_transaction_amount: 10000)
+      )
+      response
+    end
+  end
+
+  context "when a processing type is passed in" do
+    let(:test_account) { Vantiv::TestAccount.valid_account }
+
+    subject(:response) do
+      Vantiv.auth_capture(
+        amount: 10000,
+        payment_account_id: payment_account_id,
+        customer_id: customer_external_id,
+        order_id: "SomeOrder123",
+        expiry_month: test_account.expiry_month,
+        expiry_year: test_account.expiry_year,
+        processing_type: "initialRecurring"
+      )
+    end
+
+    before do
+      request_double = double("request")
+      allow(Vantiv::Api::Request).to receive(:new) { request_double }
+      allow(request_double).to receive :run
+    end
+
+    it "uses the passed in processing type" do
+      expect(Vantiv::Api::RequestBody).to receive(:for_auth_or_sale).with(
+        hash_including(processing_type: "initialRecurring")
+      )
+      response
+    end
+  end
 end

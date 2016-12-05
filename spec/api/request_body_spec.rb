@@ -201,6 +201,76 @@ describe Vantiv::Api::RequestBody do
       end
     end
 
+    context "when an original transaction amount is passed in" do
+      subject(:request_body) do
+        Vantiv::Api::RequestBody.for_auth_or_sale(
+          amount: 4224,
+          customer_id: "extid123",
+          payment_account_id: "paymentacct123",
+          order_id: "SomeOrder123",
+          expiry_month: "8",
+          expiry_year: "2018",
+          original_transaction_amount: 10000
+        )
+      end
+
+      it "sets the original transaction amount" do
+        expect(request_body.transaction.original_transaction_amount).to eq 10000
+      end
+    end
+
+    context "when an original transaction amount is not passed in" do
+      subject(:request_body) do
+        Vantiv::Api::RequestBody.for_auth_or_sale(
+          amount: 4224,
+          customer_id: "extid123",
+          payment_account_id: "paymentacct123",
+          order_id: "SomeOrder123",
+          expiry_month: "8",
+          expiry_year: "2018"
+        )
+      end
+
+      it "sets the original transaction amount to nil" do
+        expect(request_body.transaction.original_transaction_amount).to be_nil
+      end
+    end
+
+    context "when a processing type is passed in" do
+      subject(:request_body) do
+        Vantiv::Api::RequestBody.for_auth_or_sale(
+          amount: 4224,
+          customer_id: "extid123",
+          payment_account_id: "paymentacct123",
+          order_id: "SomeOrder123",
+          expiry_month: "8",
+          expiry_year: "2018",
+          processing_type: "initialRecurring"
+        )
+      end
+
+      it "sets the processing type" do
+        expect(request_body.transaction.processing_type).to eq "initialRecurring"
+      end
+    end
+
+    context "when a processing type is not passed in" do
+      subject(:request_body) do
+        Vantiv::Api::RequestBody.for_auth_or_sale(
+          amount: 4224,
+          customer_id: "extid123",
+          payment_account_id: "paymentacct123",
+          order_id: "SomeOrder123",
+          expiry_month: "8",
+          expiry_year: "2018"
+        )
+      end
+
+      it "sets the processing type to nil" do
+        expect(request_body.transaction.processing_type).to be_nil
+      end
+    end
+
     context "Transaction object" do
       it "is included" do
         expect(request_body.transaction).to be
