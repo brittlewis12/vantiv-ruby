@@ -112,13 +112,9 @@ describe Vantiv::Api::Request do
       )
     end
 
-    it "includes the online payment cryptogram in the xml" do
-      expected = <<-END
+    it "includes the online payment cryptogram in the request" do
+      expected = <<-END.strip
 <litleOnlineRequest version="10.5" xmlns="http://www.litle.com/schema" merchantId="1166386">
-  <authentication>
-    <user>PLATED</user>
-    <password>***REMOVED***</password>
-  </authentication>
   <authorization id="123456789" reportGroup="1" customerId="extid123">
     <orderId>SomeOrder123</orderId>
     <amount>4224</amount>
@@ -134,7 +130,8 @@ describe Vantiv::Api::Request do
   </authorization>
 </litleOnlineRequest>
 END
-      expect(request.body.to_xml).to eq expected.strip
+      request.body.authentication = nil # remove authentication credentials
+      expect(request.body.to_xml).to eq expected
     end
   end
 
@@ -160,12 +157,9 @@ END
       )
     end
 
-    it "does not include the online payment cryptogram in the xml" do
-      expected = '<litleOnlineRequest version="10.5" xmlns="http://www.litle.com/schema" merchantId="1166386">
-  <authentication>
-    <user>PLATED</user>
-    <password>***REMOVED***</password>
-  </authentication>
+    it "does not include the online payment cryptogram in the request" do
+      expected = <<-END.strip
+<litleOnlineRequest version="10.5" xmlns="http://www.litle.com/schema" merchantId="1166386">
   <authorization id="123456789" reportGroup="1" customerId="extid123">
     <orderId>SomeOrder123</orderId>
     <amount>4224</amount>
@@ -176,7 +170,9 @@ END
     </token>
     <allowPartialAuth>false</allowPartialAuth>
   </authorization>
-</litleOnlineRequest>'
+</litleOnlineRequest>
+END
+      request.body.authentication = nil # remove authentication credentials
       expect(request.body.to_xml).to eq expected
     end
   end
