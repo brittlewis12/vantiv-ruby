@@ -7,7 +7,7 @@ module Vantiv
         attrs: {
           card_number: "4457010000000009",
           expiry_month: "01",
-          expiry_year: "16",
+          expiry_year: "21",
           cvv: "349",
           mocked_sandbox_payment_account_id: "1111111111110009",
           network: "VI"
@@ -18,7 +18,7 @@ module Vantiv
         attrs: {
           card_number: "4457010010900010",
           expiry_month: "01",
-          expiry_year: "16",
+          expiry_year: "21",
           cvv: "349",
           mocked_sandbox_payment_account_id: nil,
           network: "VI"
