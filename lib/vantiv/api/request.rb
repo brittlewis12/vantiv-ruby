@@ -73,7 +73,9 @@ module Vantiv
     def root_uri
       if Vantiv::Environment.production?
         "https://transact.litle.com"
-      elsif Vantiv::Environment.certification?
+      elsif Vantiv::Environment.postcertification?
+        "https://transact-postlive.litle.com"
+      elsif Vantiv::Environment.precertification?
         "https://transact-prelive.litle.com"
       end
     end

@@ -1,8 +1,10 @@
 Vantiv Ruby Changes
-1.1.0
+
+master
 -----------
 - Update Vantiv XML version to 10.5
-
+- Rename certiciation environment to precertification
+- Add postcertification environment
 
 1.0.0
 -----------
@@ -12,7 +14,6 @@ Vantiv Ruby Changes
   - remove `Vantiv.licence_id` (was DevHub specific)
 - Implement Apple Pay
 - Implement Security Code (CVV) mismatch filtering
-
 
 0.3.0
 -----------
@@ -86,5 +87,3 @@ NOTE: API change occurs in this version bump on:
 - Add script to run all Devhub certification environment validation tests
   via script:
   - Allows merchants to install gem and certify quickly, rather than manually
-
-

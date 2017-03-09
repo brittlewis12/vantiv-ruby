@@ -329,7 +329,7 @@ To use the gem in any non-production environment, set the client's environment t
 
 ```ruby
 Vantiv.configure do |config|
-  config.environment = Vantiv::Environment::CERTIFICATION
+  config.environment = Vantiv::Environment::PRECERTIFICATION
 end
 ```
 
