@@ -1,14 +1,19 @@
 module Vantiv
   module Environment
+    POSTCERTIFICATION = :postcertification
+    PRECERTIFICATION = :precertification
     PRODUCTION = :production
-    CERTIFICATION = :certification
+
+    def self.postcertification?
+      Vantiv.environment == POSTCERTIFICATION
+    end
+
+    def self.precertification?
+      Vantiv.environment == PRECERTIFICATION
+    end
 
     def self.production?
       Vantiv.environment == PRODUCTION
-    end
-
-    def self.certification?
-      Vantiv.environment == CERTIFICATION
     end
   end
 end

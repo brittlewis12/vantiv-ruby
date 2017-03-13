@@ -44,7 +44,7 @@ describe "toggling mocked API requests" do
     expect(Vantiv::MockedSandbox::ApiRequest).to_not receive :run
     response
     Vantiv.configure do |config|
-      config.environment = Vantiv::Environment::CERTIFICATION
+      config.environment = Vantiv::Environment::PRECERTIFICATION
     end
   end
 
