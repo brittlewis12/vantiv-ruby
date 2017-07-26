@@ -26,7 +26,7 @@ module Vantiv
     end
 
     def run_request
-      http_response = make_request
+      http_response = send_request(build_request)
       populated_response(@response_object, http_response)
     end
 
@@ -52,11 +52,15 @@ module Vantiv
       populated_body
     end
 
-    def make_request
-      http = Net::HTTP.new(uri.host, uri.port)
-      http.use_ssl = true
+    def build_request
       request = Net::HTTP::Post.new(uri.request_uri, header)
       request.body = body.to_xml
+      request
+    end
+
+    def send_request(request)
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true
       http.request(request)
     end
 
