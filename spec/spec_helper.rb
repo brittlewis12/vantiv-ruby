@@ -25,3 +25,12 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 end
+
+if ENV["LOG_REQUESTS"] == "true"
+  require "logger"
+
+  logger = Logger.new(STDERR)
+  logger.formatter = proc { |_severity, _time, _progname, msg| msg }
+  RequestLogger.set_logger(logger)
+  Vantiv::Api::Request.prepend(RequestLogger)
+end

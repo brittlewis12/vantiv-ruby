@@ -36,7 +36,7 @@ describe "auth" do
       end
 
       it "fails beacsue of security code mismatch" do
-        expect(response.message).to match(/Restricted by Litle due to security code mismatch/i)
+        expect(response.message).to match(/Restricted by Vantiv due to security code mismatch/i)
       end
 
       it "returns a '358' response code" do
