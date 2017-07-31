@@ -1,0 +1,23 @@
+{
+  "httpok": true,
+  "http_response_code": "200",
+  "body": {
+    "litleOnlineResponse": {
+      "@message": "Valid Format",
+      "@response": "0",
+      "@version": "10.5",
+      "authorizationResponse": {
+        "authCode": "44444 ",
+        "orderId": "not-dynamic-order-id",
+        "response": "000",
+        "responseTime": "2017-07-28T20:28:56",
+        "fraudResult": {
+          "avsResult": "34"
+        },
+        "message": "Approved",
+        "TransactionID": "82921106630330123"
+      }
+    }
+  },
+  "raw_body": "<litleOnlineResponse version=\"10.5\" xmlns=\"http://www.litle.com/schema\"\n    response=\"0\" message=\"Valid Format\">\n    <authorizationResponse id=\"b2d32915b1b9bffb053ee105\" reportGroup=\"1\" customerId=\"not-dynamic-cust-id\">\n        <litleTxnId>82921106630330123</litleTxnId>\n        <orderId>not-dynamic-order-id</orderId>\n        <response>000</response>\n        <responseTime>2017-07-28T20:28:56</responseTime>\n        <postDate>2017-07-28</postDate>\n        <message>Approved</message>\n        <authCode>44444 </authCode>\n        <fraudResult>\n            <avsResult>34</avsResult>\n        </fraudResult>\n    </authorizationResponse>\n</litleOnlineResponse>\n"
+}

@@ -1,0 +1,32 @@
+{
+  "httpok": true,
+  "http_response_code": "200",
+  "body": {
+    "litleOnlineResponse": {
+      "@message": "Valid Format",
+      "@response": "0",
+      "@version": "10.5",
+      "saleResponse": {
+        "authCode": "123457",
+        "orderId": "not-dynamic-order-id",
+        "response": "000",
+        "responseTime": "2017-07-28T20:28:46",
+        "fraudResult": {
+          "avsResult": "00"
+        },
+        "message": "Approved",
+        "TransactionID": "82921106630329760",
+        "accountUpdater": {
+          "newCardTokenInfo": {
+          },
+          "extendedCardResponse": {
+            "code": "504",
+            "message": "Contact the cardholder for updated information"
+          }
+        },
+        "networkTransactionId": "000000000000000"
+      }
+    }
+  },
+  "raw_body": "<litleOnlineResponse version=\"10.5\" xmlns=\"http://www.litle.com/schema\"\n    response=\"0\" message=\"Valid Format\">\n    <saleResponse id=\"27adbe37c0c8b01a7c5b3ec7\" reportGroup=\"1\" customerId=\"not-dynamic-cust-id\">\n        <litleTxnId>82921106630329760</litleTxnId>\n        <orderId>not-dynamic-order-id</orderId>\n        <response>000</response>\n        <responseTime>2017-07-28T20:28:46</responseTime>\n        <postDate>2017-07-28</postDate>\n        <message>Approved</message>\n        <authCode>123457</authCode>\n        <accountUpdater>\n            <extendedCardResponse>\n                <code>504</code>\n                <message>Contact the cardholder for updated information</message>\n            </extendedCardResponse>\n        </accountUpdater>\n        <fraudResult>\n            <avsResult>00</avsResult>\n        </fraudResult>\n        <networkTransactionId>000000000000000</networkTransactionId>\n    </saleResponse>\n</litleOnlineResponse>\n"
+}

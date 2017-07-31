@@ -1,0 +1,18 @@
+{
+  "httpok": true,
+  "http_response_code": "200",
+  "body": {
+    "litleOnlineResponse": {
+      "@message": "Valid Format",
+      "@response": "0",
+      "@version": "10.5",
+      "voidResponse": {
+        "response": "001",
+        "responseTime": "2017-07-28T20:29:01",
+        "message": "Transaction Received",
+        "TransactionID": "82921106635325490"
+      }
+    }
+  },
+  "raw_body": "<litleOnlineResponse version=\"10.5\" xmlns=\"http://www.litle.com/schema\"\n    response=\"0\" message=\"Valid Format\">\n    <voidResponse id=\"e1179d3f542ba58edc682d67\" reportGroup=\"1\">\n        <litleTxnId>82921106635325490</litleTxnId>\n        <response>001</response>\n        <responseTime>2017-07-28T20:29:01</responseTime>\n        <postDate>2017-07-28</postDate>\n        <message>Transaction Received</message>\n    </voidResponse>\n</litleOnlineResponse>\n"
+}

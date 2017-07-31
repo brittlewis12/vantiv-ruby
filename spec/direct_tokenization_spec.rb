@@ -11,7 +11,7 @@ describe "directly tokenizing card data" do
   end
 
   context "with a valid account number" do
-    let(:card) { Vantiv::TestAccount.valid_account }
+    let(:card) { Vantiv::TestAccount.valid_account_visa }
 
     it "returns success" do
       expect(response.success?).to eq true
@@ -75,7 +75,7 @@ describe "directly tokenizing card data" do
   end
 
   context "when the credit card is expired" do
-    let(:card) { Vantiv::TestAccount.expired }
+    let(:card) { Vantiv::TestAccount.expired_card }
 
     it "returns success" do
       expect(response.success?).to eq true

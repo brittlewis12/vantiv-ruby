@@ -1,0 +1,18 @@
+{
+  "httpok": true,
+  "http_response_code": "200",
+  "body": {
+    "litleOnlineResponse": {
+      "@message": "Valid Format",
+      "@response": "0",
+      "@version": "10.5",
+      "registerTokenResponse": {
+        "response": "877",
+        "responseTime": "2017-07-28T20:28:39",
+        "message": "Invalid paypage registration id",
+        "TransactionID": "82921106630329570"
+      }
+    }
+  },
+  "raw_body": "<litleOnlineResponse version=\"10.5\" xmlns=\"http://www.litle.com/schema\"\n    response=\"0\" message=\"Valid Format\">\n    <registerTokenResponse id=\"d68af4aba8ae4fc01dbebdf9\" reportGroup=\"1\">\n        <litleTxnId>82921106630329570</litleTxnId>\n        <response>877</response>\n        <responseTime>2017-07-28T20:28:39</responseTime>\n        <message>Invalid paypage registration id</message>\n    </registerTokenResponse>\n</litleOnlineResponse>\n"
+}

@@ -12,46 +12,50 @@
 module Vantiv
   class TestAccount
 
-    def self.valid_account
-      fetch_account(
-        card_number: "4457010000000009",
-        expiry_month: "01",
-        expiry_year: "16",
-        cvv: "349"
-      )
-    end
-
-    def self.insufficient_funds
-      fetch_account(
-        card_number: "4457010100000008",
-        expiry_month: "06",
-        expiry_year: "16",
-        cvv: "992"
-      )
-    end
-
-    def self.invalid_card_number
-      new("4716605112879585", "01", "2020", "123")
-    end
-
-    def self.expired
-      fetch_account(
-        card_number: "5112001900000003",
-        expiry_month: "01",
-        expiry_year: "2020",
-        cvv: "123"
-      )
-    end
-
-    def self.invalid_account_number
-      fetch_account(
-        card_number: "5112010100000002",
-        expiry_month: "07",
-        expiry_year: "16",
-        cvv: "251"
-      )
-    end
-
+#    def self.valid_account
+#      fetch_account(
+#        card_number: "4457010000000009",
+#        expiry_month: "01",
+#        expiry_year: "21",
+#        cvv: "349"
+#      )
+#    end
+#
+#    def self.insufficient_funds
+#      fetch_account(
+#        card_number: "4457010100000008",
+#        expiry_month: "06",
+#        expiry_year: "16",
+#        cvv: "992"
+#      )
+#    end
+#
+#    def self.invalid_card_number
+#      new("4716605112879585", "01", "2020", "123")
+#    end
+#
+#    def self.expired
+#      expired_card
+#    end
+#
+#    def self.expired
+#      fetch_account(
+#        card_number: "5112001900000003",
+#        expiry_month: "01",
+#        expiry_year: "2020",
+#        cvv: "123"
+#      )
+#    end
+#
+#    def self.invalid_account_number
+#      fetch_account(
+#        card_number: "5112010100000002",
+#        expiry_month: "07",
+#        expiry_year: "16",
+#        cvv: "251"
+#      )
+#    end
+#
     def self.security_code_mismatch
       # don't cache this because accessing security code is
       # time sensitive from time of tokenization
@@ -59,42 +63,65 @@ module Vantiv
       account.get_data
       account
     end
+#
+#    def self.pick_up_card
+#      fetch_account(
+#        card_number: "375001010000003",
+#        expiry_month: "09",
+#        expiry_year: "16",
+#        cvv: "0421"
+#      )
+#    end
+#
+#    def self.account_updater
+#      fetch_account(
+#        card_number: "4457000300000007",
+#        expiry_month: "01",
+#        expiry_year: "15",
+#        cvv: "123"
+#      )
+#    end
+#
+#    def self.account_updater_account_closed
+#      fetch_account(
+#        card_number: "5112000101110009",
+#        expiry_month: "11",
+#        expiry_year: "99",
+#        cvv: "123"
+#      )
+#    end
+#
+#    def self.account_updater_contact_cardholder
+#      fetch_account(
+#        card_number: "4457000301100004",
+#        expiry_month: "11",
+#        expiry_year: "99",
+#        cvv: "123"
+#      )
+#    end
 
-    def self.pick_up_card
-      fetch_account(
-        card_number: "375001010000003",
-        expiry_month: "09",
-        expiry_year: "16",
-        cvv: "0421"
-      )
-    end
-
-    def self.account_updater
-      fetch_account(
-        card_number: "4457000300000007",
-        expiry_month: "01",
-        expiry_year: "15",
-        cvv: "123"
-      )
-    end
-
-    def self.account_updater_account_closed
-      fetch_account(
-        card_number: "5112000101110009",
-        expiry_month: "11",
-        expiry_year: "99",
-        cvv: "123"
-      )
-    end
-
-    def self.account_updater_contact_cardholder
-      fetch_account(
-        card_number: "4457000301100004",
-        expiry_month: "11",
-        expiry_year: "99",
-        cvv: "123"
-      )
-    end
+    Vantiv::TestCard.all
+      .each do |card|
+        if card.mocked_sandbox_payment_account_id
+          define_singleton_method card.name do
+            fetch_account(
+              card_number: card.card_number,
+              expiry_month: card.expiry_month,
+              expiry_year: card.expiry_year,
+              cvv: card.cvv,
+            )
+          end
+        else
+          define_singleton_method card.name do
+            new(
+              card.card_number,
+              card.expiry_month,
+              card.expiry_year,
+              card.cvv,
+            )
+          end
+        end
+      end
 
     def self.fetch_account(card_number:, expiry_month:, expiry_year:, cvv:)
       acct = new(card_number, expiry_month, expiry_year, cvv)

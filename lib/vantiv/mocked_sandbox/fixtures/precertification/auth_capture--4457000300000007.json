@@ -1,0 +1,41 @@
+{
+  "httpok": true,
+  "http_response_code": "200",
+  "body": {
+    "litleOnlineResponse": {
+      "@message": "Valid Format",
+      "@response": "0",
+      "@version": "10.5",
+      "saleResponse": {
+        "authCode": "654321",
+        "orderId": "not-dynamic-order-id",
+        "response": "000",
+        "responseTime": "2017-07-28T20:28:43",
+        "fraudResult": {
+          "avsResult": "12"
+        },
+        "message": "Approved",
+        "TransactionID": "82921106630329661",
+        "accountUpdater": {
+          "originalCardTokenInfo": {
+            "bin": "445700",
+            "Type": "VI",
+            "PaymentAccountID": "1111000242220007",
+            "ExpirationMonth": "01",
+            "ExpirationYear": "15"
+          },
+          "newCardTokenInfo": {
+            "bin": "511200",
+            "Type": "MC",
+            "PaymentAccountID": "1112000247040003",
+            "ExpirationMonth": "01",
+            "ExpirationYear": "15"
+          },
+          "extendedCardResponse": {
+          }
+        }
+      }
+    }
+  },
+  "raw_body": "<litleOnlineResponse version=\"10.5\" xmlns=\"http://www.litle.com/schema\"\n    response=\"0\" message=\"Valid Format\">\n    <saleResponse id=\"0104fb289b0c91ddfe71b63b\" reportGroup=\"1\" customerId=\"not-dynamic-cust-id\">\n        <litleTxnId>82921106630329661</litleTxnId>\n        <orderId>not-dynamic-order-id</orderId>\n        <response>000</response>\n        <responseTime>2017-07-28T20:28:43</responseTime>\n        <postDate>2017-07-28</postDate>\n        <message>Approved</message>\n        <authCode>654321</authCode>\n        <accountUpdater>\n            <originalCardTokenInfo>\n                <litleToken>1111000242220007</litleToken>\n                <type>VI</type>\n                <bin>445700</bin>\n                <expDate>0115</expDate>\n            </originalCardTokenInfo>\n            <newCardTokenInfo>\n                <litleToken>1112000247040003</litleToken>\n                <type>MC</type>\n                <bin>511200</bin>\n                <expDate>0115</expDate>\n            </newCardTokenInfo>\n        </accountUpdater>\n        <fraudResult>\n            <avsResult>12</avsResult>\n        </fraudResult>\n    </saleResponse>\n</litleOnlineResponse>\n"
+}

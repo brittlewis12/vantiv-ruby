@@ -24,7 +24,7 @@ module Vantiv
     end
 
     def self.fixtures_directory
-      "#{Vantiv.root}/lib/vantiv/mocked_sandbox/fixtures/"
+      "#{Vantiv.root}/lib/vantiv/mocked_sandbox/fixtures/#{Vantiv.environment}"
     end
   end
 end

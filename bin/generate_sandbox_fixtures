@@ -1,12 +1,25 @@
 #!/usr/bin/env ruby
 
+require "dotenv"
 require "vantiv"
 require "vantiv/mocked_sandbox/fixture_generator"
 
-require "dotenv"
+def environment_from_env
+  env_map = [
+    Vantiv::Environment::POSTCERTIFICATION,
+    Vantiv::Environment::PRECERTIFICATION,
+  ].map { |env| [env.to_s, env] }.to_h
+
+  env_map.fetch(
+    ENV["VANTIV_ENVIRONMENT"]&.downcase,
+    Vantiv::Environment::PRECERTIFICATION
+  )
+end
+
 Dotenv.load
 Vantiv.configure do |config|
-  config.environment = Vantiv::Environment::CERTIFICATION
+
+  config.environment = environment_from_env
   config.merchant_id = ENV["MERCHANT_ID"]
   config.default_order_source = "ecommerce"
   config.paypage_id = ENV["PAYPAGE_ID"]

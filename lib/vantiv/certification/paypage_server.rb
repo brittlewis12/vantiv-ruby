@@ -47,7 +47,7 @@ module Vantiv
       end
 
       def port
-        8000
+        ENV.fetch("PAYPAGE_SERVER_PORT", 8000)
       end
 
       def start_server

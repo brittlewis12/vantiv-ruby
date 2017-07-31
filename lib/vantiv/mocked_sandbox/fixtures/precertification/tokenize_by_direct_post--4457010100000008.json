@@ -1,0 +1,20 @@
+{
+  "httpok": true,
+  "http_response_code": "200",
+  "body": {
+    "litleOnlineResponse": {
+      "@message": "Valid Format",
+      "@response": "0",
+      "@version": "10.5",
+      "registerTokenResponse": {
+        "response": "802",
+        "responseTime": "2017-07-28T20:28:49",
+        "message": "Account number was previously registered",
+        "TransactionID": "82921106630329877",
+        "Type": "VI",
+        "PaymentAccountID": "1111111111120008"
+      }
+    }
+  },
+  "raw_body": "<litleOnlineResponse version=\"10.5\" xmlns=\"http://www.litle.com/schema\"\n    response=\"0\" message=\"Valid Format\">\n    <registerTokenResponse id=\"f15ef1726b82abae3688070b\" reportGroup=\"1\">\n        <litleTxnId>82921106630329877</litleTxnId>\n        <litleToken>1111000226050008</litleToken>\n        <response>802</response>\n        <responseTime>2017-07-28T20:28:49</responseTime>\n        <message>Account number was previously registered</message>\n        <bin>445701</bin>\n        <type>VI</type>\n    </registerTokenResponse>\n</litleOnlineResponse>\n"
+}

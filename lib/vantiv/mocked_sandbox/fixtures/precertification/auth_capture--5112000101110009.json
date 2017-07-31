@@ -1,0 +1,44 @@
+{
+  "httpok": true,
+  "http_response_code": "200",
+  "body": {
+    "litleOnlineResponse": {
+      "@message": "Valid Format",
+      "@response": "0",
+      "@version": "10.5",
+      "saleResponse": {
+        "authCode": "123457",
+        "orderId": "not-dynamic-order-id",
+        "response": "000",
+        "responseTime": "2017-07-28T20:28:45",
+        "fraudResult": {
+          "avsResult": "00"
+        },
+        "message": "Approved",
+        "TransactionID": "82921106630329711",
+        "accountUpdater": {
+          "originalCardTokenInfo": {
+            "bin": "511200",
+            "Type": "MC",
+            "PaymentAccountID": "1112000239160009",
+            "ExpirationMonth": "11",
+            "ExpirationYear": "99"
+          },
+          "newCardTokenInfo": {
+            "bin": "445700",
+            "Type": "VI",
+            "PaymentAccountID": "1111000288150001",
+            "ExpirationMonth": "11",
+            "ExpirationYear": "99"
+          },
+          "extendedCardResponse": {
+            "code": "501",
+            "message": "The account was closed"
+          }
+        },
+        "networkTransactionId": "000000000000000"
+      }
+    }
+  },
+  "raw_body": "<litleOnlineResponse version=\"10.5\" xmlns=\"http://www.litle.com/schema\"\n    response=\"0\" message=\"Valid Format\">\n    <saleResponse id=\"bdcae99f60de196a581e073b\" reportGroup=\"1\" customerId=\"not-dynamic-cust-id\">\n        <litleTxnId>82921106630329711</litleTxnId>\n        <orderId>not-dynamic-order-id</orderId>\n        <response>000</response>\n        <responseTime>2017-07-28T20:28:45</responseTime>\n        <postDate>2017-07-28</postDate>\n        <message>Approved</message>\n        <authCode>123457</authCode>\n        <accountUpdater>\n            <originalCardTokenInfo>\n                <litleToken>1112000239160009</litleToken>\n                <type>MC</type>\n                <bin>511200</bin>\n                <expDate>1199</expDate>\n            </originalCardTokenInfo>\n            <newCardTokenInfo>\n                <litleToken>1111000288150001</litleToken>\n                <type>VI</type>\n                <bin>445700</bin>\n                <expDate>1199</expDate>\n            </newCardTokenInfo>\n            <extendedCardResponse>\n                <code>501</code>\n                <message>The account was closed</message>\n            </extendedCardResponse>\n        </accountUpdater>\n        <fraudResult>\n            <avsResult>00</avsResult>\n        </fraudResult>\n        <networkTransactionId>000000000000000</networkTransactionId>\n    </saleResponse>\n</litleOnlineResponse>\n"
+}
