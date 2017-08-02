@@ -75,22 +75,12 @@ module Vantiv
     end
 
     def root_uri
-      if !ENV.fetch("ENABLE_VANTIV_LITLE_MIGRATION", "").empty?
-        if Vantiv::Environment.production?
-          "https://transact.vantivcnp.com"
-        elsif Vantiv::Environment.postcertification?
-          "https://transact.vantivpostlive.com"
-        elsif Vantiv::Environment.precertification?
-          "https://transact.vantivprelive.com"
-        end
-      else
-        if Vantiv::Environment.production?
-          "https://transact.litle.com"
-        elsif Vantiv::Environment.postcertification?
-          "https://transact-postlive.litle.com"
-        elsif Vantiv::Environment.precertification?
-          "https://transact-prelive.litle.com"
-        end
+      if Vantiv::Environment.production?
+        "https://transact.vantivcnp.com"
+      elsif Vantiv::Environment.postcertification?
+        "https://transact.vantivpostlive.com"
+      elsif Vantiv::Environment.precertification?
+        "https://transact.vantivprelive.com"
       end
     end
 
