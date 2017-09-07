@@ -20,15 +20,15 @@ module Vantiv
       private
 
       def litle_response_has_error?
-        body.response == "3" ||
-        # NOTE: this kind of sucks, but at the commit point, the DevHub
-        #   Api sometimes gives 200OK when litle had a parse issue and returns
-        #   'Error validating xml data...' instead of an actual error
-        !!body.body_message.match(/error/i)
+        body.response != "0" || !!body.body_message.match(/error/i)
       end
 
       def api_level_error_message
-        "API level error"
+        xml_validation_error? ? body.body_message : "API level error"
+      end
+
+      def xml_validation_error?
+        body.response == "1"
       end
 
       attr_reader :transaction_response_name
