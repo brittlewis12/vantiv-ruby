@@ -14,12 +14,13 @@ describe Vantiv::Api::Response do
   def body_with_params(params)
     body_hash = {
       "litleOnlineResponse" => {
-        "@message" => "this is a message"
+        "@message" => "this is a message",
+        "@response" => "0"
       }.merge(params)
     }
 
-    response = Vantiv::Api::ResponseBody.new
-    ResponseBodyRepresenter.new(response).from_json(body_hash.to_json)
+    response_body = Vantiv::Api::ResponseBody.new
+    ResponseBodyRepresenter.new(response_body).from_json(body_hash.to_json)
   end
 
   def set_transaction_response_name
@@ -48,8 +49,16 @@ describe Vantiv::Api::Response do
       end
     end
 
-    context "with an ok http response and no error message" do
-      let(:body) { body_with_params({ "@message" => "message" }) }
+    context "when response is not 0" do
+      let(:body) { body_with_params({ "@response" => "3" }) }
+
+      it "is true" do
+        expect(response.api_level_failure?).to eq(true)
+      end
+    end
+
+    context "with an ok http response, no error message, and a '0' response" do
+      let(:body) { body_with_params({ "@message" => "message", "@response" => "0" }) }
 
       it "is false" do
         expect(response.api_level_failure?).to eq(false)
@@ -75,12 +84,29 @@ describe Vantiv::Api::Response do
 
   describe "#error_message" do
     context "when configuration leads to API level failure" do
-      let(:api_error_message) { "error message" }
       let(:httpok) { false }
       let(:body) { Vantiv::Api::ResponseBody.new }
 
       it "returns the API level error message" do
         expect(response.error_message).to eq("API level error")
+      end
+    end
+
+    context "when failure is due to xml validation" do
+      let(:httpok) { true }
+      let(:litle_error_message) do
+        "Transaction amount [200000.00] exceeded limit of [100000.00]."
+      end
+      let(:bad_xml_response) do
+        %Q(<litleOnlineResponse version="10.5" xmlns="http://www.litle.com/schema" response="1" message="#{litle_error_message}"/>)
+      end
+      let(:body) do
+        response = Vantiv::Api::ResponseBody.new
+        ResponseBodyRepresenterXml.new(response).from_xml(bad_xml_response)
+      end
+
+      it "returns the litle transaction's message" do
+        expect(response.error_message).to eq(litle_error_message)
       end
     end
 
@@ -95,7 +121,7 @@ describe Vantiv::Api::Response do
         })
       end
 
-      it "returns the litle transaction's  message" do
+      it "returns the litle transaction's message" do
         set_transaction_response_name
         expect(response.error_message).to eq(non_api_error_message)
       end

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "auth_capture (Sale)" do
   subject(:response) do
     Vantiv.auth_capture(
-      amount: 10000,
+      amount: amount,
       payment_account_id: payment_account_id,
       customer_id: customer_external_id,
       order_id: "SomeOrder123",
@@ -12,6 +12,7 @@ describe "auth_capture (Sale)" do
     )
   end
 
+  let(:amount) { 10000 }
   let(:use_xml) { true }
   let(:customer_external_id) { "1234" }
   let(:payment_account_id) { test_account.payment_account_id }
@@ -30,6 +31,18 @@ describe "auth_capture (Sale)" do
 
     it "returns a '000' response code" do
       expect(response.response_code).to eq('000')
+    end
+
+    context "with an ammount that exceeds the transaction limit" do
+      let(:amount) { 20000000 }
+
+      it "fails" do
+        expect(response.success?).to eq(false)
+      end
+
+      it "has the correct error message" do
+        expect(response.error_message).to match(/exceeded limit of/)
+      end
     end
   end
 
