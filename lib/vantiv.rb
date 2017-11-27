@@ -7,6 +7,7 @@ require 'vantiv/test_card'
 require 'vantiv/test_temporary_token'
 require 'vantiv/environment'
 require 'vantiv/mocked_sandbox'
+require 'vantiv/response_code_map'
 require 'vantiv/paypage'
 
 module Vantiv
@@ -164,6 +165,10 @@ module Vantiv
       body: Api::RequestBody.for_void(transaction_id: transaction_id),
       response_object: Api::TiedTransactionResponse.new(:void)
     ).run
+  end
+
+  def self.get_error_description(code:)
+    ResponseCodeMap.get_error_description(code: code)
   end
 
   def self.configure
