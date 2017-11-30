@@ -106,7 +106,7 @@ To render the payframe, the merchant must include the payframe js file in the pa
 # OR:
 <%= javascript_include_tag Vantiv.payframe_js %>
 # OR it can be hardcoded:
-<script src="https://request-prelive.np-securepaypage-litle.com/LitlePayPage/js/payframe-client.min.js" type="text/javascript"></script>
+<script src="https://request.eprotect.vantivprelive.com/LitlePayPage/js/payframe-client.min.js" type="text/javascript"></script>
 ```
 
 To initialize the payframe:
