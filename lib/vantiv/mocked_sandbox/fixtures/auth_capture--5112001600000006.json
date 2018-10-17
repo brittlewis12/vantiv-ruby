@@ -9,14 +9,15 @@
       "saleResponse": {
         "orderId": "not-dynamic-order-id",
         "response": "301",
-        "responseTime": "2016-12-01T18:32:06",
+        "responseTime": "2018-10-17T15:34:16",
         "fraudResult": {
           "avsResult": "00"
         },
         "message": "Invalid Account Number",
-        "TransactionID": "82919414441086189"
+        "TransactionID": "82924261924618423",
+        "networkTransactionId": "0000000001017"
       }
     }
   },
-  "raw_body": "<litleOnlineResponse version=\"10.5\" xmlns=\"http://www.litle.com/schema\"\n    response=\"0\" message=\"Valid Format\">\n    <saleResponse id=\"60be110d0ea7bb3c0cfd9188\" reportGroup=\"1\" customerId=\"not-dynamic-cust-id\">\n        <litleTxnId>82919414441086189</litleTxnId>\n        <orderId>not-dynamic-order-id</orderId>\n        <response>301</response>\n        <responseTime>2016-12-01T18:32:06</responseTime>\n        <postDate>2016-12-01</postDate>\n        <message>Invalid Account Number</message>\n        <fraudResult>\n            <avsResult>00</avsResult>\n        </fraudResult>\n    </saleResponse>\n</litleOnlineResponse>\n"
+  "raw_body": "<litleOnlineResponse version=\"10.5\" xmlns=\"http://www.litle.com/schema\"\n    response=\"0\" message=\"Valid Format\">\n    <saleResponse id=\"0fb1d5816e3ff4eeb487fee3\" reportGroup=\"1\" customerId=\"not-dynamic-cust-id\">\n        <litleTxnId>82924261924618423</litleTxnId>\n        <orderId>not-dynamic-order-id</orderId>\n        <response>301</response>\n        <responseTime>2018-10-17T15:34:16</responseTime>\n        <postDate>2018-10-17</postDate>\n        <message>Invalid Account Number</message>\n        <fraudResult>\n            <avsResult>00</avsResult>\n        </fraudResult>\n        <networkTransactionId>0000000001017</networkTransactionId>\n    </saleResponse>\n</litleOnlineResponse>\n"
 }

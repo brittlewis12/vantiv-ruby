@@ -8,11 +8,11 @@
       "@version": "10.5",
       "registerTokenResponse": {
         "response": "820",
-        "responseTime": "2016-12-01T18:32:01",
+        "responseTime": "2018-10-17T15:34:16",
         "message": "Credit card number was invalid",
-        "TransactionID": "82919414441086098"
+        "TransactionID": "82924261924618332"
       }
     }
   },
-  "raw_body": "<litleOnlineResponse version=\"10.5\" xmlns=\"http://www.litle.com/schema\"\n    response=\"0\" message=\"Valid Format\">\n    <registerTokenResponse id=\"3a46ccc75d44902132b5d326\" reportGroup=\"1\">\n        <litleTxnId>82919414441086098</litleTxnId>\n        <response>820</response>\n        <responseTime>2016-12-01T18:32:01</responseTime>\n        <message>Credit card number was invalid</message>\n    </registerTokenResponse>\n</litleOnlineResponse>\n"
+  "raw_body": "<litleOnlineResponse version=\"10.5\" xmlns=\"http://www.litle.com/schema\"\n    response=\"0\" message=\"Valid Format\">\n    <registerTokenResponse id=\"d078473c2e61ef4e9c8c6ae3\" reportGroup=\"1\">\n        <litleTxnId>82924261924618332</litleTxnId>\n        <response>820</response>\n        <responseTime>2018-10-17T15:34:16</responseTime>\n        <message>Credit card number was invalid</message>\n    </registerTokenResponse>\n</litleOnlineResponse>\n"
 }

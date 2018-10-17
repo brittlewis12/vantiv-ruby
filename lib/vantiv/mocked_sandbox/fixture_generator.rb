@@ -53,6 +53,17 @@ module Vantiv
           )
         end
 
+        Vantiv::TestCard.all.each do |test_card|
+          mocked_payment_account_id = test_card.mocked_sandbox_payment_account_id
+          next if mocked_payment_account_id.nil?
+          live_temporary_token = @paypage_driver.get_paypage_registration_id(test_card.card_number, test_card.cvv)
+          record_tokenize_for_test_token(
+            test_temporary_token: test_card.temporary_token,
+            live_temporary_token: live_temporary_token,
+            mocked_payment_account_id: mocked_payment_account_id
+          )
+        end
+
         @paypage_driver.stop
       end
 

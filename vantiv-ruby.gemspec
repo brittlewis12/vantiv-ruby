@@ -19,12 +19,13 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_dependency 'selenium-webdriver'
-  spec.add_dependency 'webrick'
   spec.add_dependency 'representable'
   spec.add_dependency 'multi_json'
   spec.add_dependency 'nokogiri'
 
+  spec.add_development_dependency 'selenium-webdriver'
+  spec.add_development_dependency 'webrick'
+  spec.add_development_dependency 'geckodriver-helper'
   spec.add_development_dependency "bundler", "~> 1.10"
   spec.add_development_dependency 'dotenv'
   spec.add_development_dependency 'pry'

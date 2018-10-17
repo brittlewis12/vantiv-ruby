@@ -8,11 +8,11 @@
       "@version": "10.5",
       "creditResponse": {
         "response": "001",
-        "responseTime": "2016-12-01T18:32:25",
+        "responseTime": "2018-10-17T15:34:19",
         "message": "Transaction Received",
-        "TransactionID": "82919414441086585"
+        "TransactionID": "82924261924619090"
       }
     }
   },
-  "raw_body": "<litleOnlineResponse version=\"10.5\" xmlns=\"http://www.litle.com/schema\"\n    response=\"0\" message=\"Valid Format\">\n    <creditResponse id=\"148e8f18057d26d45113c581\" reportGroup=\"1\" customerId=\"not-dynamic-cust-id\">\n        <litleTxnId>82919414441086585</litleTxnId>\n        <response>001</response>\n        <responseTime>2016-12-01T18:32:25</responseTime>\n        <postDate>2016-12-01</postDate>\n        <message>Transaction Received</message>\n    </creditResponse>\n</litleOnlineResponse>\n"
+  "raw_body": "<litleOnlineResponse version=\"10.5\" xmlns=\"http://www.litle.com/schema\"\n    response=\"0\" message=\"Valid Format\">\n    <creditResponse id=\"62b108e031d9b98c4dbe7be9\" reportGroup=\"1\" customerId=\"not-dynamic-cust-id\">\n        <litleTxnId>82924261924619090</litleTxnId>\n        <response>001</response>\n        <responseTime>2018-10-17T15:34:19</responseTime>\n        <postDate>2018-10-17</postDate>\n        <message>Transaction Received</message>\n    </creditResponse>\n</litleOnlineResponse>\n"
 }

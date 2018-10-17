@@ -10,12 +10,12 @@
         "authCode": "123457",
         "orderId": "not-dynamic-order-id",
         "response": "000",
-        "responseTime": "2016-12-01T18:32:41",
+        "responseTime": "2018-10-17T15:34:24",
         "fraudResult": {
           "avsResult": "00"
         },
         "message": "Approved",
-        "TransactionID": "82919414448128125",
+        "TransactionID": "82924261924619785",
         "accountUpdater": {
           "newCardTokenInfo": {
           },
@@ -28,5 +28,5 @@
       }
     }
   },
-  "raw_body": "<litleOnlineResponse version=\"10.5\" xmlns=\"http://www.litle.com/schema\"\n    response=\"0\" message=\"Valid Format\">\n    <authorizationResponse id=\"8657693653be680892f1cf6a\" reportGroup=\"1\" customerId=\"not-dynamic-cust-id\">\n        <litleTxnId>82919414448128125</litleTxnId>\n        <orderId>not-dynamic-order-id</orderId>\n        <response>000</response>\n        <responseTime>2016-12-01T18:32:41</responseTime>\n        <postDate>2016-12-01</postDate>\n        <message>Approved</message>\n        <authCode>123457</authCode>\n        <accountUpdater>\n            <extendedCardResponse>\n                <code>504</code>\n                <message>Contact the cardholder for updated information</message>\n            </extendedCardResponse>\n        </accountUpdater>\n        <fraudResult>\n            <avsResult>00</avsResult>\n        </fraudResult>\n        <networkTransactionId>000000000000000</networkTransactionId>\n    </authorizationResponse>\n</litleOnlineResponse>\n"
+  "raw_body": "<litleOnlineResponse version=\"10.5\" xmlns=\"http://www.litle.com/schema\"\n    response=\"0\" message=\"Valid Format\">\n    <authorizationResponse id=\"8d0da4c440ca506d0867acd7\" reportGroup=\"1\" customerId=\"not-dynamic-cust-id\">\n        <litleTxnId>82924261924619785</litleTxnId>\n        <orderId>not-dynamic-order-id</orderId>\n        <response>000</response>\n        <responseTime>2018-10-17T15:34:24</responseTime>\n        <postDate>2018-10-17</postDate>\n        <message>Approved</message>\n        <authCode>123457</authCode>\n        <accountUpdater>\n            <extendedCardResponse>\n                <code>504</code>\n                <message>Contact the cardholder for updated information</message>\n            </extendedCardResponse>\n        </accountUpdater>\n        <fraudResult>\n            <avsResult>00</avsResult>\n        </fraudResult>\n        <networkTransactionId>000000000000000</networkTransactionId>\n    </authorizationResponse>\n</litleOnlineResponse>\n"
 }

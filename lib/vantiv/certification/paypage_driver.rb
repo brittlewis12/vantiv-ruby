@@ -42,7 +42,13 @@ module Vantiv
       end
 
       def driver
-        @driver ||= Selenium::WebDriver.for :phantomjs
+        @driver ||=
+          begin
+            options = ::Selenium::WebDriver::Firefox::Options.new
+            options.headless!
+
+            Selenium::WebDriver.for(:firefox, options: options)
+          end
       end
 
       def paypage_server
