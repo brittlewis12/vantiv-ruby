@@ -3,126 +3,117 @@ module Vantiv
     class CardNotFound < StandardError; end
     CARDS = [
       {
-        access_method_name: "valid_account",
-        attrs: {
-          card_number: "4457010000000009",
-          expiry_month: "01",
-          expiry_year: "21",
-          cvv: "349",
-          mocked_sandbox_payment_account_id: "1111111111110009",
-          network: "VI"
-        }
+        name: "valid_account",
+        card_number: "4457010000000009",
+        expiry_month: "01",
+        expiry_year: "21",
+        cvv: "349",
+        mocked_sandbox_payment_account_id: "1111111111110009",
+        network: "VI"
       },
       {
-        access_method_name: "invalid_card_number",
-        attrs: {
-          card_number: "4457010010900010",
-          expiry_month: "01",
-          expiry_year: "21",
-          cvv: "349",
-          mocked_sandbox_payment_account_id: nil,
-          network: "VI"
-        }
+        name: "invalid_card_number",
+        card_number: "4457010010900010",
+        expiry_month: "01",
+        expiry_year: "21",
+        cvv: "349",
+        mocked_sandbox_payment_account_id: nil,
+        network: "VI"
       },
       {
-        access_method_name: "invalid_account_number",
-        attrs: {
-          card_number: "5112001600000006",
-          expiry_month: "01",
-          expiry_year: "20",
-          cvv: "349",
-          mocked_sandbox_payment_account_id: "1111111111130006",
-          network: "MC"
-        }
+        name: "invalid_account_number",
+        card_number: "5112001600000006",
+        expiry_month: "01",
+        expiry_year: "20",
+        cvv: "349",
+        mocked_sandbox_payment_account_id: "1111111111130006",
+        network: "MC"
       },
       {
-        access_method_name: "insufficient_funds",
-        attrs: {
-          card_number: "4457002100000005",
-          expiry_month: "01",
-          expiry_year: "20",
-          cvv: "349",
-          mocked_sandbox_payment_account_id: "1111111111120005",
-          network: "VI"
-        }
+        name: "insufficient_funds",
+        card_number: "4457002100000005",
+        expiry_month: "01",
+        expiry_year: "20",
+        cvv: "349",
+        mocked_sandbox_payment_account_id: "1111111111120005",
+        network: "VI"
       },
       {
-        access_method_name: "expired_card",
-        attrs: {
-          card_number: "5112001900000003",
-          expiry_month: "01",
-          expiry_year: "20",
-          cvv: "349",
-          mocked_sandbox_payment_account_id: "1111111111140003",
-          network: "MC"
-        }
+        name: "expired_card",
+        card_number: "5112001900000003",
+        expiry_month: "01",
+        expiry_year: "20",
+        cvv: "349",
+        mocked_sandbox_payment_account_id: "1111111111140003",
+        network: "MC"
       },
       {
-        access_method_name: "account_updater",
-        attrs: {
-          card_number: "4457000300000007",
-          expiry_month: "01",
-          expiry_year: "15",
-          cvv: "123",
-          mocked_sandbox_payment_account_id: "1111111111120007",
-          network: "VI"
-        }
+        name: "account_updater",
+        card_number: "4457000300000007",
+        expiry_month: "01",
+        expiry_year: "15",
+        cvv: "123",
+        mocked_sandbox_payment_account_id: "1111111111120007",
+        network: "VI"
       },
       {
-        access_method_name: "account_updater_account_closed",
-        attrs: {
-          card_number: "5112000101110009",
-          expiry_month: "11",
-          expiry_year: "99",
-          cvv: "123",
-          mocked_sandbox_payment_account_id: "1111111111160009",
-          network: "MC"
-        }
+        name: "account_updater_account_closed",
+        card_number: "5112000101110009",
+        expiry_month: "11",
+        expiry_year: "99",
+        cvv: "123",
+        mocked_sandbox_payment_account_id: "1111111111160009",
+        network: "MC"
       },
       {
-        access_method_name: "account_updater_contact_cardholder",
-        attrs: {
-          card_number: "4457000301100004",
-          expiry_month: "11",
-          expiry_year: "99",
-          cvv: "123",
-          mocked_sandbox_payment_account_id: "1111111111130004",
-          network: "VI"
-        }
+        name: "account_updater_contact_cardholder",
+        card_number: "4457000301100004",
+        expiry_month: "11",
+        expiry_year: "99",
+        cvv: "123",
+        mocked_sandbox_payment_account_id: "1111111111130004",
+        network: "VI"
       },
     ]
 
+    CARDS.each do |card|
+      card[:temporary_token] = card[:name].tr("_", "-") + "-token"
+      card.freeze
+    end
+
+    CARDS.freeze
+
     def self.all
       CARDS.map do |raw_card|
-        new(raw_card[:attrs].merge(name: raw_card[:access_method_name]))
+        new(raw_card)
       end
     end
 
     CARDS.each do |raw_card|
-      define_singleton_method :"#{raw_card[:access_method_name]}" do
-        new(raw_card[:attrs].merge(name: raw_card[:access_method_name]))
+      define_singleton_method raw_card[:name] do
+        new(raw_card)
       end
     end
 
     def self.find(card_number)
       card = CARDS.find do |card_data|
-        card_data[:attrs][:card_number] == card_number
+        card_data[:card_number] == card_number
       end
       raise CardNotFound.new("No card with account number #{card_number}") unless card
-      new(card[:attrs].merge(name: card[:access_method_name]))
+      new(card)
     end
 
     def self.find_by_payment_account_id(payment_account_id)
       card = CARDS.find do |card_data|
-        card_data[:attrs][:mocked_sandbox_payment_account_id] == payment_account_id
+        card_data[:mocked_sandbox_payment_account_id] == payment_account_id
       end
       raise CardNotFound.new("No card with mocked sandbox payment account id #{payment_account_id}") unless card
-      new(card[:attrs].merge(name: card[:access_method_name]))
+      new(card)
     end
 
-    attr_reader :card_number, :expiry_month, :expiry_year, :cvv, :mocked_sandbox_payment_account_id, :network, :name
+    attr_reader :card_number, :expiry_month, :expiry_year, :cvv, :mocked_sandbox_payment_account_id, :network, :name, :temporary_token
 
-    def initialize(card_number:, expiry_month:, expiry_year:, cvv:, mocked_sandbox_payment_account_id:, network:, name:)
+    def initialize(card_number:, expiry_month:, expiry_year:, cvv:, mocked_sandbox_payment_account_id:, network:, name:, temporary_token:)
       @card_number = card_number
       @expiry_month = expiry_month
       @expiry_year = expiry_year
@@ -130,6 +121,7 @@ module Vantiv
       @mocked_sandbox_payment_account_id = mocked_sandbox_payment_account_id
       @network = network
       @name = name
+      @temporary_token = temporary_token
     end
 
     def ==(other_object)

@@ -42,7 +42,7 @@ module Vantiv
       end
 
       def driver
-        @driver ||= Selenium::WebDriver.for :phantomjs
+        @driver ||= Selenium::WebDriver.for :firefox
       end
 
       def paypage_server

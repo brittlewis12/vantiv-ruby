@@ -9,7 +9,8 @@ describe Vantiv::MockedSandbox::ApiRequest do
       mocked_sandbox_payment_account_id: nil,
       network: nil,
       cvv: "123",
-      name: "bobbybil"
+      name: "bobbybil",
+      temporary_token: nil
     )
   end
 
