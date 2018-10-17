@@ -8,13 +8,13 @@
       "@version": "10.5",
       "registerTokenResponse": {
         "response": "802",
-        "responseTime": "2016-12-01T18:32:19",
+        "responseTime": "2018-10-17T15:34:19",
         "message": "Account number was previously registered",
-        "TransactionID": "82919414441086452",
+        "TransactionID": "82924261924618910",
         "Type": "MC",
         "PaymentAccountID": "1111111111140003"
       }
     }
   },
-  "raw_body": "<litleOnlineResponse version=\"10.5\" xmlns=\"http://www.litle.com/schema\"\n    response=\"0\" message=\"Valid Format\">\n    <registerTokenResponse id=\"46e2cfaaf2e28465e396f6d2\" reportGroup=\"1\">\n        <litleTxnId>82919414441086452</litleTxnId>\n        <litleToken>1112000232190003</litleToken>\n        <response>802</response>\n        <responseTime>2016-12-01T18:32:19</responseTime>\n        <message>Account number was previously registered</message>\n        <bin>511200</bin>\n        <type>MC</type>\n    </registerTokenResponse>\n</litleOnlineResponse>\n"
+  "raw_body": "<litleOnlineResponse version=\"10.5\" xmlns=\"http://www.litle.com/schema\"\n    response=\"0\" message=\"Valid Format\">\n    <registerTokenResponse id=\"5ad347d64d687843ed65ab9c\" reportGroup=\"1\">\n        <litleTxnId>82924261924618910</litleTxnId>\n        <litleToken>1112000232190003</litleToken>\n        <response>802</response>\n        <responseTime>2018-10-17T15:34:19</responseTime>\n        <message>Account number was previously registered</message>\n        <bin>511200</bin>\n        <type>MC</type>\n    </registerTokenResponse>\n</litleOnlineResponse>\n"
 }

@@ -9,14 +9,15 @@
       "authorizationResponse": {
         "orderId": "not-dynamic-order-id",
         "response": "305",
-        "responseTime": "2016-12-01T18:32:23",
+        "responseTime": "2018-10-17T15:34:19",
         "fraudResult": {
           "avsResult": "00"
         },
         "message": "Expired Card",
-        "TransactionID": "82919414441086536"
+        "TransactionID": "82924261924619066",
+        "networkTransactionId": "0000000001017"
       }
     }
   },
-  "raw_body": "<litleOnlineResponse version=\"10.5\" xmlns=\"http://www.litle.com/schema\"\n    response=\"0\" message=\"Valid Format\">\n    <authorizationResponse id=\"84cb881eb8823f209d1a6cd5\" reportGroup=\"1\" customerId=\"not-dynamic-cust-id\">\n        <litleTxnId>82919414441086536</litleTxnId>\n        <orderId>not-dynamic-order-id</orderId>\n        <response>305</response>\n        <responseTime>2016-12-01T18:32:23</responseTime>\n        <postDate>2016-12-01</postDate>\n        <message>Expired Card</message>\n        <fraudResult>\n            <avsResult>00</avsResult>\n        </fraudResult>\n    </authorizationResponse>\n</litleOnlineResponse>\n"
+  "raw_body": "<litleOnlineResponse version=\"10.5\" xmlns=\"http://www.litle.com/schema\"\n    response=\"0\" message=\"Valid Format\">\n    <authorizationResponse id=\"b13cceb3ec9c5c80527340b5\" reportGroup=\"1\" customerId=\"not-dynamic-cust-id\">\n        <litleTxnId>82924261924619066</litleTxnId>\n        <orderId>not-dynamic-order-id</orderId>\n        <response>305</response>\n        <responseTime>2018-10-17T15:34:19</responseTime>\n        <postDate>2018-10-17</postDate>\n        <message>Expired Card</message>\n        <fraudResult>\n            <avsResult>00</avsResult>\n        </fraudResult>\n        <networkTransactionId>0000000001017</networkTransactionId>\n    </authorizationResponse>\n</litleOnlineResponse>\n"
 }
